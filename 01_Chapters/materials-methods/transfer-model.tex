@@ -1,0 +1,111 @@
+%-----------------------------------------------------------
+% Phantom-Head Transfer Model & Column-Selection Plan
+%-----------------------------------------------------------
+
+This section defines the math for the phantom-head system, and proposes several column-selection algorithms to reduce the number of usable dipoles \textbf{without} breaking the physical constraints (forbidden triads).  
+It is written so that the same base matrices can be kept in the repository ($F$, $B$, optional $W$), and each selection algorithm returns a diagonal \emph{selection/mask} matrix $S$ ($36\times 36$) to turn dipoles on/off.
+
+\bigskip
+
+\subsubsection{Short system description}
+
+We have:
+
+\begin{itemize}
+  \item \textbf{9 internal electrodes} (``antennas'') whose voltages can be controlled.
+  \item \textbf{36 possible dipoles}: every unordered pair $(e_x, e_y)$ with $1 \le x < y \le 9$.
+  \item 21 \textbf{scalp probes} measure potentials.
+  \item \textbf{A linear, static model} obtained from simulations: \emph{``if dipole $(e_x, e_y)$ is excited with $+1/-1$ V, what do the 21 probes see?''}
+\end{itemize}
+
+Goal: keep \textbf{one} master transfer matrix from dipoles to scalp (the original \texttt{F}), and \textbf{one} master matrix from antennas to dipoles (\texttt{B}), and apply \textbf{selection} via a diagonal matrix $S$ that zeroes out non-selected dipoles.
+
+\bigskip
+
+\subsubsection{Unified system equation}
+
+We will use \textbf{one} equation for \textbf{all} cases:
+
+\[
+\boxed{
+V_{\text{scalp}}^{(w)} \;=\; W \, F \, S \, B \, V_{\text{antena}}
+}
+\]
+
+where:
+
+\begin{itemize}
+  \item $V_{\text{antena}} \in \mathbb{R}^{9\times 1}$:  
+  antenna voltage vector; values that can be set on the 9 internal electrodes. Units: V 
+  
+  \item $B \in \mathbb{R}^{36\times 9}$:  
+  \textbf{antenna $\to$ dipole} difference matrix.  
+  Each \textbf{row} corresponds to one dipole $(e_x, e_y)$: it has $+1$ in column $x$, $-1$ in column $y$, and $0$ elsewhere.
+
+  \item $S \in \mathbb{R}^{36\times 36}$:  
+  \textbf{selection / mask matrix} (diagonal).
+  \begin{itemize}
+    \item $S_{jj} = 1$: dipole $j$ is \textbf{enabled}.
+    \item $S_{jj} = 0$: dipole $j$ is \textbf{disabled}.
+  \end{itemize}
+  Each selection algorithm returns such an \texttt{S}.
+
+  \item $F \in \mathbb{R}^{21\times 36}$:  
+  \textbf{dipole $\to$ scalp} transfer matrix (this is the one already computed from the 36 unit-dipole simulations).  
+  Column $j$ of $F$ is the 21-probe response to dipole $j$ excited with $\pm 1$ V.
+
+  \item $W \in \mathbb{R}^{21\times 21}$:  
+  \textbf{probe-weighting} matrix (diagonal).
+  \begin{itemize}
+    \item $W = I_{21}$ $\to$ unweighted model
+    \item $W \neq I_{21}$ $\to$ emphasize/de-emphasize regions (frontal, occipital, etc.)
+  \end{itemize}
+
+  \item $V_{\text{scalp}}^{(w)} \in \mathbb{R}^{21\times 1}$:  
+  weighted scalp voltages predicted by the model.
+\end{itemize}
+
+So, the data flow is:
+
+\begin{enumerate}
+  \item \textbf{antennas} $\to$ $B V_{\text{antena}}$ $\to$ \textbf{dipole amplitudes}
+  \item dipoles $\to$ $S (B V_{\text{antena}})$ $\to$ \textbf{only allowed/selected dipoles}
+  \item selected dipoles $\to$ $F S B V_{\text{antena}}$ $\to$ \textbf{scalp voltages}
+  \item scalp voltages $\to$ $W F S B V_{\text{antena}}$ $\to$ \textbf{weighted scalp voltages}
+\end{enumerate}
+
+\subsubsection*{Why masking \textbf{B} and not \textbf{F}?}
+
+\begin{itemize}
+  \item masking \textbf{B} via $S B$ keeps the original \textbf{F} intact — no duplications;
+  \item mathematically:
+  \[
+  F \, S \, B = F \, (S B)
+  \]
+  because matrix multiplication is associative;
+  \item disabling a dipole means: ``this dipole will \textbf{never} be produced from any antenna voltage'' $\to$ that is naturally a constraint on the \textbf{dipole-generation} side (\texttt{B}), not on the measurement side (\texttt{F});
+  \item selection algorithms can therefore \textbf{always} return $S_{alg}$.
+\end{itemize}
+
+\bigskip
+
+\subsubsection{Selection algorithms}
+
+All algorithms described below operate on the same base matrices defined previously:
+the dipole $\rightarrow$ scalp matrix $F$, the antenna $\rightarrow$ dipole matrix $B$,
+and the optional probe weighting matrix $W$.
+
+Each algorithm builds a list of selected dipoles
+\(\text{selected} = \{(i,j), (k,l), \dots\}\)
+subject to the physical constraint that no forbidden triad
+\(\{(i,j), (i,k), (j,k)\}\)
+is ever formed.  
+The output of each algorithm is a diagonal selection (mask) matrix \(S \in \mathbb{R}^{36\times36}\)
+whose diagonal entries are one for selected dipoles and zero otherwise.
+The mask \(S\) is applied on the dipole–generation side of the system,
+yielding $M = W \cdot F \cdot S \cdot B$ as the effective forward model.
+
+\nota{
+For each one, we need a Goal, rationale and procedure
++ any alg specific info
+}
