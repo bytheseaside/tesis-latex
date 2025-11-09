@@ -1,0 +1,56 @@
+\documentclass[../../00_Main/Main.tex]{subfiles}
+\begin{document}
+The main goal of this work is the design and development of a \gls{phantom} 
+for the evaluation and calibration of \acrfull{eeg} signal acquisition systems.  
+To achieve this goal, the following specific objectives are proposed:
+
+\begin{enumerate}
+
+\item Design and construct a \gls{phantom} capable of simulating realistic conditions 
+for the transmission of \acrshort{eeg} signals \nota{(we should add something like \textbf{and other standard test signals} ???)}, 
+through an internal generation system that maintains stable operation for at least 
+\nota{X (to be defined) days/hours}.
+
+\item Develop a desktop application for operational integration with the hardware system, 
+intended for the comprehensive management of simulated \acrshort{eeg} signals within the \gls{phantom}.  
+The platform should serve as a unified working environment, offering key functionalities such as:
+
+\begin{enumerate}
+    \item Control of signal generation parameters, with flexible configuration of amplitude, frequency, and waveform.  
+    \nota{this “waveform” aspect could mean either uploading a file with a predefined structure to reproduce that waveform, 
+    and/or allowing the user to select within the application options such as “generate sinusoidal wave with frequency $f$ and amplitude $A$.” 
+    We will later refine what is actually permitted and phrase this section accordingly.}
+    \nota{Approx.\ –250 to 250~mV are the expected target values, covering both EEG amplitudes and some useful synthetic test cases with sinusoids or other test functions.}
+
+    % \item Dynamic calibration of the generation system as a function of the current \nota{(actual???? vs ideal)} 
+    % state of the \gls{phantom}.
+
+    \item Real-time visualization of the acquired signals (with minimal latency and \textit{jitter}), 
+    including graphical tools for monitoring and validation.  
+    \nota{we should define a numerical cutoff for acceptable latency and jitter — e.g., \textbf{up to} 20~ms latency 
+    and 5~ms jitter — since it reads more clearly as an objective than “as low as possible.”}
+
+    \item Structured data logging, with the possibility of exporting recorded measurements 
+    to other environments for further analysis and processing.  
+    \nota{we could add here something like: data recording and export in format~X, 
+    which is widely accepted by other analysis platforms.}
+\end{enumerate}
+
+\item Ensure system compatibility with the \textit{OpenBCI} platform by adopting communication standards 
+and data structures that allow correct reception and processing of generated signals.  
+This integration with open hardware aims to guarantee system interoperability, facilitate replicability 
+in other research contexts, and promote adoption, adaptation, and improvement by third parties 
+within an open development framework.  
+\nota{I added some explanatory text here — please check if it feels too “fluffy”; we can simplify it if you prefer a more concise version.}
+
+\item Calibrate the signal-generation subsystem of the \gls{phantom} 
+to reproduce, with the highest possible fidelity \nota{what exactly do we mean by “highest possible fidelity”? define acceptable error!!!}, 
+the desired signals at the electrode positions defined by the international 10–20 system.  
+This calibration will establish a standardized reference for validating device performance, 
+ensuring reproducibility, comparability, and traceability across experimental and clinical contexts.
+
+\end{enumerate}
+
+
+\biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
+\end{document}

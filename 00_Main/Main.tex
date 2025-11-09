@@ -101,7 +101,7 @@
 
 \def\biblio{} % resets the biblio command, if not here a new reference list will be produced after every chapter
 
-\input{../01_Chapters/000NHH-Frontpage}
+\input{../01_Chapters/frontpage}
 \restoregeometry % restores the margins after frontpage
 %\nocite{*} % uncomment if you want all sources to be printed in the reference list, including the ones which are not cited in the text 
 
@@ -116,7 +116,7 @@
 
 \newpage
 \section*{Abstract}
-    \subfile{../01_Chapters/00Abstract}
+    \subfile{../01_Chapters/abstract/main}
 
 \newpage
 \tableofcontents
@@ -136,37 +136,39 @@
 \setcounter{tocdepth}{0}
 
 \section{Introduction} % section/chapter name
-    \subfile{../01_Chapters/01Introduction} % including the subfile for the chapter
+    \subfile{../01_Chapters/introduction/main} % including the subfile for the chapter
 \clearpage % clears the page after the chapter is finished
 
 \section{Background}
-    \subfile{../01_Chapters/02Background}
+    \subfile{../01_Chapters/background/main}
 \clearpage
 
-
 \section{State Of the Art}
-    \subfile{../01_Chapters/03StateOfTheArt}
+    \subfile{../01_Chapters/state-of-the-art/main}
+\clearpage
+
+\section{Objectives}
+    \subfile{../01_Chapters/objectives/main}
 \clearpage
   
 \section{Materials And Methods}
-    \subfile{../01_Chapters/04Materials}
+    \subfile{../01_Chapters/materials-methods/main}
 \clearpage
 
 \section{Results}
-    \subfile{../01_Chapters/05Results}
+    \subfile{../01_Chapters/results/main}
 \clearpage
 
-
 \section{Discussion}
-    \subfile{../01_Chapters/06Discussion}
+    \subfile{../01_Chapters/discussion/main}
 \clearpage
 
 \section{Conclusion}
-    \subfile{../01_Chapters/07Conclusion}
+    \subfile{../01_Chapters/conclusion/main}
 \clearpage
 
 \section{Acknowledgements}
-    \subfile{../01_Chapters/Acknowledgement}
+    \subfile{../01_Chapters/acknowledgements/main}
 \clearpage
 
 % \section{Acknowledgements}
@@ -187,7 +189,7 @@
 \addappheadtotoc
 
 \begin{appendices}
-    \subfile{../01_Chapters/Appendix}
+    \subfile{../01_Chapters/appendix/main}
 \end{appendices}
 
 
