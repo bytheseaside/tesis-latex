@@ -1,0 +1,56 @@
+# ===== LaTeX build artifacts =====
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.xdv
+*.nav
+*.snm
+*.vrb
+
+# latexmk and other temp files
+*.dvi
+*.ps
+*.pdfsync
+*.bcf
+*.run.xml
+*.thm
+*.lol
+*.ttt
+*.fff
+*.sav
+*.upa
+*.upb
+*.tmp
+
+# minted cache
+_minted*
+*.pyg
+
+# Output PDFs (optional)
+# Uncomment the next line if you don't want to version your compiled PDFs
+# *.pdf
+
+# ===== OS and editor files =====
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
+*.log
+
+# ===== VSCode project files =====
+.vscode/
+.history/
+*.code-workspace
