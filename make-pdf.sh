@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-latexmk -pdf -shell-escape -cd 00_Main/Main.tex
-
+latexmk -c -cd 00_Main/Main.tex
+latexmk -pdf -shell-escape -cd -interaction=nonstopmode 00_Main/Main.tex

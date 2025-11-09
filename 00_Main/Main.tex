@@ -12,7 +12,7 @@
 \usepackage{minted} % Code highlighting
 \usepackage{adjustbox}
 \usepackage{chronology}
-\usepackage{graphicx}
+\usepackage[draft=false]{graphicx} % draft=false shows images; change to draft to show placeholders for missing images
 \usepackage{mathtools}
 \usepackage{amsmath, amssymb, amsthm} % Mathematical packages
 \usepackage{parskip} % Removing indenting in new paragraphs
@@ -34,6 +34,8 @@
 % \usepackage{lipsum} % For generating dummy text
 % --------- You can edit from this point on --------
 
+% ----- Custom commands -----
+\newcommand{\nota}[1]{\textcolor{red}{\textbf{#1}}} % Red and bold text for notes
 
 % ----- Appearance and language ----- 
 \usepackage[english]{babel} % document language
