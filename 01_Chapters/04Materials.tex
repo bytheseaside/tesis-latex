@@ -3,7 +3,7 @@
 
 This section describes all the components, the architectures, particular set of parameters and so on, all the stuff that is used to perform the experiments or to detail all that was produced for this work.
 
-\section{Phantom-Head Modeling}
+\subsection{Phantom-Head Modeling}
 
 The phantom head model was developed to provide a realistic and modular platform 
 for simulating electrical propagation through cranial tissues. 
@@ -183,10 +183,10 @@ can be easily adapted or shared, promoting reproducibility and collaborative dev
 
 \nota{agregar imgs desp.}
 
-\section{Phantom-Head Simulation}
+\subsection{Phantom-Head Simulation}
 
 
-\section{Phantom-Head Transfer Model \& Column-Selection Plan}
+\subsection{Phantom-Head Transfer Model \& Column-Selection Plan}
 
 This section defines the math for the phantom-head system, and proposes several column-selection algorithms to reduce the number of usable dipoles \textbf{without} breaking the physical constraints (forbidden triads).  
 It is written so that the same base matrices can be kept in the repository ($F$, $B$, optional $W$), and each selection algorithm returns a diagonal \emph{selection/mask} matrix $S$ ($36\times 36$) to turn dipoles on/off.
