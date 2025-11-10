@@ -8,14 +8,14 @@ Each guide follows a unique, non-overlapping path leading to a carefully selecte
 The endpoints were positioned to intentionally break possible spatial symmetries in electrical stimulation, 
 thereby enabling more representative and diverse field distributions during testing.
 
-All guides maintain a uniform circular cross-section of \nota{DIAMETER HERE} 
+All guides maintain a uniform circular cross-section of \nota{1cm TBC} 
 to accommodate a range of cable or electrode diameters. 
 
 \subsubsection{Antenna Connector Design}
 
 Each wire guide terminates at its base in a specially designed antenna connector that interfaces with the lid. 
-The connector geometry features a \textbf{non-symmetrical radial cross-section}—combining a half-circle with a half-square profile—
-to prevent rotation and ensure unique, unambiguous positioning. 
+The connector geometry features a \textbf{not radially symmetric} profile to prevent rotation and ensure unique,
+unambiguous positioning. 
 This asymmetric design guarantees that each connector fits into its corresponding opening in the lid 
 in only one specific orientation, eliminating assembly errors and ensuring consistent alignment 
 of the internal electrodes across experiments.
@@ -43,10 +43,22 @@ The overall design of the wire-guide network enables:
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../../02_Images/antenna_connector.png}
-        \caption{Detail of the antenna connector base with non-symmetrical cross-section (half-circle, half-square) and identification number.}
-        \label{fig:antenna_connector}
+        \includegraphics[width=\textwidth]{../../02_Images/connector_detail.png}
+        \caption{Detail of the antenna connector base with an identification number.}
+        \label{fig:antenna_connector_detail}
     \end{subfigure}
-    \caption{Wire-guide system components: (a) full network integration and (b) connector detail showing the rotationally-keyed design.}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/connector_bottom.png}
+        \caption{Detail of the antenna connector base with non-symmetrical profile.}
+        \label{fig:antenna_connector_bottom}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/cut_lid.png}
+        \caption{\nota{tbd, algo como "Detail of the antenna connector lid interface, with opening to fill the shell"}}
+        \label{fig:antenna_connector_lid}
+    \end{subfigure}
+    \caption{\nota{Wire guides details.}}
     \label{fig:wire_guides}
 \end{figure}
