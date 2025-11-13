@@ -6,12 +6,12 @@ To achieve this goal, the following specific objectives are proposed:
 
 \begin{enumerate}
 
-\item Design and construct a \gls{phantom} capable of simulating realistic conditions 
+\item Design a \gls{phantom} capable of simulating realistic conditions 
 for the transmission of \acrshort{eeg} signals \nota{(we should add something like \textbf{and other standard test signals} ???)}, 
 through an internal generation system that maintains stable operation for at least 
 \nota{X (to be defined) days/hours}.
 
-\item Develop a desktop application for operational integration with the hardware system, 
+\item Develop a desktop application for operational integration with the \nota{designed/proposed} hardware system, 
 intended for the comprehensive management of simulated \acrshort{eeg} signals within the \gls{phantom}.  
 The platform should serve as a unified working environment, offering key functionalities such as:
 
@@ -20,10 +20,7 @@ The platform should serve as a unified working environment, offering key functio
     \nota{this “waveform” aspect could mean either uploading a file with a predefined structure (ex: csv with some predefined column names) to reproduce that waveform, 
     and/or allowing the user to select within the application options such as “generate sinusoidal wave with frequency $f$ and amplitude $A$.” 
     We will later refine what is actually permitted and phrase this section accordingly.}
-    \nota{Approx.\ –250 to 250~mV are the expected target values, covering both EEG amplitudes and some useful synthetic test cases with sinusoids or other test functions.}
-
-    % \item Dynamic calibration of the generation system as a function of the current \nota{(actual???? vs ideal)} 
-    % state of the \gls{phantom}.
+    \nota{Approx.\ –50 to 50~mV are the expected target values, covering both EEG amplitudes and some useful synthetic test cases with sinusoids or other test functions.}
 
     \item Real-time visualization of the acquired signals (with minimal latency and \textit{jitter}), 
     including graphical tools for monitoring and validation.  
@@ -42,12 +39,6 @@ This integration with open hardware aims to guarantee system interoperability, f
 in other research contexts, and promote adoption, adaptation, and improvement by third parties 
 within an open development framework.  
 \nota{I added some explanatory text here — please check if it feels too “fluffy”; we can simplify it if you prefer a more concise version.}
-
-\item Calibrate the signal-generation subsystem of the \gls{phantom} 
-to reproduce, with the highest possible fidelity \nota{what exactly do we mean by “highest possible fidelity”? define acceptable error!!!}, 
-the desired signals at the electrode positions defined by the international 10–20 system.  
-This calibration will establish a standardized reference for validating device performance, 
-ensuring reproducibility, comparability, and traceability across experimental and clinical contexts.
 
 \end{enumerate}
 
