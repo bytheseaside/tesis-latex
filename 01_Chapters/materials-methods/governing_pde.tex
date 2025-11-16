@@ -4,25 +4,42 @@
 We consider an EEG phantom composed of two contiguous regions—the inner gel volume and the 3D-printed head shell—together with the closed electrical circuit used for signal generation.
 
 \subsubsection{Conductivity}
-The gel is a conductive colloid (saline gelatin) with conductivity on the order of 
-$\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$ 
-\nota{[Open Access Article --- 
-A Cost-Effective 3D-Printed Conductive Phantom for EEG Sensing System Validation: Development, Performance Evaluation, and Comparison with State-of-the-Art Technologies]}, 
-comparable to physiological saline or brain tissue.
+The phantom contains two conductive regions with distinct electrical properties: the saline–gelatin interior and the carbon–doped PLA shell.
 
-The 3D-printed shell is made from an electrically conductive PLA \nota{add exact model/material and datasheet}, which is substantially more conductive (effective $\sigma_{\text{shell}}$ in the range 3--7~S/m, approximated as $\sim 5$~S/m for a layered print) \nota{Add explanation in subsection of the value... based on material datasheet and link the datasheet from fabricant}. 
-Notably, the printed shell exhibits anisotropic conductivity due to the layered fabrication process: measurements from \nota{citar aca el mismo paper que antes} report resistivities of $14.4~\Omega\cdot\text{cm}$ in the planar (X--Y) direction and $27.2~\Omega\cdot\text{cm}$ in the print (Z) direction \nota{check data sheet, has fabricant measurments, and i think they were coincident}, corresponding to conductivities of approximately 6.9~S/m and 3.7~S/m, respectively. 
-For modeling simplicity we assume an effective isotropic value $\sigma_{\text{shell}} \approx 5$~S/m as a reasonable average, while acknowledging the underlying anisotropy. 
-\nota{The simulation accepts this value as a param so we can make a range of simulations for any coherent value in the range mentioned.}
+\paragraph{Gel medium}
+The solidified saline–gelatin mixture behaves as a linear, Ohmic conductor with
+conductivity in the range $\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$~\cite{akor-2025}, comparable to
+physiological saline and to values reported in electrophysiology phantom literature.
 
-Both regions are treated as linear, homogeneous, and isotropic conductors.
-\nota{ 
-add some justif for the shel beeing treated as such. - some relevant sources
-Electrical anisotropy and its mitigation in conductive polymers printed by vat photopolymerization - \url{https://www.sciencedirect.com/science/article/pii/S2214860424002677} and \url{https://www.mdpi.com/1424-8220/25/16/4974} talk about anisotropy, processing params, and how they affect, etc. Base case: we leave the processing and possible post-procesing up to the person that prints it, say that the anisotropy can be "limited" with some techniques, here are some [c1], [c2] and mayeb add that we use 5 S/m in the known range because bla bla bla ...
-}
+\paragraph{3D–printed shell}
+The outer shell is fabricated from a commercially available carbon–doped PLA
+filament~\cite{cpla}. The manufacturer's datasheet \cite{cpla-datasheet} reports volume resistivities
+between $14.4$ and $33.6~\Omega\cdot\text{cm}$ for printed test bars, depending on the
+measurement orientation and print parameters. Converting resistivity to conductivity via
+$\sigma = 1/\rho$ and using $1~\Omega\cdot\text{cm}=10^{-2}~\Omega\cdot\text{m}$ yields
+conductivities in the approximate range
+\[
+\sigma_{\text{print}} \approx 3.0{-}6.9~\text{S/m}.
+\]
 
-Inside the gel, a set of embedded electrode patches (labeled $v_1,\dots,v_9$) serve as voltage-driven sources: they are held at prescribed potentials $u = V_i(t)$ 
-(Dirichlet boundary conditions on electrode surfaces), each modelled as a cylinder with the dimensions of a Jack 3.5  audio connector (model SP-35501-OM: \nota{12 mm height, 3.5 mm diameter} \nota{\url{https://www.digikey.fr/fr/products/detail/same-sky-formerly-cui-devices/SP-35501-OM/12822335}}). 
+% Because these values reflect orthotropic measurements (planar vs.\ through–layer
+% directions), the printed material is known to be electrically anisotropic: planar traces typically show higher conductivity than the layer–normal direction. This behaviour is well documented in conductive–polymer additive manufacturing , and several studies show that processing parameters, post–processing, and curing conditions can either exacerbate or mitigate these effects~\cite{tilve-martinez-2024,akor-2025}.
+
+Because these values reflect orthotropic measurements (planar vs.\ through–layer directions), the printed material is known to be electrically anisotropic: planar traces typically exhibit higher conductivity than the layer–normal direction. This behaviour is well documented in conductive–polymer additive manufacturing~\cite{akor-2025,tilve-martinez-2024,nowka-2024} studies and by the conductive PLA fabricant~\cite{cpla-datasheet}. Recent work demonstrates that this anisotropy is not an intrinsic limitation but can be substantially mitigated through fabrication choices. Studies like ~\cite{tilve-martinez-2024,tilve-martinez-2023} show that, by tuning curing delays and resin temperature, conductivity anisotropy can be reduced by almost two orders of magnitude, enabling the fabrication of uniform 3D materials despite the layered nature of the printing process. Similar effects are reported for extrusion-based printing: \cite{paz-2020} demonstrates that manufacturing parameters—such as layer thickness, extrusion width, screw speed, and extrusion temperature—play a key role in shaping the electrical properties of the final printed part. In \cite{nowka-2024}, the path planning:  fill pattern and in-fill angle for the material deposition are the determinant factors. \nota{chequar redaction de este parrafo}
+
+Collectively, these studies show that anisotropy in conductive polymers can be adjusted, sometimes dramatically, through processing, post-processing, curing strategies, and print-parameter selection. In practice, users fabricating the phantom may tune their printing conditions according to these guidelines to limit anisotropy as far as their equipment and workflow allow.
+
+\subparagraph{Choice of $\sigma_{\text{shell}} = 5~\text{S/m}$.}
+For the simulations, a concrete scalar value must be assigned to the shell conductivity. The datasheet values for printed test bars span approximately
+$3.0$ to $6.9~\text{S/m}$, corresponding to the least and most conductive measurement directions. In this context, choosing the intermediate value
+$\sigma_{\text{shell}} \approx 5~\text{S/m}$ serves as a balanced representative of a reasonably optimized print where the anistropy is already reduced, avoiding bias toward either the most conductive in–plane direction or the least conductive through–layer direction.
+
+At the same time, the framework does not fix this value: $\sigma_{\text{shell}}$ is exposed
+as a user–defined parameter. Users who characterise their own printed material (or adopt specific print/curing strategies to further reduce anisotropy) can directly substitute their measured or preferred value, or perform parameter sweeps over the range $3{-}7~\text{S/m}$ to assess the sensitivity of their particular setup.
+
+\nota{@Luly: usamos 5 como valor inicial y para todos los demas calculos, pero todo lo demas deberia luego estar automatizado enough asi que si nos da el tiempo podemos poner algunos resultados/graficos/apendices sobre el cambio que representa esto... solo deberia ser un escalado del sistema... es casi 100\% resistivo asi que solo deberia ser una seccion diciendo que hay constante multiplicando en algun lado con 3 fotos tipo sigma =3 sigma =4 sigma = 6 etc ... y que uno esta un poco mas "fuerte/debil" el color => o sea mas aumentado/atenuado... opiniones?}
+
+
 
 \subsubsection{Electrical insulation.} 
 There are no prescribed current sources within the volume; all currents arise solely in response to the applied voltages. 
@@ -37,23 +54,18 @@ This is expressed mathematically through homogeneous Neumann boundary conditions
 \[
     \sigma\,\frac{\partial u}{\partial n} = 0,
 \]
-on the external surface, implying that the normal current density $J_n = \sigma E_n$ vanishes. 
+on the external surface, implying that the normal current density $J_n = \sigma E_n$ vanishes~\cite{simscale-boundary-conditions}. 
 Physically, the phantom behaves as a closed volume conductor: currents injected inside must return inside, with no leakage into the air (which behaves as an excellent insulator at these field strengths).
 
 External EEG electrodes used for recording do not inject current; they simply sample the surface potential. 
-Real EEG amplifiers have input impedances on the order of $1$--$10~\text{M}\Omega$ or higher, so the current they draw is negligible 
-\nota{\url{https://www.biosemi.com/publications/pdf/Interference_reduction.pdf}}.
-% \nota{\url{https://www.biosemi.nl/forum/viewtopic.php?t=486#:~:text=EEG%20currents%20do%20not%20,not%20influence%20measured%20EEG%20voltages}}
+Real EEG amplifiers have input impedances on the order of $1$--$10~\text{M}\Omega$ or higher, so the current they draw is negligible~\cite{van-rijn-1990}  \nota{buscar mas sources para esto}
 
 Thus, from the phantom’s perspective, a recording electrode is electrically passive: it does not clamp or perturb the surface potential. 
 Accordingly, no Dirichlet or Neumann boundary condition is imposed at measurement locations; they are treated purely as observation points for $u$.
 
-
-% \textbf{{Ohmic and Frequency Response Behavior.}} We assume the conductive gel behaves Ohmically (purely resistive) over the relevant frequency range (DC to ~100 Hz). Empirical studies on tissue phantoms and biological tissues show that at low frequencies (Hz–kHz) the conductivity is essentially frequency-independent, with very small phase lag (capacitive effects) \url{https://www.mdpi.com/1424-8220/25/16/4974#:~:text=match%20at%20L722%20,characteristics%20of%20EEG%20sensing%20systems}. For example, a gelatin or saline phantom can maintain <2\% variation in conductivity from 0.1 Hz to 1 kHz, indicating minimal dispersion in the EEG band. This justifies treating $\sigma$ as a constant (piece-wise constant) and neglecting any dielectric loss or capacitive reactance --- a crucial assumption for deriving a quasi-static model. We will explicitly justify this approximation using Maxwell’s equations.
-
 \subsubsection{Ohmic and Frequency Response Behavior.}
 
-Over the frequency range of interest (DC to $\sim$100~Hz), the gel medium behaves as a linear, Ohmic conductor with negligible reactive (capacitive or inductive) effects. This is supported by experimental evidence from tissue-mimicking phantoms, which demonstrate frequency-independent conductivity across the EEG band \nota{\url{https://www.mdpi.com/1424-8220/25/16/4974}}. For example, gelatin or saline phantoms typically exhibit less than 2\% variation in $\sigma$ from 0.1 Hz to 1 kHz, and negligible phase shift, confirming that conduction current dominates.
+Over the frequency range of interest (DC to $\sim$100~Hz), the gel medium behaves as a linear, Ohmic conductor with negligible reactive (capacitive or inductive) effects. This is supported by experimental evidence from tissue-mimicking phantoms, which demonstrate frequency-independent conductivity across the EEG band~\cite{akor-2025}. For example, gelatin or saline phantoms typically exhibit less than 2\% variation in $\sigma$ from 0.1~Hz to 1~kHz, and negligible phase shift, confirming that conduction current dominates. \nota{tenemos mas sources para esto... buscarlas, estaban en el anteproyecto en algunos de los papers del state of the art..}~\cite{geddes-1967}
 
 In physical terms, the displacement current density $\partial \mathbf{D}/\partial t$ remains much smaller than the conduction current $\mathbf{J}$ in this regime. This is formally justified by examining the ratio:
 
@@ -63,30 +75,62 @@ In physical terms, the displacement current density $\partial \mathbf{D}/\partia
 
 as discussed in detail below. Consequently, dielectric storage and capacitive charging are negligible, and the medium can be considered purely resistive. This assumption is central to the quasi-static approximation, and is further justified in Section~\ref{subsection:maxwell} using Maxwell’s equations.
 
-The shell (carbon-doped PLA) is also modeled as Ohmic over the same range. While conductive polymers may exhibit weak frequency dispersion at higher frequencies, empirical phantom studies using Protopasta-type materials confirm phase delay remaining minimal  within EEG-relevant frequencies \nota{https://www.mdpi.com/1424-8220/25/16/4974}. Therefore, we treat both gel and shell as piecewise constant, frequency-independent conductors.
+% \subsubsection{Summary of Assumptions}
+% \nota{So, the assumptions made \textbf{up until now} are... and they are based in the system materials and previously explained bla bla bla
+% Explain here why we do the "deprecitating of the displacement current" section later. or move it before and add it here... whats the best option? double check
+% }
 
+% \begin{itemize}
+%     \item The phantom’s materials are linear, homogeneous conductors with
+%     isotropic (effective) conductivity $\sigma(\mathbf{x})$ (piecewise constant: $\sigma_{\text{gel}}$ vs. $\sigma_{\text{shell}}$).
+    
+%     \item No internal current sources or sinks in the volume (all driving currents come from electrode boundary conditions).
+
+%     \item No significant polarization or capacitive storage in the bulk (conductive current dominates over displacement current in the frequency range of interest).
+
+%     \item Boundary conditions: Dirichlet ($u=V_i(t)$) on internal electrode surfaces; Neumann ($\sigma,\partial_n u=0$) on the external shell surface; no enforced condition for high-impedance measurement electrodes (they effectively float).
+
+%     \item Interfaces between gel and shell are in perfect electrical contact (no contact impedance or gaps), so continuity conditions apply. \nota{this we didnt say before... do we keep it here? do i add a text saying those were the already said pnes and we introudce some new ones: etc etc }
+
+% \end{itemize}
+
+
+% With this system defined, we proceed to derive the governing partial differential equation (PDE) for the electric potential $u(\mathbf{x},t)$ in the domain $\Omega = \Omega_{\text{gel}} \cup \Omega_{\text{shell}}$.
 
 \subsubsection{Summary of Assumptions}
-\nota{So, the assumptions made \textbf{up until now} are... and they are based in the system materials and previously explained bla bla bla
-Explain here why we do the "deprecitating of the displacement current" section later. or move it before and add it here... whats the best option? double check
-}
+
+To recap, the modelling choices made so far rely on a set of assumptions that were previously introduced and justified in the preceding subsections. For clarity, they are listed here in compact form:
 
 \begin{itemize}
-    \item The phantom’s materials are linear, homogeneous conductors with
-    isotropic (effective) conductivity $\sigma(\mathbf{x})$ (piecewise constant: $\sigma_{\text{gel}}$ vs. $\sigma_{\text{shell}}$).
-    
-    \item No internal current sources or sinks in the volume (all driving currents come from electrode boundary conditions).
+    \item The phantom materials are treated as linear, homogeneous conductors with isotropic \emph{effective} conductivity $\sigma(\mathbf{x})$, piecewise constant in each region ($\sigma_{\text{gel}}$ and $\sigma_{\text{shell}}$).
 
-    \item No significant polarization or capacitive storage in the bulk (conductive current dominates over displacement current in the frequency range of interest).
+    \item No impressed current sources or sinks are present inside the volume: all currents originate from electrode boundary conditions.
 
-    \item Boundary conditions: Dirichlet ($u=V_i(t)$) on internal electrode surfaces; Neumann ($\sigma,\partial_n u=0$) on the external shell surface; no enforced condition for high-impedance measurement electrodes (they effectively float).
+    \item Displacement currents, capacitive storage, and polarization effects are negligible in the EEG frequency range, so conduction current dominates (quasi-static regime).
 
-    \item Interfaces between gel and shell are in perfect electrical contact (no contact impedance or gaps), so continuity conditions apply. \nota{this we didnt say before... do we keep it here? do i add a text saying those were the already said pnes and we introudce some new ones: etc etc }
-
+    \item Boundary conditions are defined as follows: Dirichlet ($u = V_i(t)$) on internal electrode surfaces, homogeneous Neumann ($\sigma\,\partial_n u = 0$) on the external shell surface,  
+    and no enforced condition on high-impedance measurement electrodes (which electrically “float”).
 \end{itemize}
 
+In addition to these assumptions—which follow directly from material properties, fabrication details, and the quasi-static approximation—the following modelling simplifications are introduced for completeness:
 
-With this system defined, we proceed to derive the governing partial differential equation (PDE) for the electric potential $u(\mathbf{x},t)$ in the domain $\Omega = \Omega_{\text{gel}} \cup \Omega_{\text{shell}}$.
+\begin{itemize}
+    \item \textbf{Interface continuity.}
+    The gel and shell are assumed to be in perfect electrical contact (no gaps or interfacial
+    impedance), so both the potential and the normal current density are continuous across
+    their boundary. This reflects the physical construction—where the liquid gelatin–saline
+    mixture is poured into the shell and solidifies against its inner surface—as well as the CAD
+    procedure used to generate the simulation geometry, in which a ``boundary fill'' operation
+    produces a watertight, conformal gel–shell interface.
+
+    \item \textbf{Unified domain.}  
+    The gel and shell are treated as parts of a single connected conductive domain $\Omega$, with only material parameters changing across regions. This allows the governing PDE to be written compactly over $\Omega = \Omega_{\text{gel}} \cup
+    \Omega_{\text{shell}}$.
+\end{itemize}
+
+With these assumptions established, the derivation of the governing equation for the
+electric potential $u(\mathbf{x},t)$ in the composite domain follows.
+
 
 \subsubsection{From Maxwell’s Equations to governing PDE}
 \label{subsection:maxwell}
@@ -123,14 +167,9 @@ where $\mathbf{H}$ is the magnetic field intensity (A/m), $\mathbf{J}$ is the co
 \]
 where $\mathbf{B}$ is the magnetic flux density (T).  
 
-We now invoke the quasi-static approximation appropriate for bioelectric systems like EEG
-\nota{
-\url{https://www.frontiersin.org/journals/computational-neuroscience/articles/10.3389/fncom.2010.00138/full},
-\url{https://www.researchgate.net/publication/394534573_Reference-Free_EEG_and_Electric_Fields_A_Multi-Scale_Parallax_View}
-}. This approximation is justified when both temporal and spatial variations of the fields are sufficiently slow, so that wave propagation effects can be neglected. In our case, the highest relevant frequency (100 Hz) corresponds to a wavelength larger than 300\space km for both materials (as shown in Appendix~\ref{appendix:wavelength}). Even accounting for the reduced propagation speed in biological media (due to high permittivity), the effective wavelength remains many orders of magnitude larger than the phantom’s size (around ~0.2~m, depending on the look-ed at direction). This places the system deep within the electroquasistatic regime, where the electromagnetic fields adjust effectively instantaneously across the volume.
+We now invoke the quasi-static approximation appropriate for bioelectric systems like EEG~\cite{troparevsky-2010, nunez-2025}. This approximation is justified when both temporal and spatial variations of the fields are sufficiently slow, so that wave propagation effects can be neglected. In this case, the highest relevant frequency (100 Hz) corresponds to a wavelength larger than 300\space km for both materials (as shown in Appendix~\ref{appendix:wavelength}). Even accounting for the reduced propagation speed in biological media (due to high permittivity), the effective wavelength remains many orders of magnitude larger than the phantom’s size (around ~0.2~m, depending on the looked at direction). This places the system deep within the electroquasistatic regime, where the electromagnetic fields adjust effectively instantaneously across the volume.
 
-Consequently, the spatial phase variation of the electric field is negligible, and potential changes propagate uniformly. Empirical EEG observations support this: “potentials show no measurable time delay between physically separated regions”
-\nota{\url{https://www.researchgate.net/publication/394534573_Reference-Free_EEG_and_Electric_Fields_A_Multi-Scale_Parallax_View}}. This allows us to neglect the wave nature of the field and adopt a quasi-static treatment in which the electric field is determined solely by local sources (none in this case) and boundary conditions.
+Consequently, the spatial phase variation of the electric field is negligible, and potential changes propagate uniformly. Empirical EEG observations support this: “potentials show no measurable time delay between physically separated regions” \cite{nunez-2025}. This allows us to neglect the wave nature of the field and adopt a quasi-static treatment in which the electric field is determined solely by local sources (none in this case) and boundary conditions.
 
 \paragraph{Neglecting the Displacement Current}
 In Ampère’s law, the total current includes both the conduction current density $\mathbf{J}$ and the displacement current density $\partial \mathbf{D}/\partial t$.  At low frequencies in conductive media, the displacement current is negligible compared to the conduction current. The criterion for this is:
@@ -141,12 +180,7 @@ In Ampère’s law, the total current includes both the conduction current densi
 
 where $\omega = 2\pi f$ is the angular frequency, $\varepsilon$ is the absolute permittivity of the medium, and $\sigma$ its conductivity.
 
-For biological-like media such as a gel phantom made from solidified gelatin with salt in water, this condition holds robustly. Even a small amount of salt raises conductivity to $\sigma \sim 0.3$ S/m, while water-based media at 100 Hz can have effective permittivities on the order of $10^6 \varepsilon_0$
-\nota{sources:}
-\url{https://scispace.com/pdf/the-dielectric-properties-of-biological-tissues-i-literature-2m4c4enqvy.pdf#:~:text=survey%20scispace,in%20three%20main%20steps} \url{https://www.sci.utah.edu/~wolters/LiteraturZurVorlesung/Literatur/B:_Basics_Modeling/A:_Quasi-Stationarity/B:_PlonseyHeppner_QuasiStat_BullMath_1967.pdf#:~:text=,8}
-
-
-This yields:
+For biological-like media such as a gel phantom made from solidified gelatin with salt in water, this condition holds robustly. Even a small amount of salt raises conductivity to $\sigma \sim 0.3$ S/m, while water-based media at 100 Hz can have effective permittivities on the order of $10^6 \varepsilon_0$~\cite{abraham-1996,plonsey-1967}. This yields:
 
 \[
 \omega\varepsilon \approx 2\pi \cdot 100 \cdot 10^6 \cdot \varepsilon_0 \approx 0.0056\ \text{S/m} 
@@ -158,10 +192,7 @@ Since $\sigma \gg \omega \varepsilon$, the displacement current can be ignored. 
 \nabla \times \mathbf{H} \approx \mathbf{J}
 \]
 
-This quasi-static form of Ampère’s law is standard in low-frequency biophysics and electrophysiology
-\url{https://archiwum.pe.org.pl/articles/2016/12/1.pdf#:~:text=%EF%82%B6%20%EF%82%B6%20%EF%83%91%EF%82%B4%20%EF%80%BD%20%EF%80%AD,that%20the%20displacement%20currents%20can}, and reflects that all relevant current arises from conduction. In this regime, tissues and phantoms “have no significant capacitance: they are either purely resistive or the
-frequency of activity is sufficiently low that the capacitance can be neglected”
-\url{https://sci-hub.arizonastockbroker.com/10.1016/b978-012372560-8/50028-0} \nota{use una cita directa - reformular desp}
+This quasi-static form of Ampère’s law is standard in low-frequency biophysics and electrophysiology~\cite{mognaschi-2016}, and reflects that all relevant current arises from conduction. In this regime, capacitive effects of the material are negligible: its electrical response is effectively resistive, and any residual capacitance is too small to produce any appreciable effect on the system~\cite{phillips-2007}.
 
 Moreover, the general form of the low-frequency approximation is:
 
@@ -169,7 +200,7 @@ Moreover, the general form of the low-frequency approximation is:
 \nabla \times \mathbf{H} = \mathbf{J}_0 + \sigma \mathbf{E}
 \]
 
-where $\mathbf{J}_0$ is any impressed (source) current and $\sigma \mathbf{E}$ is the conduction current density \url{https://archiwum.pe.org.pl/articles/2016/12/1.pdf#:~:text=%EF%82%B6%20%EF%82%B6%20%EF%83%91%EF%82%B4%20%EF%80%BD%20%EF%80%AD,that%20the%20displacement%20currents%20can}. In our case, $\mathbf{J}_0 = 0$ in passive regions, so the equation simplifies to:
+where $\mathbf{J}_0$ is any impressed (source) current and $\sigma \mathbf{E}$ is the conduction current density~\cite{mognaschi-2016}. In our case, $\mathbf{J}_0 = 0$ in passive regions, so the equation simplifies to:
 
 \[
 \nabla \times \mathbf{H} = \sigma \mathbf{E}
@@ -188,10 +219,7 @@ E= ~- \nabla u(\mathbf{x},t).
 \]
 
 
-Iin EEG contexts, the zero-curl condition holds to very high accuracy, enabling the use of an electrostatic potential
-\nota{\url{https://www.researchgate.net/publication/394534573_Reference-Free_EEG_and_Electric_Fields_A_Multi-Scale_Parallax_View#:}}
-\url{https://www.frontiersin.org/journals/computational-neuroscience/articles/10.3389/fncom.2010.00138/full}
-
+Iin EEG contexts, the zero-curl condition holds to very high accuracy, enabling the use of an electrostatic potential~\cite{nunez-2025,troparevsky-2010}
 
 At this point, we have reduced Maxwell’s laws to a simplified electroquasistatic form applicable to the phantom:
 \begin{itemize}
@@ -228,39 +256,9 @@ We now enforce charge conservation in differential form. Maxwell’s equations i
 \nota{This expresses that current is solenoidal – what flows into any small volume must also flow out (no sinks or sources of current density except at the electrodes where we drive the current via boundary conditions).}
 
 
-\paragraph{Final PDE - change name later}
+\paragraph{Final equation}
 Substituting Eq. \eqref{eq:JgradU} into Eq. \eqref{eq:continuity} yields the governing equation used for the simulations.
 \[
 -\nabla \cdot \!\big(\sigma(\mathbf{x})\, \nabla u(\mathbf{x},t)\big) \;=\; 0, \qquad \text{for all } \mathbf{x}\in \Omega_{\text{gel}}\cup\Omega_{\text{shell}}. 
 \tag{PDE}
 \]
-
-
-\nota{SOURCES PARA CITAR despues}
-
-
-Hämäläinen, M. et al. (1993). “Magnetoencephalography – Theory, instrumentation, and applications.” Rev. Mod. Phys. 65: 413–497. (Derivation of EEG/MEG forward model under quasi-static assumptions)
-frontiersin.org
-frontiersin.org
-.
-
-Geddes, L.A. & L.E. Baker (1967). “The specific resistance of biological materials.” Med. & Biol. Eng., 5: 271–293. (Classic data on tissue conductivities; shows near-ohmic behavior in low kHz range)
-sci.utah.edu
-.
-
-Gabriel, S., Lau, R., & C. Gabriel (1996). “The dielectric properties of biological tissues: II. Measurements in the frequency range 10 Hz–20 GHz.” Phys. Med. Biol. 41: 2251–2269. (Comprehensive tissue $\sigma$ and $\varepsilon$ data confirming $\sigma \gg \omega\varepsilon$ at <kHz frequencies)
-scispace.com
-.
-
-Owda, A.Y. & A. Casson (2019). “Investigating gelatine-based head phantoms for electrophysiology.” (Reports on gel phantom conductivity ~0.3 S/m, stability over frequency, etc.)
-mdpi.com
-mdpi.com
-.
-
-
-Nunez, P.L. & R. Srinivasan (2006). Electric Fields of the Brain: The Neurophysics of EEG. 2nd ed. (Discusses volume conduction theory and necessity of quasi-static approximation for defining EEG potentials)
-researchgate.net
-researchgate.net
-.
-
-}
