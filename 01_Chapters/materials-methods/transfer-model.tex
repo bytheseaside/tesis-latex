@@ -1,6 +1,8 @@
 %-----------------------------------------------------------
-% Phantom-Head Transfer Model & Column-Selection Plan
+% Phantom-Head Transfer Model
 %-----------------------------------------------------------
+
+\nota{hasta ahora, hablamos de como lo simulamos, desde el punto de vista fisico usando maxwell y propiedades del sistema para obtener lo que se deberia obtener en la realidad, usando FEM asi que es una aproximacion al numero real pero bueno....  ahora lo que sigue usar esas simulaciones, tomandolas como valor real (ponele), y armar un modelo matematico (solo tiene en cuenta lo que dio el simulador), que permita relacionar valores obtenidos en el "cuero cabelludo" con valores enviados a las antenas internas - basicamente armar $V_{cc} = A * V_{antena}$ , sistema matricial, para despues crear una pseudoinversa (solo algunas de las columnas de A pasan a la pseudoinversa... no todas, hay que usar algun criterio para ver cuales son las "mejores") y dado cualquier $V_{cc}$ que se quiera obtener, saber cual es el $V_{antena}$ a enviar al fantoma... }
 
 This section defines the math for the phantom-head system, and proposes several column-selection algorithms to reduce the number of usable dipoles \textbf{without} breaking the physical constraints (forbidden triads).  
 It is written so that the same base matrices can be kept in the repository ($F$, $B$, optional $W$), and each selection algorithm returns a diagonal \emph{selection/mask} matrix $S$ ($36\times 36$) to turn dipoles on/off.

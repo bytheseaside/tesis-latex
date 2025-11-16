@@ -1,7 +1,85 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
+\appendix
+\section{Wavelength Calculation at 100 Hz}
+\label{appendix:wavelength}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+To estimate the electromagnetic wavelength $\lambda$ at 100 Hz, we start with the general wave relation:
+
+\[
+\lambda = \frac{v}{f}
+\]
+
+In a medium, the wave speed is reduced due to the material's permittivity \( \varepsilon \) and permeability \( \mu \). This gives:
+
+\nota{source Griffiths,Introduction to Electrodynamics, Sec. 9.2.2 \url{https://nucleares.unam.mx/~martinel/griffiths_4ed.pdf} } 
+
+\[
+v = \frac{c}{\sqrt{\varepsilon_r \mu_r}}
+\quad \Rightarrow \quad
+\lambda = \frac{c}{f \sqrt{\varepsilon_r \mu_r}}
+\]
+
+Where:
+\begin{itemize}
+  \item $c = 3 \times 10^8$ m/s is the speed of light in vacuum
+  \item $f$ is frequency in Hz
+  \item $\varepsilon_r$ is the relative permittivity
+  \item $\mu_r$ is the relative permeability (typically $\mu_r \approx 1$ in non-magnetic media)
+\end{itemize}
+
+\subsection{Wavelength in Gelatin–Salt–Water Phantom}
+
+We note that the permittivity of saltwater is lower than that of pure water, as dissolved ions disrupt the orientational polarization of water molecules.\nota{\url{https://doi.org/10.1063/1.1746645} and  \url{https://arxiv.org/pdf/1208.5169}}
+
+Using the wavelength relation:
+
+\[
+\lambda = \frac{c}{f \sqrt{\varepsilon_r \mu_r}}
+\]
+
+it follows that if $\varepsilon_{\text{saltwater}} < \varepsilon_{\text{water}}$, then:
+
+\[
+\sqrt{\varepsilon_{\text{saltwater}}} < \sqrt{\varepsilon_{\text{water}}} \quad \Rightarrow \quad \lambda_{\text{saltwater}} > \lambda_{\text{water}}
+\]
+
+In other words, the wavelength in saltwater will be longer than that in pure water, all else equal.
+
+To provide a conservative estimate, we compute the wavelength in pure water using:
+
+\begin{itemize}
+  \item $f = 100$ Hz
+  \item $\varepsilon_r \approx 78.5$ at 25°C \nota{\url{https://nvlpubs.nist.gov/nistpubs/jres/56/jresv56n1p1_a1b.pdf} - Dielectric Constant of Water from 0 0 to 1000 C
+C. G. Malmberg and A. A. Maryott}
+  \item $\mu_r \approx 1$
+\end{itemize}
+
+\[
+\lambda_{\text{water}} \approx \frac{3 \times 10^8}{100 \cdot \sqrt{78.5}}~\text{m}
+= 338 599~\text{m} = 338.6~\text{km}
+\]
+
+Thus, the wavelength in the gelatin–salt–water phantom is expected to be at least 338.6 km, and likely longer — reinforcing the validity of the quasi-static approximation for the frequencies and scales of interest.
+
+\vspace{0.5em}
+\subsection{Wavelength in Protopasta C-Doped PLA}
+
+For Protopasta conductive PLA, a carbon-doped 3D printing filament:
+\begin{itemize}
+  \item $f = 100$ Hz
+  \item $\varepsilon_r \sim 10$ \url{https://doi.org/10.1016/j.compositesb.2016.04.030}
+  \item $\mu_r \approx 1$ (we take the approximation for non-magnetic materials).
+\end{itemize}
+
+\[
+\lambda_{\text{PLA}} = \frac{3 \times 10^8}{100 \cdot \sqrt{10}} ~\text{m} \approx 948683 ~\text{m} = 948.6~\text{km}
+\]
+
+\vspace{0.5em}
+\noindent
+In both materials, the resulting wavelengths are several orders of magnitude larger than the physical system size. This justifies the quasi-static approximation used in Section~\ref{subsec:pde} for all EEG-relevant frequencies.
+
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
