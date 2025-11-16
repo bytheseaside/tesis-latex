@@ -10,9 +10,7 @@ To estimate the electromagnetic wavelength $\lambda$ at 100 Hz, we start with th
 \lambda = \frac{v}{f}
 \]
 
-In a medium, the wave speed is reduced due to the material's permittivity \( \varepsilon \) and permeability \( \mu \). This gives:
-
-\nota{source Griffiths,Introduction to Electrodynamics, Sec. 9.2.2 \url{https://nucleares.unam.mx/~martinel/griffiths_4ed.pdf} } 
+In a medium, the wave speed is reduced due to the material's permittivity \( \varepsilon \) and permeability \( \mu \)~\cite{griffiths-2013}. This gives:
 
 \[
 v = \frac{c}{\sqrt{\varepsilon_r \mu_r}}
@@ -25,12 +23,12 @@ Where:
   \item $c = 3 \times 10^8$ m/s is the speed of light in vacuum
   \item $f$ is frequency in Hz
   \item $\varepsilon_r$ is the relative permittivity
-  \item $\mu_r$ is the relative permeability (typically $\mu_r \approx 1$ in non-magnetic media)
+  
 \end{itemize}
 
 \subsection{Wavelength in Gelatin–Salt–Water Phantom}
 
-We note that the permittivity of saltwater is lower than that of pure water, as dissolved ions disrupt the orientational polarization of water molecules.\nota{\url{https://doi.org/10.1063/1.1746645} and  \url{https://arxiv.org/pdf/1208.5169}}
+We note that the permittivity of saltwater is lower than that of pure water, as dissolved ions disrupt the orientational polarization of water molecules~\cite{hasted-1948,gavish-2016}.
 
 Using the wavelength relation:
 
@@ -50,9 +48,8 @@ To provide a conservative estimate, we compute the wavelength in pure water usin
 
 \begin{itemize}
   \item $f = 100$ Hz
-  \item $\varepsilon_r \approx 78.5$ at 25°C \nota{\url{https://nvlpubs.nist.gov/nistpubs/jres/56/jresv56n1p1_a1b.pdf} - Dielectric Constant of Water from 0 0 to 1000 C
-C. G. Malmberg and A. A. Maryott}
-  \item $\mu_r \approx 1$
+  \item $\varepsilon_r \approx 78.5$ at 25°C~\cite{malmberg-1956}
+  \item $\mu_r \approx 1$~\cite{america-no-date}
 \end{itemize}
 
 \[
@@ -60,7 +57,7 @@ C. G. Malmberg and A. A. Maryott}
 = 338 599~\text{m} = 338.6~\text{km}
 \]
 
-Thus, the wavelength in the gelatin–salt–water phantom is expected to be at least 338.6 km, and likely longer — reinforcing the validity of the quasi-static approximation for the frequencies and scales of interest.
+Thus, the wavelength in the gelatin–salt–water phantom is expected to be at least 338.6~km, and likely longer — reinforcing the validity of the quasi-static approximation for the frequencies and scales of interest.
 
 \vspace{0.5em}
 \subsection{Wavelength in Protopasta C-Doped PLA}
@@ -68,12 +65,14 @@ Thus, the wavelength in the gelatin–salt–water phantom is expected to be at 
 For Protopasta conductive PLA, a carbon-doped 3D printing filament:
 \begin{itemize}
   \item $f = 100$ Hz
-  \item $\varepsilon_r \sim 10$ \url{https://doi.org/10.1016/j.compositesb.2016.04.030}
-  \item $\mu_r \approx 1$ (we take the approximation for non-magnetic materials).
+  % \item $\varepsilon_r \sim 10$
+    \item $\varepsilon_r \approx 2000$~\cite{marquez-segura-2021,spinelli-2020} --- the manufacturer provides no permittivity data, and no direct measurements for \cite{cpla} exist in the literature. GHz-range studies of other conductive PLA materials report real permittivity values of $\varepsilon_r \approx 8$–$10$~\cite{marquez-segura-2021}, while low-frequency (100~Hz) measurements of carbon–PLA composites with comparable but slightly lower carbon loading reach $\varepsilon_r \approx 5.5\times 10^2$~\cite{spinelli-2020}. A simple power-law extrapolation of the curve discussed in~\cite{spinelli-2020}, evaluated at the maximum filler content specified by the manufacturer, yields $\varepsilon_r \approx 1.8\times 10^3$. Given the absence of measurements for this exact material–frequency combination, we adopt the rounded value $\varepsilon_r \approx 2000$ as a physically reasonable upper bound, incorporating additional safety margin.
+
+  \item $\mu_r \approx 1$~\cite{america-no-date}
 \end{itemize}
 
 \[
-\lambda_{\text{PLA}} = \frac{3 \times 10^8}{100 \cdot \sqrt{10}} ~\text{m} \approx 948683 ~\text{m} = 948.6~\text{km}
+\lambda_{\text{PLA}} = \frac{3 \times 10^8}{100 \cdot \sqrt{2000}} ~\text{m} \approx 67 082~\text{m} = 67~\text{km}
 \]
 
 \vspace{0.5em}

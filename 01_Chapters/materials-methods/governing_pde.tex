@@ -4,7 +4,7 @@
 We consider an EEG phantom composed of two contiguous regions—the inner gel volume and the 3D-printed head shell—together with the closed electrical circuit used for signal generation.
 
 \subsubsection{Conductivity}
-The phantom contains two conductive regions with distinct electrical properties: the saline–gelatin interior and the carbon–doped PLA shell.
+The phantom contains two conductive regions with distinct electrical properties: the saline–gelatin interior and the conductive PLA shell.
 
 \paragraph{Gel medium}
 The solidified saline–gelatin mixture behaves as a linear, Ohmic conductor with
@@ -12,11 +12,7 @@ conductivity in the range $\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$~\ci
 physiological saline and to values reported in electrophysiology phantom literature.
 
 \paragraph{3D–printed shell}
-The outer shell is fabricated from a commercially available carbon–doped PLA
-filament~\cite{cpla}. The manufacturer's datasheet \cite{cpla-datasheet} reports volume resistivities
-between $14.4$ and $33.6~\Omega\cdot\text{cm}$ for printed test bars, depending on the
-measurement orientation and print parameters. Converting resistivity to conductivity via
-$\sigma = 1/\rho$ and using $1~\Omega\cdot\text{cm}=10^{-2}~\Omega\cdot\text{m}$ yields
+The outer shell is considered to be made of a commercially available conductive PLA filament~\cite{cpla}. The manufacturer's datasheet \cite{cpla-datasheet} reports volume resistivities between $14.4$ and $33.6~\Omega\cdot\text{cm}$ for printed test bars, depending on the measurement orientation and print parameters. Converting resistivity to conductivity via $\sigma = 1/\rho$ and using $1~\Omega\cdot\text{cm}=10^{-2}~\Omega\cdot\text{m}$ yields
 conductivities in the approximate range
 \[
 \sigma_{\text{print}} \approx 3.0{-}6.9~\text{S/m}.
@@ -25,7 +21,8 @@ conductivities in the approximate range
 % Because these values reflect orthotropic measurements (planar vs.\ through–layer
 % directions), the printed material is known to be electrically anisotropic: planar traces typically show higher conductivity than the layer–normal direction. This behaviour is well documented in conductive–polymer additive manufacturing , and several studies show that processing parameters, post–processing, and curing conditions can either exacerbate or mitigate these effects~\cite{tilve-martinez-2024,akor-2025}.
 
-Because these values reflect orthotropic measurements (planar vs.\ through–layer directions), the printed material is known to be electrically anisotropic: planar traces typically exhibit higher conductivity than the layer–normal direction. This behaviour is well documented in conductive–polymer additive manufacturing~\cite{akor-2025,tilve-martinez-2024,nowka-2024} studies and by the conductive PLA fabricant~\cite{cpla-datasheet}. Recent work demonstrates that this anisotropy is not an intrinsic limitation but can be substantially mitigated through fabrication choices. Studies like ~\cite{tilve-martinez-2024,tilve-martinez-2023} show that, by tuning curing delays and resin temperature, conductivity anisotropy can be reduced by almost two orders of magnitude, enabling the fabrication of uniform 3D materials despite the layered nature of the printing process. Similar effects are reported for extrusion-based printing: \cite{paz-2020} demonstrates that manufacturing parameters—such as layer thickness, extrusion width, screw speed, and extrusion temperature—play a key role in shaping the electrical properties of the final printed part. In \cite{nowka-2024}, the path planning:  fill pattern and in-fill angle for the material deposition are the determinant factors. \nota{chequar redaction de este parrafo}
+Because these values reflect orthotropic measurements (planar vs.\ through-layer directions), the printed material is known to be electrically anisotropic: planar traces typically exhibit higher conductivity than the layer-normal direction. This behaviour is well documented in conductive-polymer additive manufacturing~\cite{akor-2025,tilve-martinez-2024,nowka-2024} and by the conductive PLA fabricant~\cite{cpla-datasheet}. Importantly, recent work shows that this anisotropy is not an intrinsic limitation; it can be significantly reduced through appropriate fabrication choices. For example, \cite{tilve-martinez-2024,tilve-martinez-2023} report that adjusting curing delays and resin temperature can diminish conductivity anisotropy by nearly two orders of magnitude, enabling the fabrication of electrically uniform 3D structures despite the layer-by-layer process. Comparable effects are observed in extrusion-based printing: \cite{paz-2020} shows that manufacturing parameters—such as layer thickness, extrusion width, screw speed, and extrusion temperature—strongly influence the electrical properties of the printed part. Likewise, \cite{nowka-2024} identifies path-planning variables, particularly infill pattern and infill angle, as key determinants of the resulting conductivity.
+
 
 Collectively, these studies show that anisotropy in conductive polymers can be adjusted, sometimes dramatically, through processing, post-processing, curing strategies, and print-parameter selection. In practice, users fabricating the phantom may tune their printing conditions according to these guidelines to limit anisotropy as far as their equipment and workflow allow.
 
@@ -34,8 +31,7 @@ For the simulations, a concrete scalar value must be assigned to the shell condu
 $3.0$ to $6.9~\text{S/m}$, corresponding to the least and most conductive measurement directions. In this context, choosing the intermediate value
 $\sigma_{\text{shell}} \approx 5~\text{S/m}$ serves as a balanced representative of a reasonably optimized print where the anistropy is already reduced, avoiding bias toward either the most conductive in–plane direction or the least conductive through–layer direction.
 
-At the same time, the framework does not fix this value: $\sigma_{\text{shell}}$ is exposed
-as a user–defined parameter. Users who characterise their own printed material (or adopt specific print/curing strategies to further reduce anisotropy) can directly substitute their measured or preferred value, or perform parameter sweeps over the range $3{-}7~\text{S/m}$ to assess the sensitivity of their particular setup.
+At the same time, the framework does not fix this value: $\sigma_{\text{shell}}$ is exposed as a user–defined parameter. Users who characterise their own printed material (or adopt specific print/curing strategies to further reduce anisotropy) can directly substitute their measured or preferred value, or perform parameter sweeps over the range $3{-}7~\text{S/m}$ to assess the sensitivity of their particular setup.
 
 \nota{@Luly: usamos 5 como valor inicial y para todos los demas calculos, pero todo lo demas deberia luego estar automatizado enough asi que si nos da el tiempo podemos poner algunos resultados/graficos/apendices sobre el cambio que representa esto... solo deberia ser un escalado del sistema... es casi 100\% resistivo asi que solo deberia ser una seccion diciendo que hay constante multiplicando en algun lado con 3 fotos tipo sigma =3 sigma =4 sigma = 6 etc ... y que uno esta un poco mas "fuerte/debil" el color => o sea mas aumentado/atenuado... opiniones?}
 
@@ -167,7 +163,10 @@ where $\mathbf{H}$ is the magnetic field intensity (A/m), $\mathbf{J}$ is the co
 \]
 where $\mathbf{B}$ is the magnetic flux density (T).  
 
-We now invoke the quasi-static approximation appropriate for bioelectric systems like EEG~\cite{troparevsky-2010, nunez-2025}. This approximation is justified when both temporal and spatial variations of the fields are sufficiently slow, so that wave propagation effects can be neglected. In this case, the highest relevant frequency (100 Hz) corresponds to a wavelength larger than 300\space km for both materials (as shown in Appendix~\ref{appendix:wavelength}). Even accounting for the reduced propagation speed in biological media (due to high permittivity), the effective wavelength remains many orders of magnitude larger than the phantom’s size (around ~0.2~m, depending on the looked at direction). This places the system deep within the electroquasistatic regime, where the electromagnetic fields adjust effectively instantaneously across the volume.
+We now invoke the quasi-static approximation appropriate for bioelectric systems like EEG~\cite{troparevsky-2010, nunez-2025}. This approximation is justified when both temporal and spatial variations of the fields are sufficiently slow, so that wave propagation effects can be neglected. In this case, the highest relevant frequency (100 Hz) corresponds to a wavelength larger than 300\space km for both materials (as shown in Appendix~\ref{appendix:wavelength}). The effective wavelength remains many orders of magnitude larger than the phantom’s size (around 0.3~m). 
+% maybe we leave this commented, but this is the explanation for lambda ...
+% The wavelength $\lambda$ computed in Appendix~A quantifies the distance over which an electromagnetic wave completes one full oscillation at the highest frequency of interest (here, 100~Hz). In wave–propagating regimes, field quantities can vary significantly over distances comparable to $\lambda$. Conversely, when $\lambda$ is much larger than the physical dimensions of the system, spatial variations become negligible and the fields behave in an effectively instantaneous, diffusion–like manner rather than as travelling waves. Appendix~A shows that, even under conservative assumptions for the materials’ permittivity, the resulting wavelengths (tens to hundreds of kilometres) exceed the phantom's characteristic size ($\sim 0.3$~m) by more than five orders of magnitude. This disparity confirms that wave propagation effects cannot develop within the phantom, thereby validating the electroquasistatic treatment adopted in this section.
+This places the system deep within the electroquasistatic regime, where the electromagnetic fields adjust effectively instantaneously across the volume.
 
 Consequently, the spatial phase variation of the electric field is negligible, and potential changes propagate uniformly. Empirical EEG observations support this: “potentials show no measurable time delay between physically separated regions” \cite{nunez-2025}. This allows us to neglect the wave nature of the field and adopt a quasi-static treatment in which the electric field is determined solely by local sources (none in this case) and boundary conditions.
 
