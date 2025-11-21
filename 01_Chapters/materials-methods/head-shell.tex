@@ -2,44 +2,29 @@
 % Head Shell
 % \label{subsec:head_shell}
 %-----------------------------------------------------------
-
-The outer shell constitutes the main structural boundary of the phantom. 
-It reproduces realistic cranial curvature while maintaining manufacturability for 3D printing. 
-A nominal wall thickness of 3.2~mm was applied in the measuring region, which corresponds to the area encompassing the 21 electrode positions defined by \cite{klem-1999}. 
-Outside this region, the geometry was locally thickened, modified or simplified as needed to meet other needs such as facilitating assembly of the printed phantom or getting rid of complex internal shapes for simulation later. 
-Consequently, the shell is not uniformly thick across its surface, but its 
-functional behavior within the measuring area remains consistent and well controlled.
-
-The head was divided into two parts along a \textit{superior–inferior} direction, 
-resulting in an upper and a lower half rather than a mid-sagittal or planar cut. 
-The separation interface was carefully positioned to remain outside the measuring region, 
-thereby preventing any discontinuity or mechanical seam from affecting the probe area. 
-Its geometry was shaped to ensure proper mating and alignment between both halves, 
-while providing sufficient clearance to minimize potential border effects 
-and to facilitate assembly and internal access.
-
 \begin{figure}[h!]
   \centering
-
   % Subfigure (a)
-  \begin{subfigure}[b]{0.47\textwidth}
+  \begin{subfigure}[b]{0.4\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../../02_Images/head_shell.png}
+    \includegraphics[width=\textwidth]{../../02_Images/printable_head.png}
+    \caption{Exterior view showing the two-part division.}
     \label{fig:head_shell_halves}
   \end{subfigure}
   \hfill
   % Subfigure (b)
-  \begin{subfigure}[b]{0.47\textwidth}
+  \begin{subfigure}[b]{0.4\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../../02_Images/shell_section.png}
+    \includegraphics[width=\textwidth]{../../02_Images/printable_head_section.png}
+    \caption{Internal section illustrating constant wall thickness in the measuring region.}
     \label{fig:head_shell_section}
   \end{subfigure}
-
-  % Single caption only
-  \caption{Phantom head shell design.
-  (a) Exterior view showing the two-part division.
-  (b) Internal section illustrating constant wall thickness in the measuring region.}
+  \caption{Phantom head shell design.}
   \label{fig:head_shell_overview}
 \end{figure}
 
-\nota{IMAGENES DEL CORTE DE LA CABEZA + MATING STRUCTURES PARA EL CERRADO}
+The outer shell (Figure~\ref{fig:head_shell_halves}) constitutes the main structural boundary of the phantom. It reproduces realistic cranial curvature while maintaining manufacturability for 3D printing. A nominal wall thickness of 3.2~mm was applied in the measuring region, corresponding to the area encompassing the 21 electrode positions defined by the ten–twenty EEG system~\cite{klem-1999}. Outside this region, the geometry was locally thickened, modified, or simplified as needed to meet assembly and manufacturability constraints.
+
+The head was divided into two parts along a \textit{superior–inferior} direction, resulting in an upper and a lower half. The separation interface was carefully positioned to remain outside the measuring region, thereby preventing any discontinuity or mechanical seam from affecting the probe area. To ensure proper alignment and structural integrity, the interface incorporates a male–female mating feature designed to guide and lock the two halves in place. Additionally, an extra sealing groove was included along the joint, allowing it to be filled with either a vulcanized gasket or a bead of liquid silicone to create a waterproof seal. Both the mating structures and the sealing channel are visible in Figure~\ref{fig:head_shell_section}.
+
+
