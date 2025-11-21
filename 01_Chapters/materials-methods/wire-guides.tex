@@ -2,72 +2,56 @@
 % Wire Guides
 % \label{subsec:wire_guides}
 %-----------------------------------------------------------
-
-%-----------------------------------------------------------
-% Wire Guides
-%-----------------------------------------------------------
 \begin{figure}[h!]
     \centering
 
+    % Row 1
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/wire_guide_assembly.png}
-        \caption{Complete wire-guide network showing the 9 guides in their selected positions within the head shell.}
+        \caption{View of the complete wire-guide network, showing the nine guides positioned in their designated seating within the lid.}
         \label{fig:wire_guides_assembly}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/numbered_wire_guide.png}
-        \caption{Detail of the antenna connector base with identification number.}
+        \caption{Detail of a connector base, highlighting the engraved numerical identifier used for unambiguous matching.}
         \label{fig:antenna_connector_detail}
     \end{subfigure}
 
-    \medskip
-    
+    % Row 2
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/wire_guide_bottom.png}
-        \caption{Connector base showing its non-symmetrical profile.}
+        \caption{Rendering of the connector base profile, illustrating the non-radial, unidirectional geometry that prevents rotational misalignment.}
         \label{fig:antenna_connector_bottom}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/cut_lid.png}
-        \caption{Lid–connector interface with filling channel.}
+        \caption{Section view of the inferior lid, showing the keyed and numbered openings corresponding to each connector base.}
         \label{fig:antenna_connector_lid}
     \end{subfigure}
 
-    \caption{Wire guides, connector geometries, and lid interface.}
+    \caption{Wire guides and lid interface.}
     \label{fig:wire_guides}
 \end{figure}
 
 
-A network of internal wire guides (Figure \ref{fig:wire_guides_assembly}) was designed to route and position the input electrodes within the head's internal volume. 
-Each guide follows a unique, non-overlapping path leading to a selected coordinate inside the cavity. 
-The endpoint coordinates were positioned to intentionally break possible spatial symmetries in electrical stimulation, 
-thereby enabling more representative and diverse field distributions during testing.
+A network of nine internal wire guides (Figure~\ref{fig:wire_guides_assembly}) was designed to route and position the input electrodes at specific, pre-selected coordinates within the phantom’s internal cavity. Each guide follows a unique, non-overlapping path, ensuring that the electrodes reach their intended locations while avoiding collisions or interference between channels.
 
-All guides maintain a uniform circular cross-section of 1~cm to accommodate a range of cable or electrode diameters. 
+To support each guide mechanically and to define a reproducible interface with the exterior of the phantom, every guide terminates in a dedicated connector base. During the design process, two practical assembly challenges emerged: (i) guaranteeing that each guide is inserted into the correct opening in the lid, and (ii) ensuring that each guide is inserted in the correct orientation, since rotational misalignment would shift the internal endpoint.
 
+These constraints informed the geometry of the connector base. As shown in Figure~\ref{fig:antenna_connector_bottom}, the base is deliberately \emph{not} radially symmetric, providing a unidirectional seating that physically prevents incorrect rotation. In addition, the bases were individually numbered (Figure~\ref{fig:antenna_connector_detail}) to allow unambiguous correspondence between each wire guide and its designated opening.
 
-Each wire guide terminates at its base in a specially designed antenna connector that interfaces with the lid. 
-The connector geometry features a \textbf{not radially symmetric} profile to prevent rotation and ensure unique,
-unambiguous positioning. 
-This asymmetric design guarantees that each connector fits into its corresponding opening in the lid 
-in only one specific orientation, eliminating assembly errors and ensuring consistent alignment 
-of the internal electrodes across experiments.
+The inferior lid complements this design by incorporating numbered, unidirectional openings that match the shape of each connector base (Figure~\ref{fig:antenna_connector_lid}). As a result, each wire guide can be inserted only into its assigned position and only in the correct orientation, creating a fully foolproof assembly system and ensuring consistent alignment of the internal electrode tips.
 
-The connectors are uniquely shaped and numbered at their base for unambiguous identification 
-during assembly. 
-This numbering system allows consistent correspondence with the experimental layout and the lid opening configuration
-
-The overall design of the wire-guide network enables:
+Together, the wire-guide network and its mechanical interface achieve:
 \begin{itemize}
-    \item straightforward insertion of flexible antenna wires,
-    \item precise alignment of electrode tips within the conductive medium,
-    \item foolproof assembly through rotationally-keyed connectors,
-    \item and reliable mechanical fixation during gel solidification.
+    \item reliable routing and spatial positioning of internal electrodes,
+    \item straightforward insertion of flexible wires,
+    \item error-proof assembly through keyed, rotationally constrained connectors,
+    \item and robust mechanical stability during gel filling and solidification.
 \end{itemize}
-
