@@ -3,15 +3,56 @@
 % \label{subsec:wire_guides}
 %-----------------------------------------------------------
 
-A network of internal wire guides was designed to route and align the antenna conductors within the gel volume. 
+%-----------------------------------------------------------
+% Wire Guides
+%-----------------------------------------------------------
+\begin{figure}[h!]
+    \centering
+
+    % ---- Row 1 ----
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/antenna_layout.png}
+        \caption{Complete wire-guide network showing the 9 guides in their selected positions within the head shell.}
+        \label{fig:wire_guides_assembly}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/connector_number.png}
+        \caption{Detail of the antenna connector base with identification number.}
+        \label{fig:antenna_connector_detail}
+    \end{subfigure}
+
+    \medskip % espacio entre filas (opcional)
+
+    % ---- Row 2 ----
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/connector_bottom.png}
+        \caption{Connector base showing its non-symmetrical profile.}
+        \label{fig:antenna_connector_bottom}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/cut_lid.png}
+        \caption{Lid–connector interface with filling channel.}
+        \label{fig:antenna_connector_lid}
+    \end{subfigure}
+
+    \caption{Wire guides, connector geometries, and lid interface.}
+    \label{fig:wire_guides}
+\end{figure}
+
+
+A network of internal wire guides (Figure \ref{fig:wire_guides_assembly}) was designed to route and position the input electrodes within the head's internal volume. 
 Each guide follows a unique, non-overlapping path leading to a selected coordinate inside the cavity. 
 The endpoint coordinates were positioned to intentionally break possible spatial symmetries in electrical stimulation, 
 thereby enabling more representative and diverse field distributions during testing.
 
-All guides maintain a uniform circular cross-section of \nota{1cm TBC} 
-to accommodate a range of cable or electrode diameters. 
+All guides maintain a uniform circular cross-section of 1~cm to accommodate a range of cable or electrode diameters. 
 
-\subsubsection{Antenna Connector Design}
 
 Each wire guide terminates at its base in a specially designed antenna connector that interfaces with the lid. 
 The connector geometry features a \textbf{not radially symmetric} profile to prevent rotation and ensure unique,
@@ -32,33 +73,3 @@ The overall design of the wire-guide network enables:
     \item and reliable mechanical fixation during gel solidification.
 \end{itemize}
 
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../../02_Images/wire_guides.png}
-        \caption{Complete wire-guide network showing the 9 guides in their selected positions within the head shell.}
-        \label{fig:wire_guides_assembly}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../../02_Images/connector_detail.png}
-        \caption{Detail of the antenna connector base with an identification number.}
-        \label{fig:antenna_connector_detail}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../../02_Images/connector_bottom.png}
-        \caption{Detail of the antenna connector base with non-symmetrical profile.}
-        \label{fig:antenna_connector_bottom}
-    \end{subfigure}
-        \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../../02_Images/cut_lid.png}
-        \caption{\nota{tbd, algo como "Detail of the antenna connector lid interface, with opening to fill the shell"}}
-        \label{fig:antenna_connector_lid}
-    \end{subfigure}
-    \caption{\nota{Wire guides details.}}
-    \label{fig:wire_guides}
-\end{figure}
