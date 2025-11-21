@@ -2,27 +2,168 @@
 % Phantom-Head Transfer Model
 %-----------------------------------------------------------
 
-\nota{hasta ahora, hablamos de como lo simulamos, desde el punto de vista fisico usando maxwell y propiedades del sistema para obtener lo que se deberia obtener en la realidad, usando FEM asi que es una aproximacion al numero real pero bueno....  ahora lo que sigue usar esas simulaciones, tomandolas como valor real (ponele), y armar un modelo matematico (solo tiene en cuenta lo que dio el simulador), que permita relacionar valores obtenidos en el "cuero cabelludo" con valores enviados a las antenas internas - basicamente armar $V_{cc} = A * V_{antena}$ , sistema matricial, para despues crear una pseudoinversa (solo algunas de las columnas de A pasan a la pseudoinversa... no todas, hay que usar algun criterio para ver cuales son las "mejores") y dado cualquier $V_{cc}$ que se quiera obtener, saber cual es el $V_{antena}$ a enviar al fantoma... }
+Having established the physical model of the phantom and the quasi-static PDE
+governing its behaviour, the next step is to construct a purely numerical
+representation of the system. In this section we no longer work with Maxwell’s
+equations or the FEM solver directly; instead, we treat the simulated results as
+the “ground-truth’’ behaviour of the phantom and build a linear model that maps
+voltages applied to the \emph{internal electrodes} to the potentials measured at
+the 21 \emph{scalp probes}.
 
-This section defines the math for the phantom-head system, and proposes several column-selection algorithms to reduce the number of usable dipoles \textbf{without} breaking the physical constraints (forbidden triads).  
-It is written so that the same base matrices can be kept in the repository ($F$, $B$, optional $W$), and each selection algorithm returns a diagonal \emph{selection/mask} matrix $S$ ($36\times 36$) to turn dipoles on/off.
+Our objective is to express this relationship in the compact form
+\[
+V_{\text{scalp}} = A\,V_{\text{electrode}},
+\]
+where \(V_{\text{electrode}}\) contains the voltages that can be actively imposed on the
+nine internal electrodes, and \(A\) is an effective forward operator derived from
+the FEM simulations. This linear model allows us to predict scalp potentials
+resulting from arbitrary internal stimulation patterns.
 
-\bigskip
+In practice, however, the intended use of the system is the inverse one: the
+user specifies a desired potential pattern on the scalp probes, and we seek the
+internal electrode voltages that best reproduce it. Because nine controllable
+electrodes must reproduce twenty-one probe measurements, the inverse problem is
+inherently underdetermined and the matrix \(A\) is not invertible. For this
+reason, the solution is obtained through a conditioned pseudoinverse of \(A\),
+which yields the internal voltages that minimise the reconstruction error at the
+scalp while maintaining numerical stability.
 
-\subsubsection{Short system description}
+\subsubsection{Rationale for using dipoles instead of single-electrode stimulation}
 
-We have:
+Before constructing the numerical model, we evaluated a ``monopolar''
+stimulation protocol in which a single internal electrode was set to
+\(+1~\mathrm{V}\) while the remaining eight were held at \(0~\mathrm{V}\),
+following the procedure described in \cite{CITE-LATER cuando me encuentre en donde anote la fuente}. For each of the nine
+electrodes, the resulting potentials at the 21 scalp probes were obtained from
+the FEM simulations.
 
-\begin{itemize}
-  \item \textbf{9 internal electrodes} (``antennas'') whose voltages can be controlled.
-  \item \textbf{36 possible dipoles}: every unordered pair $(e_x, e_y)$ with $1 \le x < y \le 9$.
-  \item 21 \textbf{scalp probes} measure potentials.
-  \item \textbf{A linear, static model} obtained from simulations: \emph{``if dipole $(e_x, e_y)$ is excited with $+1/-1$ V, what do the 21 probes see?''}
-\end{itemize}
+A consistent and problematic phenomenon appeared: although the absolute voltage
+levels differed across probes, the \emph{pattern} of probe responses was almost
+independent of which electrode was activated. In practical terms, every
+monopolar excitation produced nearly the same 21-dimensional output vector. This
+renders the forward operator associated with monopolar stimulation extremely
+poorly conditioned, since its nine columns are nearly collinear. Such a system
+cannot support meaningful inversion or reconstruction.
 
-Goal: keep \textbf{one} master transfer matrix from dipoles to scalp (the original \texttt{F}), and \textbf{one} master matrix from antennas to dipoles (\texttt{B}), and apply \textbf{selection} via a diagonal matrix $S$ that zeroes out non-selected dipoles.
+This behaviour is consistent with the geometry and scale of the phantom: at the
+distance of the scalp probes, the spatial electric field patterns produced by
+individual electrodes become very similar, making it difficult for a probe to
+distinguish which electrode was responsible for the excitation. For the purposes
+of inversion, the monopolar protocol therefore provides insufficient independent
+information.
 
-\bigskip
+To obtain richer and more distinguishable probe patterns, we instead use
+\emph{dipolar} stimulation. A dipole is defined by selecting a pair of distinct
+electrodes \((e_i,e_j)\), and, for definiteness, we always label them so that
+\(i<j\). Under a fixed polarity convention, electrode \(e_i\) is set to
+\(+1~\mathrm{V}\), electrode \(e_j\) to \(-1~\mathrm{V}\), and all remaining
+electrodes are held at \(0~\mathrm{V}\):
+\[
+u_{e_i} = +1~\mathrm{V},\qquad 
+u_{e_j} = -1~\mathrm{V},\qquad 
+u_{e_k}=0~\mathrm{V}\ \text{for } k\neq i,j.
+\]
+% The ``ordered'' condition \(i<j\) is used solely to avoid duplicates; mathematically,
+% the physical dipole is defined by this exact polarity convention.
+
+With nine electrodes, every unordered pair of distinct electrodes generates one
+dipole. The number of such pairs is
+\[
+\binom{9}{2} = \frac{9\cdot 8}{2} = 36.
+\]
+Each of these 36 dipoles produces a unique electric field orientation and
+therefore a distinct 21-probe response. The resulting columns of the
+dipole-to-scalp matrix \(F\) are far more linearly independent than those
+obtained from monopolar stimulation, and the system becomes amenable to
+inversion. 
+\nota{unique field orientation no es falso, pero es polemico... vivimos en R3... es unica (creo, no deberia haber electrodos completamente colineales...) pero con 36 vectores en R3 hay mas redundancia y dependencia lineal que informacion nueva en muchos de ellos. reescribir... maybe 36 direcciones que no se parecen tanto, pero escrito mas lindo...}
+
+\subsubsection{Forbidden triads: definition, interpretation, and general form}
+
+Dipoles encode strict pairwise voltage differences: a dipole \((e_i,e_j)\)
+imposes \(u_{e_i} > u_{e_j}\) under our fixed \(+1/-1\) convention. When several
+dipoles are selected simultaneously, the electrode voltages must satisfy all
+their pairwise inequalities at once.
+
+A \emph{forbidden triad} (FT) is a set of three dipoles involving the same
+triplet of electrodes, whose required pairwise inequalities cannot all be
+satisfied by any assignment of scalar voltages to the electrodes.
+
+Formally, for three distinct electrodes \(e_i,e_j,e_k\), the dipoles
+\[
+(e_i,e_j),\qquad (e_i,e_k),\qquad (e_j,e_k)
+\]
+constitute a forbidden triad. Under our sign convention, they impose:
+\[
+u_{e_i} > u_{e_j}, \qquad
+u_{e_i} > u_{e_k}, \qquad
+u_{e_j} > u_{e_k}.
+\]
+Taken individually, each inequality is valid; however, together they imply two
+requirements that cannot be simultaneously satisfied with the fixed voltage
+offsets forced by dipoles. In other words, no choice of electrode voltages
+\(\{u_{e_i}\}\) can generate these three dipoles at once.
+
+More generally, for any distinct \(i<j<k\), the triad
+\[
+\{(e_i,e_j),\ (e_i,e_k),\ (e_j,e_k)\}
+\]
+is forbidden. Any dipole-selection algorithm must therefore avoid selecting all
+three dipoles from such a triplet.
+
+We will refer to these structures as \emph{forbidden triads} throughout the
+remainder of this work. Enforcing their exclusion ensures that the selected
+dipoles always correspond to a physically realisable set of electrode voltages.
+
+\subsubsection*{Transition to the algebraic model}
+
+\nota{given the past considerations and our model where Vprobes = A Velectrodos, a formulaton for A is done as WFSB, such as the model is [complete version here] where
+lista de cada componente de A aca..., para qiue se usa, dimensiones, etc
+}
+
+% \subsubsection{Forbidden triads and why some dipole combinations are impossible}
+
+% Although the 36 dipoles form a convenient basis for representing stimulation
+% patterns, not all subsets of dipoles correspond to a physically realisable set
+% of electrode voltages. The key constraint arises from the fact that each dipole
+% imposes a \emph{strict voltage ordering} between two electrodes:
+% \[
+% (e_i,e_j)\ \text{means}\ u_i > u_j \quad \text{(for the } +1/-1 \text{ convention).}
+% \]
+
+% Problems appear when selecting dipoles that collectively require contradictory
+% orderings. Consider the three dipoles:
+% \[
+% (e_1,e_2),\qquad (e_1,e_3),\qquad (e_2,e_3).
+% \]
+
+% These impose the following inequalities:
+% \[
+% u_1 > u_2,\qquad
+% u_1 > u_3,\qquad
+% u_2 > u_3.
+% \]
+
+% Individually, each inequality is fine. But taken together, they imply that
+% \[
+% u_1 > u_2 > u_3,
+% \]
+% which is consistent — except that dipole \((e_1,e_3)\) requires \(u_1 > u_3\) by
+% a fixed amount, and dipole \((e_2,e_3)\) requires \(u_2 > u_3\) by the \emph{same}
+% fixed amount. These conditions cannot be simultaneously satisfied by assigning a
+% single scalar voltage to each electrode unless all three dipoles have exactly
+% compatible magnitudes, which they do not in our fixed \(+1/-1\) formulation.
+% Equivalently, no vector of electrode voltages can generate all three dipoles
+% with the required polarity.
+
+% Thus, the set \(\{(1,2),(1,3),(2,3)\}\) is a \emph{forbidden triad}: it encodes a
+% cycle of mutually inconsistent pairwise constraints. Any complete triad
+% \(\{(i,j),(i,k),(j,k)\}\) is similarly impossible to realise physically.
+
+% In the numerical model, we therefore restrict dipole selection to subsets that
+% contain no forbidden triads. This ensures that every selected dipole set
+% corresponds to at least one feasible configuration of electrode voltages, and
+% that the resulting forward model is physically realisable.
 
 \subsubsection{Unified system equation}
 

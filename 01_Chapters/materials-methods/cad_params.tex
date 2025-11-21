@@ -1,5 +1,34 @@
+%-----------------------------------------------------------
+% Parametric CAD Framework
+%-----------------------------------------------------------
 
+A fully parametric CAD workflow underpins the entire phantom-head model. 
+Instead of fixed dimensions, all critical geometric features, tolerances, and mating conditions were defined through named parameters. 
+This approach ensures global consistency, minimizes manual editing, and enables rapid regeneration of the model whenever design changes are required.
 
+The parametrization affects all major components of the assembly. 
+Examples include the shell thickness in the measuring region, the diameter of the wire-guide channels, the height and keyed profile of the connector bases, and the mating tolerances that govern how components fit together throughout the model.
 
-\nota{aca iria una tabla con las variables usadas en el modelo Y RELEVANTES NO TODAS algunas son shell thickness, tolerance porcentual, tolerance mm absoluta,las que mas afectan el modelo y/o alguien mas podria llegar a querer cambiar, ejemplo la tolerancia para la impresion con una impresora en particular
-}
+Table~\ref{tab:parametric_variables} summarizes the principal parameters exposed in the CAD model, along with their default values and functional roles within the design.
+
+\begin{table}[h!]
+    \centering
+    \caption{Main parametric variables defined in the phantom-head CAD model.}
+    \label{tab:parametric_variables}
+    \begin{tabular}{l c p{7cm}}
+        \toprule
+        \textbf{Parameter} & \textbf{Default Value} & \textbf{Description / Purpose} \\
+        \midrule
+
+        \texttt{shellThickness\_MeasRegion} & 3.2 mm & Wall thickness of the shell in the measuring region; chosen for structural rigidity and manufacturability. \\
+
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Any of these parameters may be modified to accommodate different fabrication processes, material choices, or experimental designs. 
+When a parameter is changed in the global \texttt{project\_params} file, all dependent geometries regenerate accordingly; however, Fusion~360 requires each affected component to be manually updated to the latest version within the project for the changes to propagate. 
+Once updated, the model remains fully consistent and fabrication-ready without the need for manual geometric edits. 
+This parametric structure allows researchers to explore alternative layouts, adapt the phantom to new requirements, or generate revised versions of the design while preserving overall integrity.
+
+\nota{Revisar después: completar la tabla con los nombres reales de las variables, distinguir cuáles son project-wide (en \texttt{project\_params}) y cuáles son locales por archivo. Indicar también la ubicación exacta de cada una dentro del proyecto, quizás en la misma tabla. REREDACTAR TODO, AGREGAR IDEAS, ARCHIVOS, QUE RELACION TIENEN ENTRE ELLOS, ETC.}
