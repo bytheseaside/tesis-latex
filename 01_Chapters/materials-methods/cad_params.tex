@@ -20,15 +20,13 @@ Table~\ref{tab:parametric_variables} summarizes the principal parameters exposed
         \textbf{Parameter} & \textbf{Default Value} & \textbf{Description / Purpose} \\
         \midrule
 
-        \texttt{shellThickness\_MeasRegion} & 3.2 mm & Wall thickness of the shell in the measuring region; chosen for structural rigidity and manufacturability. \\
+        \texttt{shell\_thickness} & 3.2 mm & Wall thickness of the shell in the measuring region \\
 
         \bottomrule
     \end{tabular}
 \end{table}
 
 Any of these parameters may be modified to accommodate different fabrication processes, material choices, or experimental designs. 
-When a parameter is changed in the global \texttt{project\_params} file, all dependent geometries regenerate accordingly; however, Fusion~360 requires each affected component to be manually updated to the latest version within the project for the changes to propagate. 
-Once updated, the model remains fully consistent and fabrication-ready without the need for manual geometric edits. 
-This parametric structure allows researchers to explore alternative layouts, adapt the phantom to new requirements, or generate revised versions of the design while preserving overall integrity.
+Once updated, the model remains fully consistent and fabrication-ready without the need for manual geometric edits across related pieces. 
 
 \nota{Revisar después: completar la tabla con los nombres reales de las variables, distinguir cuáles son project-wide (en \texttt{project\_params}) y cuáles son locales por archivo. Indicar también la ubicación exacta de cada una dentro del proyecto, quizás en la misma tabla. REREDACTAR TODO, AGREGAR IDEAS, ARCHIVOS, QUE RELACION TIENEN ENTRE ELLOS, ETC.}
