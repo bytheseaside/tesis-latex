@@ -1,15 +1,15 @@
 \nota{aca iria el codigo del solver/ la referencia a donde pongamos el codigo (appendix? ver como lo organizamos) + explicacion necesaria}
 
 
-\nota{ hayq eu explicar tambien la version "debil" de la ecuacion deducida en la seccion de pde gobernante - no redacto la seccion entera por ahora porque se que la vas a mirar y hacer cambios, pero la parte de la
-weak form de la ecuacion deberia ser algo PARECIDO a lo que dice aca https://mfem.org/fem_weak_form/}
+\nota{ hayq eu explicar tambien la version "debil" de la ecuacion deducida en la seccion de pde gobernante . no redacto la seccion entera por ahora porque se que la vas a mirar y hacer cambios, pero la parte de la
+weak form de la ecuacion deberia ser algo PARECIDO a lo que dice aca \url{https://mfem.org/fem_weak_form/}}
 
-\nota{cosas que me gustaria agregar en el solver en si:
-- poder simular una señal -> en vez de pasar un valor fijo por cada electrodo, pasar una funcion de tiempo (array por electrodo donde cada elemento es un step de tiempo) y que el solver haga la simulacion en el tiempo.
- basicamente es readaptarlo para que cada caso haga muchas simulaciones variando los valores de las condiciones de borde en cada paso de tiempo pero todas las guarde en el mismo archivo de resultado, y despues poder verlas
-  en el visor como una animacion (o ir paso a paso)
-  - agregar la anisotropia del material de i3d: por ahora esta justificado en el texto que hay un error, pero que queda a cargo del lector hacer su modelo mas anisotropico si quiere. estaria bueno agregarlo, si es que se puede, sino como un "mejoras a hacer" en el futuro
-}
+\nota{cosas que me gustaria agregar en el solver en si:}
+
+\nota{1.poder simular una señal, en vez de pasar un valor fijo por cada electrodo, pasar una funcion de tiempo (array por electrodo donde cada elemento es un step de tiempo) y que el solver haga la simulacion en el tiempo. basicamente es readaptarlo para que cada caso haga muchas simulaciones variando los valores de las condiciones de borde en cada paso de tiempo pero todas las guarde en el mismo archivo de resultado, y despues poder verlas
+  en el visor como una animacion (o ir paso a paso con algun boton)}
+  
+\nota{2. agregar la anisotropia del material de i3d: por ahora esta justificado en el texto que hay un error, pero que queda a cargo del lector hacer su modelo mas anisotropico si quiere. estaria bueno agregarlo, si es que se puede, sino como un "mejoras a hacer" en el futuro}
 
 
 \subsubsection{step view (visor)}
