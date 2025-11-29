@@ -13,19 +13,20 @@
         \label{fig:wire_guides_assembly}
     \end{subfigure}
     \hfill
+        \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/wire_guide_bottom.png}
+        \caption{Rendering of the connector base profile, illustrating the non-radial, unidirectional geometry that prevents rotational misalignment.}
+        \label{fig:antenna_connector_bottom}
+    \end{subfigure}
+
+
+    % Row 2
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/numbered_wire_guide.png}
         \caption{Detail of a connector base, highlighting the engraved numerical identifier used for unambiguous matching.}
         \label{fig:antenna_connector_detail}
-    \end{subfigure}
-
-    % Row 2
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../../02_Images/wire_guide_bottom.png}
-        \caption{Rendering of the connector base profile, illustrating the non-radial, unidirectional geometry that prevents rotational misalignment.}
-        \label{fig:antenna_connector_bottom}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.45\textwidth}
@@ -39,15 +40,26 @@
     \label{fig:wire_guides}
 \end{figure}
 
-A network of nine internal wire guides (Figure~\ref{fig:wire_guides_assembly}) was designed to route and position the input electrodes at specific, pre-selected coordinates within the phantom’s internal cavity. Each guide follows a unique, non-overlapping path, ensuring that the electrodes reach their intended locations while avoiding collisions or interference between channels.
+A network of nine internal wire guides (Figure~\ref{fig:wire_guides_assembly}) was designed to route and position the input
+ electrodes at specific, pre-selected coordinates within the phantom’s internal cavity. Each guide follows a unique, non-overlapping path,
+  ensuring that the electrodes reach their intended locations while avoiding collisions or interference between channels.
 
-To support each guide mechanically and to define a reproducible interface with the exterior of the phantom, every guide terminates in a dedicated connector base. During the design process, two practical assembly challenges emerged: (i) guaranteeing that each guide is inserted into the correct opening in the lid, and (ii) ensuring that each guide is inserted in the correct orientation, since rotational misalignment would shift the internal endpoint.
+To support each guide mechanically and to define a reproducible interface with the exterior of the phantom, every guide terminates 
+in a dedicated connector base. During the design process, this points were the main concerns: (i) guaranteeing that each guide is inserted
+ into the correct opening in the lid, and (ii) ensuring that each guide is inserted in the correct orientation, since rotational misalignment 
+ would shift the internal endpoint.
 
-These constraints informed the geometry of the connector base. As shown in Figure~\ref{fig:antenna_connector_bottom}, the base is deliberately \emph{not} radially symmetric, providing a unidirectional seating that physically prevents incorrect rotation. In addition, the bases were individually numbered (Figure~\ref{fig:antenna_connector_detail}) to allow unambiguous correspondence between each wire guide and its designated opening.
+These constraints informed the geometry of the connector base. As shown in Figure~\ref{fig:antenna_connector_bottom}, the base is
+ deliberately \emph{not} radially symmetric, providing a unidirectional seating that physically prevents incorrect rotation. 
+ In addition, the bases were individually numbered (Figure~\ref{fig:antenna_connector_detail}) to allow unambiguous correspondence 
+ between each wire guide and its designated opening.
 
-The inferior lid complements this design by incorporating numbered, unidirectional openings that match the shape of each connector base (Figure~\ref{fig:antenna_connector_lid}). As a result, each wire guide can be inserted only into its assigned position and only in the correct orientation, creating a fully foolproof assembly system and ensuring consistent alignment of the internal electrode tips.
+The inferior lid complements this design by incorporating numbered, unidirectional openings that match the shape of each connector
+ base. As a result, each wire guide can be inserted only into its assigned position and only
+  in the correct orientation, creating a fully foolproof assembly system and ensuring consistent alignment of the internal electrode tips.
 
-In addition to the connector openings, the lid includes a dedicated filling port used to introduce the conductive medium into the phantom cavity. This opening provides direct access for pouring the fill material once the shell and lid are assembled.
+In addition to the connector openings, the lid also incorporates a dedicated filling port for introducing the conductive medium after
+assembly (Figure~\ref{fig:antenna_connector_lid}).
 
 Together, the wire-guide network and its mechanical interface achieve:
 \begin{itemize}

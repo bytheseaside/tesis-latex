@@ -11,9 +11,9 @@ voltages applied to the \emph{internal electrodes} to the potentials measured at
 the 21 \emph{scalp probes}.
 
 Our objective is to express this relationship in the compact form
-\[
+\begin{equation}\label{eq:forward-operator}
 V_{\text{scalp}} = A\,V_{\text{electrode}},
-\]
+\end{equation}
 where \(V_{\text{electrode}}\) contains the voltages that can be actively imposed on the
 nine internal electrodes, and \(A\) is an effective forward operator derived from
 the FEM simulations. This linear model allows us to predict scalp potentials
@@ -52,8 +52,16 @@ distinguish which electrode was responsible for the excitation. For the purposes
 of inversion, the monopolar protocol therefore provides insufficient independent
 information.
 
-To obtain richer and more distinguishable probe patterns, we instead use
-\emph{dipolar} stimulation. A dipole is defined by selecting a pair of distinct
+To address this limitation, we instead use \emph{dipolar} stimulation. A dipole
+creates a stronger spatial gradient in the electric field due to the opposing
+polarities of its two electrodes. This gradient enhances the sensitivity of scalp
+measurements to the specific location and orientation of the dipole source.
+Consequently, different dipole configurations produce probe patterns that are
+more distinguishable from one another. This controllable dependence on the
+stimulation source improves the conditioning of the forward operator \(A\),
+enabling more robust inverse reconstruction.
+
+A dipole is defined by selecting a pair of distinct
 electrodes \((e_i,e_j)\), and, for definiteness, we always label them so that
 \(i<j\). Under a fixed polarity convention, electrode \(e_i\) is set to
 \(+1~\mathrm{V}\), electrode \(e_j\) to \(-1~\mathrm{V}\), and all remaining
@@ -71,12 +79,14 @@ dipole. The number of such pairs is
 \[
 \binom{9}{2} = \frac{9\cdot 8}{2} = 36.
 \]
-Each of these 36 dipoles produces a unique electric field orientation and
-therefore a distinct 21-probe response. The resulting columns of the
-dipole-to-scalp matrix \(F\) are far more linearly independent than those
-obtained from monopolar stimulation, and the system becomes amenable to
-inversion. 
-\nota{unique field orientation no es falso, pero es polemico... vivimos en R3... es unica (creo, no deberia haber electrodos completamente colineales...) pero con 36 vectores en R3 hay mas redundancia y dependencia lineal que informacion nueva en muchos de ellos. reescribir... maybe 36 direcciones que no se parecen tanto, pero escrito mas lindo...}
+Each of these 36 dipoles produces a spatially distinct electric field pattern,
+leading to substantially different scalp voltage distributions. The resulting
+probe responses are far more dipole-dependent than those obtained from monopolar
+stimulation: each dipole generates a characteristic signature at the scalp that
+can be more easily distinguished from the others. Although the 36 dipole
+orientations span only a three-dimensional physical space and therefore contain
+some degree of redundancy, they yield a forward operator \(A\) with significantly
+improved conditioning, making the system amenable to inversion.
 
 \subsubsection{Forbidden triads: definition, interpretation, and general form}
 
@@ -120,50 +130,6 @@ dipoles always correspond to a physically realisable set of electrode voltages.
 \nota{given the past considerations and our model where Vprobes = A Velectrodos, a formulaton for A is done as WFSB, such as the model is [complete version here] where
 lista de cada componente de A aca..., para qiue se usa, dimensiones, etc
 }
-
-% \subsubsection{Forbidden triads and why some dipole combinations are impossible}
-
-% Although the 36 dipoles form a convenient basis for representing stimulation
-% patterns, not all subsets of dipoles correspond to a physically realisable set
-% of electrode voltages. The key constraint arises from the fact that each dipole
-% imposes a \emph{strict voltage ordering} between two electrodes:
-% \[
-% (e_i,e_j)\ \text{means}\ u_i > u_j \quad \text{(for the } +1/-1 \text{ convention).}
-% \]
-
-% Problems appear when selecting dipoles that collectively require contradictory
-% orderings. Consider the three dipoles:
-% \[
-% (e_1,e_2),\qquad (e_1,e_3),\qquad (e_2,e_3).
-% \]
-
-% These impose the following inequalities:
-% \[
-% u_1 > u_2,\qquad
-% u_1 > u_3,\qquad
-% u_2 > u_3.
-% \]
-
-% Individually, each inequality is fine. But taken together, they imply that
-% \[
-% u_1 > u_2 > u_3,
-% \]
-% which is consistent — except that dipole \((e_1,e_3)\) requires \(u_1 > u_3\) by
-% a fixed amount, and dipole \((e_2,e_3)\) requires \(u_2 > u_3\) by the \emph{same}
-% fixed amount. These conditions cannot be simultaneously satisfied by assigning a
-% single scalar voltage to each electrode unless all three dipoles have exactly
-% compatible magnitudes, which they do not in our fixed \(+1/-1\) formulation.
-% Equivalently, no vector of electrode voltages can generate all three dipoles
-% with the required polarity.
-
-% Thus, the set \(\{(1,2),(1,3),(2,3)\}\) is a \emph{forbidden triad}: it encodes a
-% cycle of mutually inconsistent pairwise constraints. Any complete triad
-% \(\{(i,j),(i,k),(j,k)\}\) is similarly impossible to realise physically.
-
-% In the numerical model, we therefore restrict dipole selection to subsets that
-% contain no forbidden triads. This ensures that every selected dipole set
-% corresponds to at least one feasible configuration of electrode voltages, and
-% that the resulting forward model is physically realisable.
 
 \subsubsection{Unified system equation}
 
