@@ -6,7 +6,8 @@ stimulation, as discussed in Section~\ref{subsec:phantom_head_transfer_model}.
 
 Two stimulation protocols were evaluated through FEM simulations. For both protocols,
 a forward transfer matrix $F$ was computed, where each column represents the scalp
-voltages measured at the 21 probes (10--20 EEG system) for one unit source activation.
+voltages measured at the 21 probes (according to the ten-twenty electrode system of the International 
+ Federation~\cite{klem-1999}) for one unit source activation (monopole or dipole).
 The matrix maps internal electrode activations to surface measurements, forming the
 basis for comparing spatial discriminability.
 
@@ -38,10 +39,9 @@ Table~\ref{tab:mono-vs-dip-matrix} compares the fundamental properties of both f
 \midrule
 Matrix size & $21 \times 9$ & $21 \times 36$ \\
 Rank & 9 & 21 \\
-Condition number ($\kappa$) & 128 & 10{,}424 \\
+Condition number ($\kappa$) & 128 & 10424 \\
 Max singular value & 0.937 & 0.649 \\
 Min singular value & $7.3 \times 10^{-3}$ & $6.2 \times 10^{-5}$ \\
-Singular value decay & 2 orders of magnitude & 4 orders of magnitude \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -50,19 +50,20 @@ The monopolar matrix has full column rank (9) but only spans a 9-dimensional
 subspace of $\mathbb{R}^{21}$. Its lower condition number ($\kappa = 128$) is
 misleading: the fundamental limitation is insufficient rank to represent arbitrary
 21-dimensional probe patterns. The dipolar matrix achieves full row rank (21),
-spanning the entire probe measurement space. Its poor condition number ($\kappa \approx 10{,}424$)
+spanning the entire probe measurement space. Its poor condition number ($\kappa \approx 10424$)
 reflects redundancy among the 36 dipole orientations --- precisely the information-rich
 basis from which selection algorithms will extract well-conditioned subsets.
 
 The critical difference lies in \emph{probe discrimination}. For each probe, we computed
 the coefficient of variation (CV = $\sigma / \lvert\mu\rvert$) across all stimulation
-cases. A high CV indicates that probe responses vary significantly with source location,
+cases, where $\mu$ and $\sigma$ represent the mean and standard deviation of probe 
+responses. A high CV indicates that probe responses vary significantly with source location,
 enabling spatial discrimination. A low CV indicates nearly uniform responses regardless
 of which source is active.
 
 \begin{table}[h]
 \centering
-\caption{Probe discrimination statistics across all 21 measurement locations.}
+\caption{Probe discrimination statistics across all 21 measurement locations.\nota{check values because they were in a random notebook draft}}
 \label{tab:mono-vs-dip-cv}
 \begin{tabular}{lcc}
 \toprule
@@ -76,18 +77,6 @@ Mean probe std (mV) & 29.3 & 34.4 \\
 \end{tabular}
 \end{table}
 
-\paragraph{Example: Probe Fp2 (frontal-right).}
-This probe exhibits maximum contrast between protocols:
-\begin{itemize}
-  \item \textbf{Monopolar}: 64.6 $\pm$ 16.7~mV (CV = 26\%). Regardless of which 
-        electrode was activated, Fp2 consistently measured $\sim$65~mV.
-  
-  \item \textbf{Dipolar}: $-1.5$ $\pm$ 25.1~mV (CV = 1627\%). Different dipoles 
-        produced dramatically different responses spanning both positive and negative values.
-\end{itemize}
-
-The 63-fold increase in CV for this probe (and 15-fold average across all probes)
-demonstrates that dipolar stimulation provides dramatically superior spatial discriminability.
 
 \subsection{Field Visualization}
 
