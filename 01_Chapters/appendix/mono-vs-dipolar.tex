@@ -56,14 +56,13 @@ basis from which selection algorithms will extract well-conditioned subsets.
 
 The critical difference lies in \emph{probe discrimination}. For each probe, we computed
 the coefficient of variation (CV = $\sigma / \lvert\mu\rvert$) across all stimulation
-cases, where $\mu$ and $\sigma$ represent the mean and standard deviation of probe 
-responses. A high CV indicates that probe responses vary significantly with source location,
+cases. A high CV indicates that probe responses vary significantly with source location,
 enabling spatial discrimination. A low CV indicates nearly uniform responses regardless
 of which source is active.
 
 \begin{table}[h]
 \centering
-\caption{Probe discrimination statistics across all 21 measurement locations.\nota{check values because they were in a random notebook draft}}
+\caption{Probe discrimination statistics across all 21 measurement locations.\nota{check values because they were in a random notebook draft, prob correct but recalculate them to double check}}
 \label{tab:mono-vs-dip-cv}
 \begin{tabular}{lcc}
 \toprule
@@ -136,7 +135,7 @@ Fields exhibit similar patterns regardless of which electrode is activated.}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{../../02_Images/mono_F_matrix_heatmap.png}
+\includegraphics[width=1\textwidth]{../../02_Images/mono_F_matrix_heatmap.png}
 \caption{Heatmap of probe voltage responses for monopolar stimulation. Each row
 represents one of the 21 probes, each column represents one of the 9 electrode
 activations, with color indicating measured voltage magnitude.}
@@ -235,6 +234,16 @@ activations, with color indicating measured voltage magnitude.}
 \caption{D\_e3e8}
 \end{subfigure}
 
+\caption{Electric potential distributions for the 36 dipolar stimulation cases.
+Fields show diverse orientations and polarity distributions. (Continued on next page)}
+\label{fig:dip-cases}
+\end{figure}
+
+\begin{figure}[p]
+\ContinuedFloat
+\centering
+\setcounter{subfigure}{20}  % Continue subfigure counter from page 1 (start at 21st)
+% Page 2: Remaining 16 dipolar cases
 % Row 6: D_e3e9-D_e4e6
 \begin{subfigure}{0.23\textwidth}
 \includegraphics[width=\textwidth]{../../02_Images/D_e3e9.png}
@@ -307,14 +316,12 @@ activations, with color indicating measured voltage magnitude.}
 \caption{D\_e8e9}
 \end{subfigure}
 
-\caption{Electric potential distributions for the 36 dipolar stimulation cases.
-Fields show diverse orientations and polarity distributions.}
-\label{fig:dip-cases}
+\caption{Electric potential distributions for the 36 dipolar stimulation cases (continued).}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.95\textwidth]{../../02_Images/dip_F_matrix_heatmap.png}
+\includegraphics[width=\textwidth]{../../02_Images/dip_F_matrix_heatmap.png}
 \caption{Heatmap of probe voltage responses for dipolar stimulation. Each row
 represents one of the 21 probes, each column represents one of the 36 dipole
 configurations, with color indicating measured voltage magnitude.}
@@ -323,13 +330,13 @@ configurations, with color indicating measured voltage magnitude.}
 
 This visual observation is quantified by the correlation matrices in
 Figures~\ref{fig:mono-correlation} and~\ref{fig:dip-correlation}.
-The monopolar matrix shows high correlation among columns (\nota{mean $r = 0.94$}), confirmingfirming
+The monopolar matrix shows high correlation among columns (\nota{mean $r = 0.94$}), confirming
 that the 9 activation patterns are nearly indistinguishable. The dipolar matrix shows
 much lower correlation (\nota{mean $r = 0.31$}), indicating far more distinct probe patterns.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\textwidth]{../../02_Images/mono_correlation_heatmap.png}
+\includegraphics[width=\textwidth]{../../02_Images/mono_correlation_heatmap.png}
 \caption{Pearson correlation matrix for monopolar stimulation patterns.
 Columns are highly correlated ($r \approx 0.94$), indicating similar probe responses.}
 \label{fig:mono-correlation}
@@ -337,7 +344,7 @@ Columns are highly correlated ($r \approx 0.94$), indicating similar probe respo
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{../../02_Images/dip_correlation_heatmap.png}
+\includegraphics[width=\textwidth]{../../02_Images/dip_correlation_heatmap.png}
 \caption{Pearson correlation matrix for dipolar stimulation patterns.
 Columns show lower correlation ($r \approx 0.31$), indicating more diverse probe patterns.}
 \label{fig:dip-correlation}
