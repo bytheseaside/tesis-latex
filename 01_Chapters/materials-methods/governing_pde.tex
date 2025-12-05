@@ -56,14 +56,14 @@ This condition simply states that no current flows out of the shell surface: the
 Physically, the phantom behaves as a closed volume conductor: currents injected inside must return inside, with no leakage into the air (which behaves as an excellent insulator at these field strengths).
 
 External EEG electrodes used for recording do not inject current; they simply sample the surface potential. 
-Real EEG amplifiers have input impedances on the order of $1$--$10~\text{M}\Omega$ or higher, so the current they draw is negligible~\cite{van-rijn-1990}  \nota{buscar mas sources para esto}
+Real EEG amplifiers have input impedances on the order of $1$--$10~\text{M}\Omega$ or higher, so the current they draw is negligible~\cite{van-rijn-1990, jackson2014}
 
 Thus, from the phantom’s perspective, a recording electrode is electrically passive: it does not clamp or perturb the surface potential. 
 Accordingly, no Dirichlet or Neumann boundary condition is imposed at measurement locations; they are treated purely as observation points for $u$.
 
 \subsubsection{Ohmic and Frequency Response Behavior.}
 
-Over the frequency range of interest (DC to $\sim$100~Hz), the gel medium behaves as a linear, Ohmic conductor with negligible reactive (capacitive or inductive) effects. This is supported by experimental evidence from tissue-mimicking phantoms, which demonstrate frequency-independent conductivity across the EEG band~\cite{akor-2025}. For example, gelatin or saline phantoms typically exhibit less than 2\% variation in $\sigma$ from 0.1~Hz to 1~kHz, and negligible phase shift, confirming that conduction current dominates. \nota{tenemos mas sources para esto... buscarlas, estaban en el anteproyecto en algunos de los papers del state of the art..}~\cite{geddes-1967}
+Over the frequency range of interest (DC to $\sim$100~Hz), the gel medium behaves as a linear, Ohmic conductor with negligible reactive (capacitive or inductive) effects. This is supported by experimental evidence from tissue-mimicking phantoms, which demonstrate frequency-independent conductivity across the EEG band~\cite{akor-2025}. For example, gelatin or saline phantoms typically exhibit less than 2\% variation in $\sigma$ from 0.1~Hz to 1~kHz, and negligible phase shift, confirming that conduction current dominates.~\cite{geddes-1967, Chandra2000}
 
 % In physical terms, the displacement current density $\partial \mathbf{D}/\partial t$ remains much smaller than the conduction current $\mathbf{J}$ in this regime. This is formally justified by examining the ratio:
 
