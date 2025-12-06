@@ -143,8 +143,6 @@ where
 $\mathbf{D}$ is the electric displacement field (C/m$^{2}$) and 
 $\rho_f$ is the free charge density (C/m$^{3}$).
 
-There's no free charge in the conductive bulk (any charge separations are negligible in the voulme) therefore $\rho_f\approx 0 \Rightarrow \nabla\cdot \mathbf{D}\approx 0 $.
-
 \paragraph*{Faraday’s law}
 \[
 \nabla\times \mathbf{E} = -\displaystyle\frac{\partial \mathbf{B}}{\partial t}
@@ -221,7 +219,7 @@ Iin EEG contexts, the zero-curl condition holds to very high accuracy, enabling 
 
 At this point, we have reduced Maxwell’s laws to a simplified electroquasistatic form applicable to the phantom:
 \begin{itemize}
-    \item $\nabla\cdot \mathbf{D} \approx 0$ 
+    \item $\nabla\cdot \mathbf{D} = \rho_f$  \nota{Preg: no usamos esto para deducir nada, solo está porque es parte de las 4 eqs base... lo dejamos o lo sacamos?}
     \item $\nabla\times \mathbf{E} \approx 0 \Rightarrow \mathbf{E}=-\nabla u$.
     \item $\nabla\times \mathbf{H} = \mathbf{J}$ 
     \item  $\nabla\cdot \mathbf{B}=0$ 
