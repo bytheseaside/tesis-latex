@@ -33,7 +33,8 @@ $\sigma_{\text{shell}} \approx 4.1~\text{S/m}$ serves as a balanced representati
 
 At the same time, the framework does not fix this value: $\sigma_{\text{shell}}$ is exposed as a user–defined parameter. Users who characterise their own printed material (or adopt specific print/curing strategies to further reduce anisotropy) can directly substitute their measured or preferred value, or perform parameter sweeps over the range $3{-}5.2~\text{S/m}$ to assess the sensitivity of their particular setup.
 
-\subsubsection{Electrical insulation.} 
+\subsubsection{Electrical insulation.}
+\label{subsubsec:insulation}
 There are no prescribed current sources within the volume; all currents arise solely in response to the applied voltages. 
 Any current injected by one internal electrode necessarily returns to the generator through another. 
 
@@ -276,8 +277,5 @@ Eq.~\eqref{eq:continuity} leads to the governing equation used in the simulation
 -\nabla \cdot \big(\sigma(\mathbf{x})\, \nabla u(\mathbf{x},t)\big) = 0,
 \qquad \text{for all } \mathbf{x}\in 
 \Omega_{\text{gel}}\cup\Omega_{\text{shell}}.
-\tag{PDE}
+\tag{PDE}\label{eq:pde}
 \]
-
-
-\nota {1. mencionar que esto es coherente con otrs trabajos similares en la literattura como cancelli (10.1088/1741-2560/13/3/036022)}
