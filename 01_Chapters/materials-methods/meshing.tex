@@ -34,7 +34,7 @@ from about 10.54 to 0.18~\cite{erdbrugger-2023}. Guided by this, we set a maximu
   
   
 \paragraph*{Refinement Near Internal Electrodes}
-Each of the nine internal electrodes is modeled as a cylindrical contact (3.5~mm diameter, 12~mm tall) that imposes
+Each of the nine internal electrodes is modeled as a cylindrical contact (3.5~mm diameter, 12~mm tall~\cite{jack_datasheet}) that imposes
 a Dirichlet condition ($u=V_i$) on the gel boundary. Such voltage sources produce localized gradients
 in the surrounding gel, so we refined the mesh near them using a distance-based field. Specifically, we used a
 threshold field yielding a minimum element size of 0.5~mm for points within 2.0~mm of any electrode surface,
@@ -108,3 +108,14 @@ These values indicate that the final mesh maintains a high element quality,
 with minimal distortion or skewness, while respecting the local refinement
 needs near electrodes and shell interfaces. The configuration reflects a practical
 compromise between numerical accuracy and computational resource constraints.
+
+\paragraph*{Physical Groups and Mesh Entities}
+Inside the gel volume, nine embedded electrode patches (labeled $v_1,\dots,v_9$) serve as voltage-driven 
+sources. Each electrode is modeled as a cylindrical surface matching a Jack 3.5~mm audio connector 
+(model SP-35501-OM), and is assigned a physical surface tag (IDs 11--19 for electrodes $v_1$ through $v_9$). 
+During simulation, these surfaces are held at prescribed potentials $u = V_i(t)$ via Dirichlet boundary conditions.
+The two volume regions are tagged as physical volumes: the gel interior receives physical tag~2, and the 
+conductive PLA shell receives physical tag~1. These tags allow straightforward assignment of material 
+properties (piecewise constant conductivity) and boundary conditions in the finite element solver. 
+The outer shell surface was left untagged, which implicitly enforces a natural (Neumann, insulating) 
+boundary condition at the phantom exterior.
