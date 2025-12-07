@@ -1,14 +1,121 @@
-%-----------------------------------------------------------
-% Meshing
-%-----------------------------------------------------------
-\subsubsection{Processing}
-how did we do it, params for the mesh, how to make a conformal mesh, how to ahndle the complex or "tricky" geometries, etc
+To simulate the quasi-static electric potential distribution in the phantom head geometry,
+we generated a three-dimensional finite element mesh using Gmsh~\cite{gmsh}. The mesh was
+designed to accurately resolve regions with steep voltage gradients near the internal
+electrodes and to capture the layered structure of the 3.2~mm conductive PLA shell,
+while maintaining computational efficiency in the homogeneous gel interior. 
+    
+\paragraph*{Element Order and Type} We employed second-order tetrahedral elements (P2)
+throughout the computational domain. Second-order elements are standard in bioelectric
+field modeling because their quadratic interpolation yields substantially higher accuracy
+than linear (P1) elements for comparable mesh sizes~\cite{zhang-2004}.
+In our case, P2 elements allow accurate representation of smooth potential fields and 
+bending effects with fewer elements. Studies, such as~\cite{zhang-2004}, showed that
+second-order FEM provides “substantially enhanced numerical accuracy and computational
+efficiency” relative to first-order FEM for similar meshes.
+This property is particularly valuable for our 3.2~mm thick shell: using P2 elements,
+a single layer of tetrahedra through the thickness suffices to capture the voltage drop
+across the shell without excessive mesh refinement.
+The mesh was configured with \texttt{Mesh.ElementOrder = 2} and \texttt{Mesh.HighOrderOptimize = 1}.
+In Gmsh, \texttt{HighOrderOptimize=1} applies basic optimization of high-order node placement. 
+A more aggressive setting (\texttt{=2}) would invoke additional elastic smoothing, but this requires 
+significantly more memory; we therefore chose \texttt{=1} given our 16~GB RAM constraint.
+We also set \texttt{Mesh.SecondOrderLinear = 1} so that mid-edge nodes on internal edges are placed by
+simple linear interpolation. This enforces straight edges for the quadratic elements. Given that 
+our phantom geometry includes primarily planar electrode faces and cylindrical guides, straight-edge P2
+elements are sufficient and avoid unnecessary curvature. (Note that tetrahedral meshes inherently approximate
+curved surfaces well~\cite{erdbrugger-2023}.)
 
-\subsubsection{Final relevant entities}
-tagged entities such as electrodes, names for them, and volumes.
+\paragraph*{Global Mesh Resolution}
+The literature on EEG and transcranial electrical stimulation (tES) modeling indicates that a 2~mm
+ element size achieves excellent accuracy~\cite{erdbrugger-2023}. In a comprehensive head model convergence study,
+ it is reported that reducing the mesh resolution from 16~mm to 2~mm shrinks the mean relative difference measure~(RDM)
+from about 10.54 to 0.18~\cite{erdbrugger-2023}. Guided by this, we set a maximum element size of 2.0~mm in the homogeneous
+ gel interior, where potential gradients are smooth and coarser resolution is acceptable.
+  
+  
+\paragraph*{Refinement Near Internal Electrodes}
+Each of the nine internal electrodes is modeled as a cylindrical contact (3.5~mm diameter, 12~mm tall~\cite{jack_datasheet}) that imposes
+a Dirichlet condition ($u=V_i$) on the gel boundary. Such voltage sources produce localized gradients
+in the surrounding gel, so we refined the mesh near them using a distance-based field. Specifically, we used a
+threshold field yielding a minimum element size of 0.5~mm for points within 2.0~mm of any electrode surface,
+increasing linearly to 2.0~mm size by 8.0~mm away. In practice, this means:
+\begin{itemize}
+\item Element size = 0.5~mm for distance $\leq 2.0$~mm from electrodes
+\item Element size = 2.0~mm for distance $\geq 8.0$~mm from electrodes
+\item Linear transition between 2.0 and 8.0~mm
+\end{itemize}
 
-\nota{step 1 and 2... scripts, here or appendix? explain either way...}
+This graded refinement ensures that the mesh conforms closely to the curved electrode surfaces without an
+overwhelming number of elements far away. In preliminary testing, we verified that a 0.5~mm near-electrode
+size was sufficient to converge the potential distribution (smaller sizes produced negligible changes).
 
-\nota{movido de otra seccion, deberia ser re-redactado e incluido aca o en modelling...}
-Inside the gel, a set of embedded electrode patches (labeled $v_1,\dots,v_9$) serve as voltage-driven sources: they are held at prescribed potentials $u = V_i(t)$ 
-(Dirichlet boundary conditions on electrode surfaces), each modelled as a cylinder with the dimensions of a Jack 3.5  audio connector (model SP-35501-OM: 12 mm height, 3.5 mm diameter).
+\paragraph*{Shell Refinement and Thin-Layer Capture}
+The conductive PLA shell in the head phantom is nominally 3.2~mm thick and about ten times more conductive
+than the interior gel (we measured $\sigma_{\rm shell}\approx 4.1$~S/m vs.\ $\sigma_{\rm gel}\approx 0.33$~S/m).
+This high contrast across a thin layer requires fine resolution to avoid numerical artifacts. 
+Indeed, previous studies note that very thin compartments can suffer spurious “current leakage” if under-resolve~\cite{erdbrugger-2023}.
+To mitigate this, we applied another distance-based refinement around the shell–gel interface. We set 
+a 0.5~mm element size (yielding roughly 6 linear elements through 3.2~mm) for distances up to 3.0~mm from the
+shell, transitioning to 2.0~mm by 8.0~mm away. This means:
+\begin{itemize}
+\item Element size = 0.5~mm for distance $\leq 3.0$~mm from shell surfaces
+\item Element size increases to 2.0~mm by 8.0~mm distance
+\end{itemize}
+With quadratic tetrahedra, 0.5~mm yields about 8 elements (counting mid-edge nodes) across the shell,
+which is more than sufficient to capture the potential drop and avoid leakage. For reference, the SimNIBS
+mesh-generation guidelines~\cite{simnibs-custom-meshing} also recommend using roughly 0.5~mm resolution to
+resolve thin structures, and other studies showed that second-order elements can achieve this accuracy
+with fewer layers than first-order elements~\cite{zhang-2004}.
+
+\paragraph*{Curvature-Based Refinement}
+In addition to these explicit fields, we enabled curvature-adaptive meshing (\texttt{Mesh.MeshSizeFromCurvature = 25}).
+This instructs Gmsh to place more nodes along regions of high geometric curvature.
+Curvature-adaptive refinement is a common strategy in head modeling, since features like facial contours
+and the occipital scalp surface are smoothly curved~\cite{erdbrugger-2023}. 
+By setting 25 elements per $2\pi$ radians, we ensure that our mesh automatically tightens around any remaining
+curved geometry, further improving accuracy. 
+
+
+\paragraph*{Refinement Field Combination}
+We combined the electrode- and shell-based fields using a minimum operator (\texttt{Field[…] = Min}),
+so that at any point in space the smallest (finest) prescribed element size is applied. This automatically 
+handles overlapping regions.
+
+\paragraph*{Mesh Quality Control}
+After initial mesh generation, we performed iterative smoothing (\texttt{Mesh.Smoothing = 10}) 
+and activated both Gmsh’s built-in optimizer and the Netgen optimizer (\texttt{Mesh.Optimize = 1}
+and \texttt{Mesh.OptimizeNetgen = 1}). 
+
+The physical volume tags were defined for the gel and shell, and physical surface tags for the nine electrodes,
+to facilitate assignment of material properties and boundary conditions in the solver. The exterior shell surface 
+was left untagged, taking the natural Neumann (insulating) condition of the solver.
+
+
+\subsubsection{Final Mesh Specifications}
+The final mesh was generated using Gmsh~4.11 and saved in MSH 4.1 format for
+compatibility with FEniCSx (dolfinx). Meshing was completed in approximately 5
+minutes on a machine with 16~GB RAM. The mesh statistics, as given by the meshing software, are:
+
+\begin{itemize}
+  \item Total nodes: 6,539,752
+  \item Total tetrahedral elements: 4,587,720 (second-order, 10-node)
+  \item Surface triangles: 12,274 (used for electrode and shell boundary tagging)
+  \item Average scaled Jacobian (SICN): 0.871
+  \item Average shape quality (SIGE): 0.890
+\end{itemize}
+
+These values indicate that the final mesh maintains a high element quality,
+with minimal distortion or skewness, while respecting the local refinement
+needs near electrodes and shell interfaces. The configuration reflects a practical
+compromise between numerical accuracy and computational resource constraints.
+
+\paragraph*{Physical Groups and Mesh Entities}
+Inside the gel volume, nine embedded electrode patches (labeled $v_1,\dots,v_9$) serve as voltage-driven 
+sources. Each electrode is modeled as a cylindrical surface matching a Jack 3.5~mm audio connector 
+(model SP-35501-OM), and is assigned a physical surface tag (IDs 11--19 for electrodes $v_1$ through $v_9$). 
+During simulation, these surfaces are held at prescribed potentials $u = V_i(t)$ via Dirichlet boundary conditions.
+The two volume regions are tagged as physical volumes: the gel interior receives physical tag~2, and the 
+conductive PLA shell receives physical tag~1. These tags allow straightforward assignment of material 
+properties (piecewise constant conductivity) and boundary conditions in the finite element solver. 
+The outer shell surface was left untagged, which implicitly enforces a natural (Neumann, insulating) 
+boundary condition at the phantom exterior.

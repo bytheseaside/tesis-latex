@@ -4,7 +4,6 @@
 %-----------------------------------------------------------
 \begin{figure}[h!]
   \centering
-  % Subfigure (a)
   \begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{../../02_Images/printable_head.png}
@@ -12,7 +11,6 @@
     \label{fig:head_shell_halves}
   \end{subfigure}
   \hfill
-  % Subfigure (b)
   \begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{../../02_Images/printable_head_section.png}
@@ -23,8 +21,47 @@
   \label{fig:head_shell_overview}
 \end{figure}
 
-The outer shell (Figure~\ref{fig:head_shell_halves}) constitutes the main structural boundary of the phantom. It reproduces realistic cranial curvature while maintaining manufacturability for 3D printing. A nominal wall thickness of 3.2~mm was applied in the measuring region, corresponding to the area encompassing the 21 electrode positions defined by the ten–twenty EEG system~\cite{klem-1999}. Outside this region, the geometry was locally thickened, modified, or simplified as needed to meet assembly and manufacturability constraints.
+The outer shell (Figure~\ref{fig:head_shell_halves}) constitutes the main structural boundary of the phantom. It reproduces realistic cranial
+ curvature while maintaining manufacturability for 3D printing. A nominal wall thickness of 3.2~mm was applied in the measuring region,
+  corresponding to the area encompassing the 21 electrode positions defined by the ten–twenty EEG system~\cite{klem-1999}. Outside this region,
+  the geometry was locally thickened, modified, or simplified as needed to meet assembly and manufacturability constraints.
 
-The head was divided into two parts along a \textit{superior–inferior} direction, resulting in an upper and a lower half. The separation interface was carefully positioned to remain outside the measuring region, thereby preventing any discontinuity or mechanical seam from affecting the probe area. To ensure proper alignment and structural integrity, the interface incorporates a male–female mating feature designed to guide and lock the two halves in place. Additionally, an extra sealing groove was included along the joint, allowing it to be filled with either a vulcanized gasket or a bead of liquid silicone to create a waterproof seal. Both the mating structures and the sealing channel are visible in Figure~\ref{fig:head_shell_section}.
+The head was divided into two parts along a \textit{superior–inferior} direction, resulting in an upper and a lower half.
+
+The parting plane that divides the head shell was positioned at a vertical distance of 72~mm from the ground plane. This height 
+was selected for two primary considerations: first, it provides sufficient width at the cut level to facilitate comfortable assembly 
+of the complete system, particularly when installing the wire-guide connectors and internal components through the access opening;
+ second, and more critically, it ensures the parting line remains entirely outside the measuring region, avoiding any physical
+  interruption of the measurement surface and minimizing edge effects that could arise from the structural discontinuity.
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/mating_sealing_closed.png}
+    \caption{Assembled configuration showing mated interface.}
+    \label{fig:mating_closed}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/mating_sealing_structures.png}
+    \caption{Separated halves revealing mating and sealing features.}
+    \label{fig:mating_separated}
+  \end{subfigure}
+  \caption{Section views of the head shell interface showing mating structures and sealing groove.}
+  \label{fig:head_shell_mating_detail}
+\end{figure}
+
+At the interface between halves, a protruding flange extends horizontally from each shell half (Figure~\ref{fig:head_shell_mating_detail}).
+ This flange serves as the mounting surface for both the alignment mechanism and the waterproofing system. The male–female 
+ interlocking feature, positioned along the outer edge of the flange, provides precise registration between the upper and lower 
+ halves during assembly. The female feature is machined into the lower half as a recessed channel, while the corresponding male feature
+  protrudes from the upper half with dimensions reduced by the mating tolerance to ensure proper clearance and fit.
+
+The sealing groove, located toward the inner edge of the flange, forms a continuous channel designed to contain sealing material 
+that prevents leakage of the gelatin-salt-water mixture used to fill the phantom. This groove can be filled with, for example,
+ a pre-formed vulcanized rubber gasket or liquid silicone applied during assembly. The groove depth and width were dimensioned
+  to provide adequate material retention while maintaining sufficient compression when the halves are closed.
 
 
