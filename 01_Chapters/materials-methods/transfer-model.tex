@@ -127,11 +127,8 @@ dipoles always correspond to a physically realisable set of electrode voltages.
 
 \subsubsection*{Transition to the algebraic model}
 
-\nota{given the past considerations and our model where Vprobes = A Velectrodos, a formulaton for A is done as WFSB, such as the model is [complete version here] where
-lista de cada componente de A aca..., para qiue se usa, dimensiones, etc
-}
-
-\subsubsection{Unified system equation}
+\nota{Lo que sigue es un \textit{fancy} borrador de la idea, falta explicar más y ajustar cosas.}
+\nota{Básicamente, la matriz A que definimos antes, deja de ser "lo que sea que sea A" y le damos dimensiones, valores e interpretación física de que representa, cómo se obtiene y optimiza}
 
 We will use \textbf{one} equation for \textbf{all} cases:
 
@@ -183,6 +180,9 @@ So, the data flow is:
   \item scalp voltages $\to$ $W F S B V_{\text{antena}}$ $\to$ \textbf{weighted scalp voltages}
 \end{enumerate}
 
+\nota{Sobre W: opcional, quizás luego solo usamos W=I21 en el desarrollo del proyecto}.
+
+
 \subsubsection*{Why masking \textbf{B} and not \textbf{F}?}
 
 \begin{itemize}
@@ -215,6 +215,41 @@ The mask \(S\) is applied on the dipole–generation side of the system,
 yielding $M = W \cdot F \cdot S \cdot B$ as the effective forward model.
 
 \nota{
-For each one, we need at least a Goal (choose the bla bla bla), rationale (because that would reduce the $\kappa$ or whatever else the end goal is) and procedure (1. do bla 2. do bla bla 3. repeat until bla bla bla)
-+ any alg specific info (params it takes if any, etc etc)
+Para cada algoritmo de selección hay que explicar mínimamente:
+\begin{itemize}
+  \item \textbf{Objetivo:} qué busca optimizar el algoritmo (ej: minimizar $\kappa$, maximizar cobertura espacial, etc.)
+  \item \textbf{Justificación:} por qué ese criterio mejora el sistema (ej: reducir $\kappa$ mejora la estabilidad numérica del pseudoinverso)
+  \item \textbf{Procedimiento:} pasos del algoritmo (1. inicializar con..., 2. en cada iteración..., 3. criterio de parada...)
+  \item \textbf{Parámetros:} qué inputs recibe el algoritmo (ej: número máximo de dipolos, umbral de tolerancia, etc.)
+  \item \textbf{Output:} la matriz diagonal $S$ con los dipolos seleccionados
+\end{itemize}
+}
+
+
+\nota{
+Luego iría la sección con la definición de pseudoinversa (anotada en apuntes) y en resultados se mostrarían 
+los resultados de cada algoritmo/los mejores algoritmos y sus comparaciones: dipolos seleccionados, error al reconstruir el sistema, 
+número de condición, rango, etc.
+
+\textbf{Comparaciones/validaciones a realizar:}
+\begin{enumerate}
+  \item \textbf{Validación del modelo directo (forward):} 
+  \[
+  \|V_{\text{out}}^{\text{solver}} - V_{\text{out}}^{\text{matriz}}\| = \|V_{\text{out}}^{\text{solver}}(V_{\text{in}}) - (M \cdot V_{\text{in}})\| \approx 0
+  \]
+  Comparar la respuesta del solver FEM vs. la del sistema matricial $M = WFSB$ ante la misma entrada $V_{\text{in}}$, 
+  para varios casos de voltajes de entrada.
+  
+  \item \textbf{Validación del modelo inverso (reconstruction):} 
+  \[
+  \|V_{\text{in}}^{\text{solver}} - M^{\dagger} \cdot V_{\text{out}}^{\text{solver}}\| \approx 0
+  \]
+  Meter un $V_{\text{in}}$ conocido al solver, obtener $V_{\text{out}}^{\text{solver}}$, y verificar que 
+  al aplicar la pseudoinversa $A^{\dagger}$ al output del solver, se recupera el $V_{\text{in}}$ original.
+  
+  \item \textbf{Métricas de condicionamiento:} Número de condición $\kappa(M)$, rango efectivo, valores singulares.
+  
+  \item \textbf{Otras métricas potencialmente relevantes:} Error RMS entre patrones de voltaje, cobertura espacial 
+  de los dipolos seleccionados, sensibilidad a ruido en las mediciones, robustez ante variaciones de conductividad, etc.
+\end{enumerate}
 }
