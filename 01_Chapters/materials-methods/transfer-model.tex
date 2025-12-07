@@ -235,14 +235,14 @@ número de condición, rango, etc.
 \begin{enumerate}
   \item \textbf{Validación del modelo directo (forward):} 
   \[
-  \|V_{\text{out}}^{\text{solver}} - V_{\text{out}}^{\text{matriz}}\| = \|V_{\text{out}}^{\text{solver}}(V_{\text{in}}) - (M \cdot V_{\text{in}})\| \approx 0
+  \|V_{\text{out}}^{\text{solver}} - V_{\text{out}}^{\text{matriz}}\| = \|V_{\text{out}}^{\text{solver}}(V_{\text{in}}) - (A \cdot V_{\text{in}})\| \approx 0
   \]
-  Comparar la respuesta del solver FEM vs. la del sistema matricial $M = WFSB$ ante la misma entrada $V_{\text{in}}$, 
+  Comparar la respuesta del solver FEM vs. la del sistema matricial $A = WFSB$ ante la misma entrada $V_{\text{in}}$, 
   para varios casos de voltajes de entrada.
   
   \item \textbf{Validación del modelo inverso (reconstruction):} 
   \[
-  \|V_{\text{in}}^{\text{solver}} - M^{\dagger} \cdot V_{\text{out}}^{\text{solver}}\| \approx 0
+  \|V_{\text{in}}^{\text{solver}} - A^{\dagger} \cdot V_{\text{out}}^{\text{solver}}\| \approx 0
   \]
   Meter un $V_{\text{in}}$ conocido al solver, obtener $V_{\text{out}}^{\text{solver}}$, y verificar que 
   al aplicar la pseudoinversa $A^{\dagger}$ al output del solver, se recupera el $V_{\text{in}}$ original.
