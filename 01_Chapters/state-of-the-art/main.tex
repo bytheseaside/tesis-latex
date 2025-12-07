@@ -5,7 +5,7 @@ The development of reliable electroencephalography (EEG) sensing systems require
 
 These phantoms allow a pre-recorded electrophysiology signal to be played out, which can then be collected and analyzed by the novel electrode or instrumentation system, or neurotechnological application to be tested~\cite{Owda2020}.
 
-\subsection{Design Types of Phantom Heads}
+\subsection{Design Types of Phantom Heads}\label{subsec:phantom_designs}
 
 \subsubsection{Single Layer (Homogeneous) Phantoms}
 
@@ -25,7 +25,7 @@ Although these phantoms can give similar frequency response characteristics to g
 
 Currently, hybrid methods are gaining popularity~\cite{9475461}. These methods combine synthetic and biological materials to balance fidelity and practicality. Furthermore, the use of advanced technologies such as 3D printing and the functionalization of materials with nanocomposites is revolutionizing the design of phantom heads~\cite{akor-2025}.
 
-\subsection{Materials}
+\subsection{Materials}\label{subsec:phantom_materials}
 
 Phantom heads are typically fabricated using biocompatible and conductive materials that mimic the dielectric properties of human tissue~\cite{Collier2012}. These materials include carbon-filled silicones and conductive polymers, such as saline gels or hydrogels~\cite{Owda2020}. These phantom devices aim to be a good electrical equivalent of the human body and its tissues~\cite{9475461}.
 
@@ -63,15 +63,91 @@ However, conductive polymers and related polymer systems face challenges such as
 
 \subsection{Signal Generation}
 
-The generation of electrical signals within a phantom head is the core mechanism enabling the controlled validation of new electrode and instrumentation designs~\cite{9475461}. Unlike experiments conducted on human subjects where the recorded signal is intrinsically unknown, phantoms allow a pre-recorded electrophysiology signal or a synthetically created signal to be played out, providing a known signal for the test system to collect and compare against~\cite{Owda2020}.
+The generation of electrical signals within a phantom head is the core mechanism enabling the controlled validation of new electrode and instrumentation designs~\cite{9475461}. Unlike experiments conducted on human subjects where the recorded signal is intrinsically unknown, phantoms allow a pre-recorded electrophysiology signal or a synthetically created signal to be played out, providing a known signal for the test system to collect and compare against~\cite{Owda2020}. This is usually achieved by injecting precisely controlled currents or voltages into the phantom's conductive medium via a set of internal drive electrodes~\cite{akor-2025}.
 
-\nota{Falta completar el resto de la sección añadiendo los componentes y potenciales circuitos que se usan para la generación de señales. Sumar propiedades técnicas y limitaciones de la capacidad de simulación. Hay info sobre esto en la tercera entrega que hice para la materia de PF, pero faltan referencias.}
+Phantom designs then consist of primarily three components: the dipole array that injects the signal into the phantom, the dipole driver that allows the independent control of each dipole, and the phantom head itself that contains said dipole array~\cite{LEAHY1998159}.
 
-\subsubsection{Electronic Components for Signal Generation}
+As phantom head design and composition where already covered in Subsection~\ref{subsec:phantom_designs} and Subsection~\ref{subsec:phantom_materials} respectively, this section focuses on the signal generation module (dipole array and driver) and the key characteristics of the generated signals.
 
-\nota{Completar}
+\subsubsection{Signal Requirements}
 
-\subsubsection{Signal Types and Limitations}
+Phantom heads are designed to mimic the frequency spectrum of human brain activity, which is characterized by a wide range of frequencies. Specific frequency bands used in phantom validation include:
+
+\begin{itemize}
+    \item Standard bands: Phantoms are often tested against standard clinical bands, such as Delta (0.5{-}4 Hz), Theta (4{-}7 Hz), Alpha (8{-}12 Hz) and Beta (13{-}30 Hz)~\cite{akor-2025}.
+    \item Higher frequencies: Gamma, 30{-}80 Hz and higher, are more difficult to study in the human body as they are heavily attenuated by the skull and scalp layers, and obfuscated by muscular and ocular artifacts~\cite{FREEMAN20031053}. Head phantom validation often involves ensuring that the components accurately mimic these behaviours~\cite{9475461}.
+\end{itemize}
+
+The amplitude of the EEG under physiological conditions ranges from 15 to 150 \( \mu\text{V} \)~\cite{Naydenov2022}. However, the internal generators (dipoles) must drive significantly higher currents to account for the attenuation caused by volume conduction through the phantom material~\cite{LEAHY1998159}. The electronics must provide a wide dynamic range, capable of generating signals that result in low surface potentials to reduce noise~\cite{Morsalin2020}.
+
+\subsubsection{Dipole Driver}
+
+The dipole driver acts as the interface between the digital simulation software (usually on a PC) and the physical phantom, generating complex, arbitrary waveforms used to mimic neural activity~\cite{LEAHY1998159}.
+
+Controlling the driver means knowing the exact location, orientation, amplitude, and timing of the source: the ``ground truth'' data~\cite{LEAHY1998159}. This known signal is crucial for validating the performance of EEG electrodes and acquisition systems, as it allows for objective comparisons between the generated signal and the recorded data.~\cite{Audette2020}
+
+\subsubsection{Dipole Construction}
+
+The driver sends the current into physical dipoles embedded in the phantom head. These dipoles can be constructed in various ways depending on the design requirements of the phantom. 
+
+\begin{itemize}
+    \item Dipoles are often constructed from semi-rigid coaxial cables, where the inner conductor and the outer shield are exposed at the tip (with a gap of roughly 0.5 mm to 2 mm) to form the two poles of the dipole~\cite{LEAHY1998159}.
+    \item Platinum is often used in high-fidelity dipoles, as it is chemically inert and resistant to corrosion, which is a major concern in saline environments~\cite{Machts2019}.
+    \item For lower-cost phantoms, standard 3.5 mm TRS audio jacks are used. While less electrochemically stable than platinum, they are readily available and provide a standardized connection interface.~\cite{Downey2023}
+\end{itemize}
+
+\subsubsection{Electronic module architecture}
+
+The choice of architecture dictates the fidelity, bandwidth, and flexibility of the phantom. Some common architectures include:
+
+\begin{itemize}
+    \item Computer audio interface: frequently used for this task due to their high resolution (typically 24-bit), excellent signal-to-noise ratio (>100 dB), and low cost~\cite{Collier2012}. The downside is that they tether the phantom to a computer, introducing ground loops and mains noise unless USB isolators are used~\cite{LEAHY1998159}.
+    \item Microcontroller-based architecture: for portable, battery-powered phantoms. A usual choice is the Teensy 3.2 that features a built-in 12-bit digital-to-analog converter (DAC)~\cite{PJRC_Teensy}. While having lower resolution than audio interfaces, 12 bits provides sufficient dynamic range for many verification tasks, especially when the signal is generated at a higher amplitude and then attenuated analogically~\cite{LEAHY1998159}.
+\end{itemize}
+
+\subsubsection{Wireless Protocols}
+
+\nota{Me gustaría añadir una sección sobre protocolos wireless para la transmisión de datos y control del phantom, pero no encontré mucho todavía. Ver cómo esto afecta a la señal que se transmite. Ver Audette2020}
+
+
+\subsection{Signal Acquisition and Analysis}
+
+Data is typically collected using digital EEG amplifiers with sampling frequencies ranging from 250 Hz to 5 kHz~\cite{cita}. To prevent aliasing and remove noise, signal filters are applied prior to sampling, such as a 0.1 Hz high-pass and 100 Hz low-pass filters~\cite{LEAHY1998159}.
+
+\subsubsection{The 10{-}20 Electrode System}
+
+The 10{-}20 electrode system is an international standard for placing scalp electrodes during electroencephalography (EEG) and event-related potential (ERP) studies~\cite{klem-1999}. It serves as a foundational grid for ensuring standardized and reproducible measurements across different subjects and laboratories.
+
+A standard 10{-}20 array typically consists of 21 electrodes. Every position is identified by a letter and a number. The letters correspond to the brain regions they cover: 
+
+\begin{itemize}
+    \item F (frontal),
+    \item T (temporal),
+    \item C (central),
+    \item P (parietal),
+    \item O (occipital). 
+\end{itemize}
+
+The numbers indicate the hemisphere: 
+
+\begin{itemize}
+    \item Odd numbers for the left hemisphere,
+    \item Even numbers for the right hemisphere,
+    \item Z for midline positions.
+\end{itemize}
+
+\begin{figure}[0.4\textwidth]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/10_20_system.svg}
+    \caption{International 10{-}20 electrode placement system.}
+    \label{fig:10_20_system}
+\end{figure}
+
+\subsubsection{Signal Filters}
+
+\nota{Completar con filtros típicos usados en la adquisición de señales EEG en phantoms, tanto hardware como software.}
+
+\subsection{Selection Algorithms}
 
 \nota{Completar}
 
