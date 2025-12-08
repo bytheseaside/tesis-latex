@@ -6,42 +6,20 @@ To achieve this goal, the following specific objectives are proposed:
 
 \begin{enumerate}
 
-\item Design a \gls{phantom} capable of simulating realistic conditions 
-for the transmission of \acrshort{eeg} signals \nota{(\textbf{and other standard test signals, like sinusoids and square waves})} through a physical medium that mimics, 
-through an internal generation system that maintains stable operation for at least 
-\nota{X (to be defined) days/hours - 1 day ?}.
+\item Design a low-cost phantom head capable of accurately simulating the transmission of both brain-like signals and standard test waveforms (e.g., sinusoids and square waves) through a physical medium. This phantom must incorporate an internal signal generation system designed to maintain stable operation for a minimum test period of $X$ [days/hours].~\nota{Definir tiempo objetivo.}
 
-\item Develop a desktop application for operational integration with the \nota{designed/proposed} hardware system, 
-intended for the comprehensive management of simulated \acrshort{eeg} signals within the \gls{phantom}.  
-The platform should serve as a unified working environment, offering key functionalities such as:
+\item Design, develop, and implement a desktop application platform for the operational integration and comprehensive management of the proposed EEG signal phantom. This platform must provide a unified environment for:
 
 \begin{enumerate}
-    \item Control of signal generation parameters, with flexible configuration of amplitude, frequency, and waveform.  
-    \nota{this “waveform” aspect could mean either uploading a file with a predefined structure (ex: csv with some predefined column names) to reproduce that waveform, 
-    and/or allowing the user to select within the application options such as “generate sinusoidal wave with frequency $f$ and amplitude $A$.” 
-    We will later refine what is actually permitted and phrase this section accordingly.}
-    \nota{Approx.\ –50 to 50~mV are the expected target values, covering both EEG amplitudes and some useful synthetic test cases with sinusoids or other test functions.}
-
-    \item Real-time visualization of the acquired signals (with minimal latency and jitter), 
-    including graphical tools for monitoring and validation.  
-    \nota{we should define a numerical cutoff for acceptable latency and jitter — e.g., \textbf{up to} 20~ms latency 
-    and 5~ms jitter — since it reads more clearly as an objective than “as low as possible.”}
-
-    \item Structured data logging, with the possibility of exporting recorded measurements 
-    to other environments for further analysis and processing.  
-    \nota{we could add here something like: data recording and export in format~X, 
-    which is widely accepted by other analysis platforms.}
+    \item Controlling signal generation parameters (e.g., amplitude $[\approx -50 \text{ to } 50 \text{ mV}]$, frequency, and waveform),
+    \item Real-time visualization of acquired and generated data with latency $\math{\leq 30 \text{ ms}}$ and jitter $\math{\leq 10 \text{ ms}}$, and
+    \item Structured data logging and export (CSV, EDF, etc.).
 \end{enumerate}
 
-\item Ensure system compatibility with the \textit{OpenBCI} platform by adopting communication standards 
-and data structures that allow correct reception and processing of generated signals.  
-This integration with open hardware aims to guarantee system interoperability, facilitate replicability 
-in other research contexts, and promote adoption, adaptation, and improvement by third parties 
-within an open development framework.  
-\nota{Chequear redacción de este item.}
+\item Design and implement the necessary communication standards and data structures for interoperability with the OpenBCI platform, enabling the reliable reception and processing of real-time EEG data.
 
 \end{enumerate}
 
 
-\biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
+\biblio~% Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}

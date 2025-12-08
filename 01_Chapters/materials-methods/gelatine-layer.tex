@@ -1,1 +1,52 @@
-In this section we will describe the composition and preparation of the gelatine layer used in the phantom head model. This includes the lab tests realized to analyze the gelatine properties and its changes over time.
+To validate the suitability of gelatin as a reliable material for the phantom design, a series of laboratory experiments were designed. These studies aim to characterize the electrical impedance of the material, assess the reproducibility of the manufacturing process, and validate the similarity of the physical phantom against the proposed simulation model.
+
+\subsubsection{Equipment and setup}
+
+The experimental setup utilizes the following instrumentation to generate signals and capture the electrical response of the phantom:
+
+\begin{itemize}
+    \item Signal generator: To provide input signals (AC and DC) of varying frequencies and amplitudes.
+    \item Two-channel oscilloscope: To simultaneously monitor the input signal ($V_{in}$) and the output signal ($V_{out}$) propagated through the medium.
+    \item Custom electrodes: Insulated conductive wires with exposed tips will be inserted into the gelatin to serve as current injection and voltage recording points.
+\end{itemize}
+
+\subsubsection{Experiment I:\ Impedance Analysis and Material Sensitivity}
+
+The primary objective of this study is to measure the complex impedance of the gelatin solution across a defined frequency spectrum.
+
+\paragraph*{Frequency Response}
+
+The impedance characterization will be performed by injecting a sinusoidal signal and comparing the input channel against the output channel across a mapped range of frequencies. The analysis will focus on two key parameters:
+
+\begin{itemize}
+    \item Attenuation: The ratio of signal amplitude drop as it traverses the medium ($V_{out} / V_{in}$).
+    \item Phase shift: The temporal delay ($\Delta \phi$) between the input and output waveforms.
+\end{itemize}
+
+By plotting these variables as a function of frequency, we will determine the spectral behavior of the phantom material.
+
+\paragraph*{Concentration and Reproducibility}
+
+To establish the reliability of the manufacturing process, the following variations will be tested:
+
+\begin{itemize}
+    \item Concentration sensitivity: Distinct mixtures with varying concentrations of gelatin will be analyzed to determine how variations in solute density affect electrical impedance.
+    \item Batch consistency: Two separate batches of the identical recipe will be measured under identical conditions. This will quantify the deviation between samples and establish the reproducibility of the protocol.
+\end{itemize}
+
+\subsubsection{Experiment II:\ Signal localization and Simulation Validation}
+
+This study aims to compare the physical phantom's behavior against the computational model based on the finite element method described in the upcoming Section~\ref{subsec:solver}.
+
+\paragraph*{Geometric Standarization}
+
+The gelatin will be molded into a known, controlled geometric shape. This exact geometry will be replicated in the simulation program to ensure that boundary conditions and electrode positions are mathematically comparable.
+
+\paragraph*{Spatial Potential Distribution}
+
+Two sources of signal injection will be placed at fixed coordinates within the phantom. Potential measurements will be taken at various surface locations of the phantom.
+
+\begin{itemize}
+    \item Signal types: The propagation will be tested using both Direct Current (DC) and Alternating Current (AC) stimuli.
+    \item Validation: The measured voltage potentials at specific coordinates on the physical phantom will be compared to the predicted values at the corresponding nodes in the software simulation.
+\end{itemize}
