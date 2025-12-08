@@ -62,7 +62,7 @@ of which source is active.
 
 \begin{table}[h]
 \centering
-\caption{Probe discrimination statistics across all 21 measurement locations.\nota{check values because they were in a random notebook draft, prob correct but recalculate them to double check}}
+\caption{Probe discrimination statistics across all 21 measurement locations. CV (coefficient of variation) quantifies how much probe responses vary across different source configurations; higher CV indicates better spatial discrimination capability.}
 \label{tab:mono-vs-dip-cv}
 \begin{tabular}{lcc}
 \toprule
@@ -71,7 +71,7 @@ of which source is active.
 Mean CV across probes & 44\% & 645\% \\
 Min CV (worst discrimination) & 26\% & 91\% \\
 Max CV (best discrimination) & 67\% & 2607\% \\
-Mean probe std (mV) & 29.3 & 34.4 \\
+% Mean probe std (mV) & 29.3 & 34.4 \\ no es muy relevante, dado que el CV muestra la misma data y más
 \bottomrule
 \end{tabular}
 \end{table}
@@ -79,275 +79,48 @@ Mean probe std (mV) & 29.3 & 34.4 \\
 
 \subsection{Field Visualization}
 
-Figures~\ref{fig:mono-cases}--\ref{fig:dip-correlation} show the electric potential
-distribution and correlation analysis for all stimulation cases. Visual inspection
+Figures~\ref{fig:mono-cases}--\ref{fig:dip-heatmap} show the electric potential
+distribution for all stimulation cases. Visual inspection
 reveals that monopolar fields exhibit highly similar patterns regardless of source
 location, while dipolar fields show diverse orientations and polarity distributions.
 
+% MONO - HEAD  VIEWS
 \begin{figure}[p]
 \centering
-% Row 1: M_e1-M_e3
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e1.png}
-\caption{M\_e1}
-\end{subfigure}
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e2.png}
-\caption{M\_e2}
-\end{subfigure}
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e3.png}
-\caption{M\_e3}
-\end{subfigure}
-
-% Row 2: M_e4-M_e6
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e4.png}
-\caption{M\_e4}
-\end{subfigure}
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e5.png}
-\caption{M\_e5}
-\end{subfigure}
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e6.png}
-\caption{M\_e6}
-\end{subfigure}
-
-% Row 3: M_e7-M_e9
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e7.png}
-\caption{M\_e7}
-\end{subfigure}
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e8.png}
-\caption{M\_e8}
-\end{subfigure}
-\begin{subfigure}{0.3\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/M_e9.png}
-\caption{M\_e9}
-\end{subfigure}
-
+\includegraphics[width=1\textwidth]{../../02_Images/monopolar_grid.pdf}
 \caption{Electric potential distributions for the 9 monopolar stimulation cases.
 Fields exhibit similar patterns regardless of which electrode is activated.}
 \label{fig:mono-cases}
 \end{figure}
 
+% MONO - HEATMAP
 \begin{figure}[h]
 \centering
-\includegraphics[width=1\textwidth]{../../02_Images/mono_F_matrix_heatmap.png}
+\includegraphics[width=1\textwidth]{../../02_Images/mono_F_matrix_heatmap.pdf}
 \caption{Heatmap of probe voltage responses for monopolar stimulation. Each row
-represents one of the 21 probes, each column represents one of the 9 electrode
+represents one of the 21 probes, each column represents one of the 9 monopolar electrode
 activations, with color indicating measured voltage magnitude.}
 \label{fig:mono-heatmap}
 \end{figure}
 
+
+% DIP - HEAD  VIEWS
 \begin{figure}[p]
 \centering
-% Row 1: D_e1e2-D_e1e5
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e2.png}
-\caption{D\_e1e2}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e3.png}
-\caption{D\_e1e3}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e4.png}
-\caption{D\_e1e4}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e5.png}
-\caption{D\_e1e5}
-\end{subfigure}
-
-% Row 2: D_e1e6-D_e1e9
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e6.png}
-\caption{D\_e1e6}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e7.png}
-\caption{D\_e1e7}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e8.png}
-\caption{D\_e1e8}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e1e9.png}
-\caption{D\_e1e9}
-\end{subfigure}
-
-% Row 3: D_e2e3-D_e2e6
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e2e3.png}
-\caption{D\_e2e3}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e2e4.png}
-\caption{D\_e2e4}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e2e5.png}
-\caption{D\_e2e5}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e2e6.png}
-\caption{D\_e2e6}
-\end{subfigure}
-
-% Row 4: D_e2e7-D_e3e4
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e2e7.png}
-\caption{D\_e2e7}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e2e8.png}
-\caption{D\_e2e8}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e2e9.png}
-\caption{D\_e2e9}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e3e4.png}
-\caption{D\_e3e4}
-\end{subfigure}
-
-% Row 5: D_e3e5-D_e3e8
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e3e5.png}
-\caption{D\_e3e5}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e3e6.png}
-\caption{D\_e3e6}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e3e7.png}
-\caption{D\_e3e7}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e3e8.png}
-\caption{D\_e3e8}
-\end{subfigure}
-
+\includegraphics[width=1\textwidth]{../../02_Images/dipolar_grid.pdf}
 \caption{Electric potential distributions for the 36 dipolar stimulation cases.
-Fields show diverse orientations and polarity distributions. (Continued on next page)}
+Fields show diverse orientations and polarity distributions.}
 \label{fig:dip-cases}
 \end{figure}
 
-\begin{figure}[p]
-\ContinuedFloat
-\centering
-\setcounter{subfigure}{20}  % Continue subfigure counter from page 1 (start at 21st)
-% Page 2: Remaining 16 dipolar cases
-% Row 6: D_e3e9-D_e4e6
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e3e9.png}
-\caption{D\_e3e9}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e4e5.png}
-\caption{D\_e4e5}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e4e6.png}
-\caption{D\_e4e6}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e4e7.png}
-\caption{D\_e4e7}
-\end{subfigure}
-
-% Row 7: D_e4e8-D_e5e6
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e4e8.png}
-\caption{D\_e4e8}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e4e9.png}
-\caption{D\_e4e9}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e5e6.png}
-\caption{D\_e5e6}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e5e7.png}
-\caption{D\_e5e7}
-\end{subfigure}
-
-% Row 8: D_e5e8-D_e6e8
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e5e8.png}
-\caption{D\_e5e8}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e5e9.png}
-\caption{D\_e5e9}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e6e7.png}
-\caption{D\_e6e7}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e6e8.png}
-\caption{D\_e6e8}
-\end{subfigure}
-
-% Row 9: D_e6e9-D_e8e9
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e6e9.png}
-\caption{D\_e6e9}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e7e8.png}
-\caption{D\_e7e8}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e7e9.png}
-\caption{D\_e7e9}
-\end{subfigure}
-\begin{subfigure}{0.23\textwidth}
-\includegraphics[width=\textwidth]{../../02_Images/D_e8e9.png}
-\caption{D\_e8e9}
-\end{subfigure}
-
-\caption{Electric potential distributions for the 36 dipolar stimulation cases (continued).}
-\end{figure}
-
+% DIP - HEATMAP
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{../../02_Images/dip_F_matrix_heatmap.png}
+\includegraphics[angle=270,width=0.9\textwidth]{../../02_Images/dip_F_matrix_heatmap.pdf}
 \caption{Heatmap of probe voltage responses for dipolar stimulation. Each row
 represents one of the 21 probes, each column represents one of the 36 dipole
 configurations, with color indicating measured voltage magnitude.}
 \label{fig:dip-heatmap}
-\end{figure}
-
-This visual observation is quantified by the correlation matrices in
-Figures~\ref{fig:mono-correlation} and~\ref{fig:dip-correlation}.
-The monopolar matrix shows high correlation among columns (\nota{mean $r = 0.94$}), confirming
-that the 9 activation patterns are nearly indistinguishable. The dipolar matrix shows
-much lower correlation (\nota{mean $r = 0.31$}), indicating far more distinct probe patterns.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{../../02_Images/mono_correlation_heatmap.png}
-\caption{Correlation matrix for monopolar stimulation patterns.
-Columns are highly correlated ($r \approx 0.94$), indicating similar probe responses.}
-\label{fig:mono-correlation}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{../../02_Images/dip_correlation_heatmap.png}
-\caption{Correlation matrix for dipolar stimulation patterns.
-Columns show lower correlation ($r \approx 0.31$), indicating more diverse probe patterns.}
-\label{fig:dip-correlation}
 \end{figure}
 
 These results demonstrate that dipolar stimulation is the superior choice for the
@@ -357,7 +130,7 @@ following reasons:
         measurement space (rank 21 vs 9 for monopolar), enabling representation of
         arbitrary scalp potential patterns.
   
-  \item \textbf{Superior spatial discrimination}: Probe responses show 15× higher
+  \item \textbf{Superior spatial discrimination}: Probe responses show $\approx15\times$ higher
         variability across different source configurations (CV = 645\% vs 44\%),
         meaning the system can distinguish between different dipole activations much
         more effectively.
@@ -374,3 +147,29 @@ following reasons:
 
 In contrast, the monopolar protocol cannot provide full rank coverage of the measurement
 space, fundamentally limiting its spatial discriminability.
+
+\subsection{Duda: Análisis de Correlación entre protocolos}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{../../02_Images/mono_correlation_heatmap.pdf}
+\caption{Correlation in monopolar protocol. RMS: 0.4056}
+\label{fig:mono-corr}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{../../02_Images/dip_correlation_heatmap.pdf}
+\caption{Correlation in dipolar protocol. RMS: 0.4553}
+\label{fig:dip-corr}
+\end{figure}
+
+\nota{Nota para revisión:} 
+El RMS de la correlación entre casos es similar e incluso un poco más alta en el dipolar
+--- corr(D) = 0.4553 (Fig~\ref{fig:dip-corr}) vs corr(M) = 0.4056 (Fig~\ref{fig:mono-corr}) --- a pesar de que todas las otras métricas favorecen al dipolar.
+De todas formas, del conjunto dipolar podemos eliminar columnas (muchas más que en monopolar) mediante algoritmos de
+selección, lo que debería reducir este número. La magnitud de este RMS representa la redundancia inherente en los 36
+casos dipolares, algo similar a lo mencionado antes sobre el número de condición, que también refleja redundancia/dependencia lineal. 
+
+Deberíamos incluir esta métrica de RMS de correlación en la comparación principal y justificar por qué un valor ligeramente (0.05) mayor
+en dipolar no contradice nuestra decisión? O podemos omitirla y justificar la decisión basandonos en las otras métricas?

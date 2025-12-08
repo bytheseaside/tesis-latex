@@ -1,24 +1,175 @@
-\nota{aca iria el codigo del solver/ la referencia a donde pongamos el codigo (appendix? ver como lo organizamos) + explicacion necesaria}
+Before solving Eq.~\eqref{eq:pde} using the finite element method, we rewrite it
+in a weak (or variational) form. The idea of the weak form is simple: instead
+of requiring the differential equation to hold at every point inside the domain
+(which would demand very smooth solutions), we require it to hold only in an
+average or integrated sense. This is achieved by multiplying the equation by a
+smooth test function and integrating over the domain. After an integration by
+parts step, the formulation only involves first derivatives, which is exactly
+what finite element functions can represent~\cite{fem-org}.
+
+With this idea in mind, let $\Omega$ denote the region of interest (the phantom
+volume), $\partial\Omega$ its boundary, $\Gamma_D$ the parts of the boundary
+where the potential is prescribed, and $\Gamma_N$ the parts where a flux
+condition is applied. Let $v$ be an arbitrary test function that is null on
+$\Gamma_D$. Multiplying the strong formulation of the problem by $v$ and
+integrating over the domain gives
+\[
+\int_\Omega v\, \nabla\cdot(\sigma\nabla u)\, dx = 0.
+\]
+Applying integration by parts yields
+\[
+- \int_\Omega \sigma \nabla u \cdot \nabla v\, dx
++ \int_{\partial\Omega} v\, \sigma \nabla u \cdot n\, ds = 0.
+\]
+Because $v = 0$ on $\Gamma_D$, the boundary term reduces to the Neumann portion,
+leading to the final weak formulation:
+\[
+\int_\Omega \sigma \nabla u \cdot \nabla v\, dx
+= \int_{\Gamma_N} g\, v\, ds.
+\]
+
+The quantity $g$ on the right-hand side is simply the flux prescribed on
+$\Gamma_N$, coming directly from the Neumann boundary condition
+$\sigma\nabla u \cdot n = g$. This quantity specifies the normal current flux
+through that part of the boundary. In our phantom, the outer
+surface of the head is assumed to be electrically insulating
+(see Section~\ref{subsubsec:insulation}), which corresponds to a homogeneous
+Neumann condition; thus $g = 0$. Under this assumption, the right-hand side
+vanishes and the weak problem reduces to
+\[
+\int_\Omega \sigma \nabla u \cdot \nabla v\, dx = 0
+\qquad \forall\, v.
+\]
 
 
-\nota{ hayq eu explicar tambien la version "debil" de la ecuacion deducida en la seccion de pde gobernante . no redacto la seccion entera por ahora porque se que la vas a mirar y hacer cambios, pero la parte de la
-weak form de la ecuacion deberia ser algo PARECIDO a lo que dice aca \url{https://mfem.org/fem_weak_form/}}
+\nota{Falta explicar un poco el código del solver en sí: parametros que toma, salida, etc}
 
-\nota{cosas que me gustaria agregar en el solver en si:}
+\subsubsection{Finite element solver implementation}
 
-\nota{1.poder simular una señal, en vez de pasar un valor fijo por cada electrodo, pasar una funcion de tiempo (array por electrodo donde cada elemento es un step de tiempo) y que el solver haga la simulacion en el tiempo. basicamente es readaptarlo para que cada caso haga muchas simulaciones variando los valores de las condiciones de borde en cada paso de tiempo pero todas las guarde en el mismo archivo de resultado, y despues poder verlas
-  en el visor como una animacion (o ir paso a paso con algun boton)}
+\nota{Explain solver code: dependencies, parameters, outputs, etc.}
+Quizás lo cambiamos un poco, por eso no está completamente escrito aún, pero basicamente toma el archivo.mesh, los parámetros de conductividad - opcional, tiene otros por default, los mencionados arriba, un CSV con los valores de BCs para poner en los v_1 a  v_9 - electrode surfaces, y resuelve el sistema segun la ecuación explicada arriba.
+
+\subsubsection{Interactive 3D visualization}
+\nota{Explicar el viewer, sus funcionalidades, etc.}
+
+To facilitate the analysis and validation of simulation results, an interactive 3D viewer
+was developed using PyVista~\cite{pyvista} and PyVistaQt. The viewer provides real-time visualization of
+voltage potential distributions across the phantom geometry, with multi-actor control for selective
+display of the head shell, gel interior, and electrode surfaces.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/viewer_screenshot_4.png}
+    \caption{Standard volume rendering of the head, showing potential distribution throughout its volume.}
+    \label{fig:viewer_volume}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/viewer_screenshot_5.png}
+    \caption{Sagittal plane clipping reveals the gradient of the electric field structure in the shell element.}
+    \label{fig:viewer_sagittal}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/viewer_screenshot_3.png}
+    \caption{Multi-actor view combining volume head with surface gel, clipped by the mid-sagittal plane.}
+    \label{fig:viewer_multiactor}
+  \end{subfigure}
   
-\nota{2. agregar la anisotropia del material de i3d: por ahora esta justificado en el texto que hay un error, pero que queda a cargo del lector hacer su modelo mas anisotropico si quiere. estaria bueno agregarlo, si es que se puede, sino como un "mejoras a hacer" en el futuro}
+  \vspace{0.5em}
+  
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/viewer_screenshot_1.png}
+    \caption{Clipping plane centered at electrode 5 (+1V) reveals the steep potential gradient from the Dirichlet boundary into the gel volume.}
+    \label{fig:viewer_electrode_pos}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/viewer_screenshot_2.png}
+    \caption{Clipping plane centered at electrode 8 (-1V) reveals the steep potential gradient from the Dirichlet boundary into the gel volume.}
+    \label{fig:viewer_electrode_neg}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/viewer_screenshot_6.png}
+    \caption{Probe validation interface displaying measured potentials at 21 EEG locations with interactive selection and color-coded geometric markers.}
+    \label{fig:viewer_probes}
+  \end{subfigure}
+  
+  \caption{Interactive 3D viewer capabilities for electrostatic simulation analysis. The viewer features multi-actor control (head, gel, electrodes), anatomical plane clipping, and a center-zero diverging colormap (PRGn: purple=negative, green=positive) optimized for bipolar stimulation patterns. Screenshots show case D\_e5e8 with dipolar stimulation between electrodes 5 and 8.}
+  \label{fig:viewer_overview}
+\end{figure}
+
+Key features include:
+
+\begin{itemize}
+    \item \textbf{Multi-actor rendering:} Independent control of head (surface/volume/off),
+        gel (surface/volume/off), and electrode visibility enables selective inspection of different
+        phantom components.
+    
+    \item \textbf{Interactive plane clipping:} Arbitrary cutting planes with adjustable normal
+        vectors and positions allow examination of internal potential fields. Preset anatomical
+        planes (sagittal, coronal, axial) facilitate standardized views.
+    
+    \item \textbf{Diverging colormap with center-zero scaling:} The PRGn colormap (purple-green)
+        with symmetric ranges $[-V_{\max}, +V_{\max}]$ makes voltage polarity and gradient direction
+        immediately apparent, which is essential for validating bipolar stimulation patterns.
+    
+    \item \textbf{Static vs.\ dynamic range modes:} Static mode locks color ranges to the full dataset
+        for quantitative comparison during clipping; dynamic mode rescales to visible data for enhanced
+        local contrast.
+    
+    \item \textbf{Probe validation with interactive selection:} Optional integration with measurement
+        point data (CSV format) allows direct comparison between simulated and expected potentials at
+        specific locations. When enabled, probe positions are visualized as 3D spheres on the phantom
+        surface, with an integrated table displaying voltage values at each location. Individual probes
+        can be selected interactively, highlighting the chosen position with a distinct color in the
+        3D view while displaying its coordinates and potential value in the table. This feature enables
+        rapid identification and validation of simulation results at critical measurement points.
+\end{itemize}
+
+Figure~\ref{fig:viewer_overview} demonstrates the viewer's capabilities on a representative
+dipolar case (D\_e5e8), where electrode 5 is set to +1V (green) and electrode 8 to -1V (purple).
+The top row shows different visualization modes, from standard volume rendering
+to multi-actor clipping and selective actor visibility. The bottom row focuses on electrode-specific
+inspection: clipping planes are centered at predefined electrode positions (center points of the cylindrical
+electrode surfaces, BC locations) to expose the potential gradients from the Dirichlet boundary conditions
+(electrode surfaces) into the surrounding gel volume, revealing the local field structure near the
+prescribed-voltage interfaces. The final panel (Fig.~\ref{fig:viewer_probes}) demonstrates the probe
+validation interface with its interactive table and color-coded position markers.
 
 
-\subsubsection{step view (visor)}
-\nota{Aca habria que poner algunas fotos del viewer explicar que hace etc etc. es minor, pero suma}
-lo meteria como subsubsection del solver, porque no es una cosa en si, es una herramienta para ver los resultados del solver.
+\subsubsection{Solution sampling at probe locations}
 
+After solving the forward problem, the computed voltage potential field must be sampled at specific
+measurement locations to enable validation against experimental data or comparison with analytical
+solutions. This sampling step is performed by a dedicated probing script that extracts potential
+values at predefined coordinates on the phantom surface.
 
+To establish consistent measurement locations across simulations and physical experiments, 21 probe positions
+were defined following the international 10-20 EEG system (Fp1, Fp2, Fpz, F7, F3, Fz, F4, F8, T3, C3, Cz, C4,
+T4, T5, P3, Pz, P4, T6, O1, Oz, O2). These standard electrode positions were located and marked directly on the
+CAD geometry of the phantom model shown in Fig.~\ref{fig:head_shell_overview}, following the same procedure used
+in clinical practice to position EEG electrodes on a patient's scalp. This ensures spatial correspondence between
+simulated probe locations and physical measurement points on the fabricated phantom, covering frontal, central,
+parietal, temporal, and occipital regions.
 
-\subsubsection{step probe (medicion de resultados)}
-\nota{Aca habria que poner algunas fotos del viewer explicar que hace etc etc. es minor, pero suma}
-de nuevo, no es algo critico en si, pero es una herramienta para obtener los resultados del solver, pero es importante mencioanrlo en algun lado porque es la forma en que obtenemos los datos numericos de las simulaciones para despues hacer otras cosas con esos valores
+The probing tool takes three inputs: (1) the VTU solution file containing the scalar field $u$~(voltage potential),
+(2)~a CSV file defining probe locations with their names and 3D coordinates $(x, y, z)$ extracted from the CAD
+model, and (3)~an output path for the sampled results.
 
+Since the probe coordinates may not coincide exactly with mesh vertices, the script first extracts the head shell
+surface from the volume mesh (by thresholding \texttt{region\_id}), then uses a nearest-neighbor search to find the
+closest surface point to each probe location. The voltage value at that point is recorded in the output CSV file
+with columns: \texttt{name}, \texttt{x}, \texttt{y}, \texttt{z}, and \texttt{u\_volts}.
+
+This approach ensures robust sampling even when probe coordinates are slightly displaced from the mesh surface due
+to geometric tolerances or coordinate system differences. The resulting probe data enables quantitative comparison between
+simulation cases and can be visualized directly in the interactive viewer for validation purposes.
