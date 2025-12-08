@@ -17,7 +17,7 @@ Multi-layer phantoms typically consist of three layers representing the scalp, s
 
 \subsubsection{Real-Tissue Phantoms}
 
-Real-tissue phantoms incorporate actual biological tissue, typically from animals or cadavers, into the model~\cite{Owda2020, 9475461}. These are principally used for advanced research where more realistic anatomic representations are required. For example, human head skull phantoms filled with gelatine have been used to investigate the effect of dipole localization on EEG and magnetoencephalogram (MEG)~\cite{9475461}.
+Real-tissue phantoms incorporate actual biological tissue, typically from animals or cadavers, into the model~\cite{Owda2020, 9475461}. These are principally used for advanced research where more realistic anatomic representations are required. For example, human head skull phantoms filled with gelatine have been used to investigate the effect of electrode localization on EEG and magnetoencephalogram (MEG)~\cite{9475461}.
 
 Although these phantoms can give similar frequency response characteristics to gelatine phantoms, gelatine phantoms are often selected as the preferred approach because they are more manageable, can be generated in the lab at any time, and provide more control over the electrical properties~\cite{9475461}.
 
@@ -39,7 +39,7 @@ Saline gels and hydrogels are fundamental materials in the creation of phantom h
 
 Saline gels are typically composed of a gelatinous matrix, such as gelatine or agar/agarose, mixed with saline solutions that commonly include sodium chloride to adjust the ionic conductivity, as NaCl provides ions for conduction~\cite{9475461}. Different levels of NaCl allow the electrical properties to be tuned to match various tissues of interest~\cite{Marchal01011989}.\nota{Añadir valores relevantes}
 
-However, these materials present limitations in their stability, such as evaporation~\cite{Owda2020} and degradation~\cite{Tseghai2021ALT}, which affects their use in prolonged tests. The resulting increase in contact impedance magnitude over time is attributed to the water content evaporating, which makes the phantom drier~\cite{C5TC01888A}. Gelatin-based phantoms generally show durability in their electrical response over the course of seven days under ideal conditions~\cite{9475461}.
+However, these materials present limitations in their stability, such as evaporation~\cite{Owda2020} and degradation~\cite{Tseghai2021ALT}, which affects their use in prolonged tests. The resulting increase in contact impedance magnitude over time is attributed to the water content evaporating, which makes the phantom drier~\cite{C5TC01888A}. The conductivity of the material also presents changes based on temperature, requiring storage at a constant low temperature (e.g., 2.3°C)~\cite{9475461}. Gelatin-based phantoms generally show durability in their electrical response over the course of seven days under ideal conditions~\cite{9475461}.
 
 Hydrogels are gel materials like gelatine and agarose used in phantoms~\cite{Owda2020}. Those composed of cross-linked hydrophilic polymers stand out for their capacity to absorb large amounts of water and maintain stable electrical conductivity~\cite{C5TC01888A}. Tested ion gels achieved conductivity values in the range of 0.1 $\text{S/m}$ to 1 $\text{S/m}$ at relevant temperatures~\cite{C5TC01888A}. This conductivity range is appropriate for mimicking tissues like the brain (0.12 to 0.48 $\text{S/m}$) and the scalp (0.43 $\text{S/m}$)~\cite{Owda2020}. The three-dimensional structure of these materials allows for the customization of both electrical and mechanical properties~\cite{Uhrhan2024}. For example, materials can be functionalized by incorporating conductive additives such as carbon nanofibers~\cite{Slipher2018} or multi-walled carbon nanotubes~\cite{MAGSOOD2021111705}.
 
@@ -65,9 +65,9 @@ However, conductive polymers and related polymer systems face challenges such as
 
 The generation of electrical signals within a phantom head is the core mechanism enabling the controlled validation of new electrode and instrumentation designs~\cite{9475461}. Unlike experiments conducted on human subjects where the recorded signal is intrinsically unknown, phantoms allow a pre-recorded electrophysiology signal or a synthetically created signal to be played out, providing a known signal for the test system to collect and compare against~\cite{Owda2020}. This is usually achieved by injecting precisely controlled currents or voltages into the phantom's conductive medium via a set of internal drive electrodes~\cite{akor-2025}.
 
-Phantom designs then consist of primarily three components: the dipole array that injects the signal into the phantom, the dipole driver that allows the independent control of each dipole, and the phantom head itself that contains said dipole array~\cite{LEAHY1998159}.
+Phantom designs then consist of primarily three components: the electrode array that injects the signal into the phantom, the electrode driver that allows the independent control of each electrode, and the phantom head itself that contains said electrode array~\cite{LEAHY1998159}.
 
-As phantom head design and composition where already covered in Subsection~\ref{subsec:phantom_designs} and Subsection~\ref{subsec:phantom_materials} respectively, this section focuses on the signal generation module (dipole array and driver) and the key characteristics of the generated signals.
+As phantom head design and composition where already covered in Subsection~\ref{subsec:phantom_designs} and Subsection~\ref{subsec:phantom_materials} respectively, this section focuses on the signal generation module (electrode array and driver) and the key characteristics of the generated signals.
 
 \subsubsection{Signal Requirements}
 
@@ -78,23 +78,29 @@ Phantom heads are designed to mimic the frequency spectrum of human brain activi
     \item Higher frequencies: Gamma, 30{-}80 Hz and higher, are more difficult to study in the human body as they are heavily attenuated by the skull and scalp layers, and obfuscated by muscular and ocular artifacts~\cite{FREEMAN20031053}. Head phantom validation often involves ensuring that the components accurately mimic these behaviours~\cite{9475461}.
 \end{itemize}
 
-The amplitude of the EEG under physiological conditions ranges from 15 to 150 \( \mu\text{V} \)~\cite{Naydenov2022}. However, the internal generators (dipoles) must drive significantly higher currents to account for the attenuation caused by volume conduction through the phantom material~\cite{LEAHY1998159}. The electronics must provide a wide dynamic range, capable of generating signals that result in low surface potentials to reduce noise~\cite{Morsalin2020}.
+The amplitude of the EEG under physiological conditions ranges from 15 to 150 \( \mu\text{V} \)~\cite{Naydenov2022}. However, the internal generators (electrodes) must drive significantly higher voltages to account for the attenuation caused by volume conduction through the phantom material~\cite{LEAHY1998159}. The electronics must provide a wide dynamic range, capable of generating signals that result in low surface potentials to reduce noise~\cite{Morsalin2020}.
 
-\subsubsection{Dipole Driver}
+\subsubsection{Electrode Driver}
 
-The dipole driver acts as the interface between the digital simulation software (usually on a PC) and the physical phantom, generating complex, arbitrary waveforms used to mimic neural activity~\cite{LEAHY1998159}.
+The electrode driver acts as the interface between the digital simulation software (usually on a PC) and the physical phantom, generating complex, arbitrary waveforms used to mimic neural activity~\cite{LEAHY1998159}.
 
 Controlling the driver means knowing the exact location, orientation, amplitude, and timing of the source: the ``ground truth'' data~\cite{LEAHY1998159}. This known signal is crucial for validating the performance of EEG electrodes and acquisition systems, as it allows for objective comparisons between the generated signal and the recorded data.~\cite{Audette2020}
 
-\subsubsection{Dipole Construction}
-
-The driver sends the current into physical dipoles embedded in the phantom head. These dipoles can be constructed in various ways depending on the design requirements of the phantom. 
+\subsubsection{Electrode Construction}
+The driver controls the known electrical signals that are injected into physical electrodes embedded in the phantom head. These electrodes can be constructed in various ways depending on the design requirements of the phantom:
 
 \begin{itemize}
-    \item Dipoles are often constructed from semi-rigid coaxial cables, where the inner conductor and the outer shield are exposed at the tip (with a gap of roughly 0.5 mm to 2 mm) to form the two poles of the dipole~\cite{LEAHY1998159}.
-    \item Platinum is often used in high-fidelity dipoles, as it is chemically inert and resistant to corrosion, which is a major concern in saline environments~\cite{Machts2019}.
+    \item The most common are dipoles constructed from semi-rigid coaxial cables, where the inner conductor and the outer shield are exposed at the tip (with a gap of roughly 0.5 mm to 2 mm) to form the two poles of the dipole (see Figure~\ref{fig:dipole_leahy}). This design is favored because the semi-rigid nature of the cable allows for precise positioning and bending to specific orientations within the phantom volume~\cite{LEAHY1998159}.
+    \item For high-fidelity phantoms, platinum electrodes are used as they are chemically inert and resistant to corrosion, which is a major concern in saline environments~\cite{Machts2019}.
     \item For lower-cost phantoms, standard 3.5 mm TRS audio jacks are used. While less electrochemically stable than platinum, they are readily available and provide a standardized connection interface.~\cite{Downey2023}
 \end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{../../02_Images/leahy_dipole.png}
+\caption{Coaxial cable dipole used in~\cite{LEAHY1998159}.}
+\label{fig:dipole_leahy}
+\end{figure}
 
 \subsubsection{Electronic module architecture}
 
@@ -148,9 +154,9 @@ The numbers indicate the hemisphere:
 
 \nota{Completar con filtros típicos usados en la adquisición de señales EEG en phantoms, tanto hardware como software.}
 
-\subsection{Selection Algorithms}
+\subsubsection{Feature Selection Algorithms}
 
-\nota{Completar}
+\nota{Completar con algoritmos usados para validar las señales adquiridas de los phantoms.}
 
 \biblio% Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
