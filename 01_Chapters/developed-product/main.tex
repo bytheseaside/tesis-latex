@@ -1,11 +1,33 @@
-Descripción técnica de la solución o del producto desarrollado incluyendo los modelos,
-datos arquitectura, etc.
-• Especificación de Requerimientos del Proyecto
-• Especificación de Requisitos Funcionales
-• Documentación de interfaces
-• Documento de Arquitectura
-• Diseño de alto nivel
-• Diseño de bajo nivel
-• Resultados de Testing
-• Ejecutable o Prototipo
-• Instructivo de instalación / descarga
+\documentclass[../00_Main.tex]{subfiles}
+\begin{document}
+
+\subsection{Conceptual Design}
+Overview of the hybrid system composed of the software platform and the phantom head hardware.
+
+\nota{Diagrama de bloques Usuario -> Software -> Audio DAC -> Phantom Head -> OpenBCI}
+
+\subsection{System Architecture}
+\subsubsection{Software Architecture Pattern}
+Description of the architecture using the Electron container (client) and Python Flask (server).
+
+\subsubsection{Technology Stack}
+\begin{itemize}
+    \item \textbf{Frontend:} React, TypeScript, Vite.
+    \item \textbf{Backend:} Python
+\end{itemize}
+\subsection{Software Platform}
+
+\subsubsection{Signal Generation Engine}
+\subsubsection{User Interface Design}
+\subsection{Hardware Architecture}
+
+\subsubsection{Phantom Head Building Specifications}
+Detailed methodology for constructing the full phantom head:
+\begin{itemize}
+    \item Gelatine formulation.
+    \item Assembly of the phantom head model.
+    \item 10{-}20 System electrode placement strategy.
+\end{itemize}
+
+\biblio~% Needed for referencing to working when compiling individual subfiles - Do not remove
+\end{document}
