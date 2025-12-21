@@ -8,7 +8,7 @@ From a physiological perspective, the signals observed in an electroencephalogra
 
 The dominant contribution to electroencephalographic signals originates from synchronized postsynaptic potentials in cortical pyramidal neurons. Due to their geometry, alignment, and organization within the cerebral cortex, these neurons form effective electrical dipoles between the neuronal soma and apical dendrites, making them particularly influential in shaping the signals recorded in electroencephalograms~\cite{abhang-2016}.
 
-\subsubsection{EEG patterns}
+\subsubsection{EEG signal characteristics and rhythmic patterns}
 Through his early experiments, Berger observed that electroencephalograms change in a \textit{consistent and recognizable manner} with the state of the subject. Transitions between conditions such as sleep, relaxation, and alertness were found to be accompanied by characteristic changes in the recorded brain activity~\cite{st-louis-2016,abhang-2016}. These observations provided the first evidence that EEG signals exhibit structured temporal patterns related to brain state, motivating subsequent efforts to classify EEG activity into distinct rhythmic components. One decade later, Adrian and Matthews published results consistent with Berger’s findings~\cite{abhang-2016}.
 
 Nowadays, electroencephalographic activity is commonly described in terms of frequency bands, each associated with characteristic frequency ranges and general physiological or cognitive states. A summary of these bands is provided in Table~\ref{tab:eeg_frequency_bands}.
@@ -30,12 +30,16 @@ Gamma~$\gamma$  & $>$30    & High-level cognitive processing \\
 \end{tabular}
 \end{table}
 
-From a clinical perspective, EEG analysis typically focuses on frequency components in the range of approximately 0.5 to 70~Hz, but it's recorded up to 100~Hz~\cite{kong-2025}. Activity above this range is not commonly observed under normal physiological conditions, but higher-frequency components may appear in specific pathological contexts, such as epileptic activity. In more specialized settings, including research and invasive recordings, EEG signals may be acquired and analyzed at frequencies extending to several hundred hertz.
+From a clinical perspective, EEG analysis typically focuses on frequency components in the range of approximately 0.5 to 70~Hz, although signals are commonly
+recorded up to 100~Hz~\cite{kong-2025}, with scalp-recorded potentials exhibiting relatively small amplitudes under physiological conditions, typically on the
+order of 15 to 150~$\mu$V~\cite{Naydenov2022}.
 
-Although the frequency bands summarized above are broadly associated with characteristic brain states, their interpretation is not exclusive. EEG patterns are influenced by multiple factors beyond the general state of the subject, including age, mental and physical condition, and pharmacological effects, which must be considered when analyzing and interpreting EEG recordings.
+Although the frequency bands summarized above are broadly associated with characteristic brain states, their interpretation is not exclusive. EEG patterns are
+influenced by multiple factors beyond the general state of the subject, including age, mental and physical condition, and pharmacological effects, which must be
+considered when analyzing and interpreting EEG recordings.
 
 The following descriptions summarize the main characteristics of each EEG frequency band as commonly reported in the literature~\cite{nayak-2025}.
- 
+
 \paragraph*{Delta activity.}
 Delta activity is the slowest EEG rhythm and predominates during deep stages of sleep. In awake adults, prominent delta activity is uncommon and may indicate altered or pathological brain function.
 
@@ -62,3 +66,30 @@ High-frequency EEG activity above 30~Hz includes gamma-band oscillations as well
 Activity above approximately 80~Hz is often subdivided into ripples and fast ripples, which are primarily observed in pathological contexts and are strongly associated
 with epileptogenic tissue. These signals are typically studied in specialized clinical or invasive recording settings as they are heavily attenuated by the skull and scalp
 layers, and obfuscated by muscular and ocular artifacts~\cite{FREEMAN20031053, nayak-2025}.
+
+\subsubsection{EEG electrode placement systems}
+
+Standardized electrode placement systems are used in electroencephalography (EEG) to ensure anatomical consistency and reproducibility across subjects,
+recording sessions, and laboratories. These systems define electrode locations as proportions of scalp distances measured between anatomical landmarks,
+such as the nasion, inion, and preauricular points, thereby accommodating differences in head size and shape~\cite{klem-1999}.
+
+The most widely adopted framework is the International 10{-}20 system, originally formalized to standardize earlier practices in clinical EEG.
+Several extensions of this system have since been introduced to increase spatial sampling density, including the 10{-}10 system and higher-resolution
+schemes such as the 10{-}5 (or 5\%) system. These extensions preserve compatibility with the original 10{-}20 nomenclature, ensuring that electrode labels
+remain consistent across different spatial resolutions~\cite{klem-1999}. As a result, recordings obtained with higher-density layouts can be directly related to
+conventional clinical EEG configurations.
+
+In all these systems, electrode labels consist of a letter indicating the general cortical region—frontal~(F), temporal~(T), central~(C), parietal~(P),
+and occipital~(O)—and a numerical index denoting hemispheric location. Odd numbers correspond to the left hemisphere, even numbers to the right, and the suffix \textit{z}
+designates midline positions.
+
+In this work, electrode placement follows the International 10{-}20 system, which remains the clinical standard for routine EEG acquisition.
+A conventional 10{-}20 montage typically comprises 21 electrodes, providing representative coverage of the major cortical regions while maintaining
+a balance between spatial resolution and practical feasibility.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{../../02_Images/10_20_system.pdf}
+\caption[EEG electrode placement systems: the 10--20 standard]{International 10{-}20 EEG electrode placement system.}
+\label{fig:10_20_system}
+\end{figure}
