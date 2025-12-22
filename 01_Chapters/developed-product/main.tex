@@ -2,7 +2,35 @@
 \begin{document}
 
 \subsection{Conceptual Design}
-Overview of the hybrid system composed of the software platform and the phantom head hardware.
+The proposed solution is a hybrid electro-acoustic emulation system. It integrates a digital signal processing platform with a physical analog transduction architecture to simulate electrophysiological activity in a phantom head mimicking EEG signals.
+
+\subsubsection{Software and Hardware Subsystems}
+The system is conceptualized as two distinct but synchronized subsystems:
+
+\begin{enumerate}
+    \item \textbf{The Digital Control Unit (Software):} A desktop application responsible for the deterministic synthesis of waveforms and real-time visualization of acquired data for contrast. This subsystem acts as the signal generator controller, utilizing the host computer's audio sound card as a high-fidelity DAC source to output precise voltage fluctuations at set frequencies. The software has also included functionality to parse and playback clinical EEG data from EDF files, allowing for realistic simulation scenarios.
+    
+    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale ($\mu V$) potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first splitted into two mono channels (left and right), each routed to an independent signal conditioning circuit containing a non-inverting opamp and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an EEG acquisition system and fed back into the software for analysis.
+\end{enumerate}
+
+\subsubsection{System Data Flow}
+\begin{enumerate}
+    \item \textbf{User Configuration:} The operator defines the desired EEG parameters via the dashboard interface.
+    \item \textbf{Digital Synthesis:} The Python backend generates a discrete-time signal array.
+    \item \textbf{D/A Conversion:} The PC's audio DAC reconstructs the continuous analog signal.
+    \item \textbf{Channel Splitting:} Each audio output is splitted into two mono signals, obtaining the channels left and right.
+    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting opamp and potentiometer to control gain.
+    \item \textbf{Dipole Construction:} The channels are routed to the phantom head model as dipoles using audio jack terminals.
+    \item \textbf{Volume Conduction:} The signal is injected into the phantom head, establishing an electric field distribution.
+    \item \textbf{Acquisition:} The EEG electrodes detect the potential difference on the phantom's surface, closing the loop.
+\end{enumerate}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/high_level_block_diagram.png}
+    \caption{High-Level Block Diagram of the solution.}
+    \label{fig:block_diagram}
+\end{figure}
 
 \nota{Diagrama de bloques Usuario -> Software -> Audio DAC -> Phantom Head -> OpenBCI}
 
