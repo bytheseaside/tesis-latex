@@ -10,12 +10,22 @@ The system is conceptualized as two distinct but synchronized subsystems:
 \begin{enumerate}
     \item \textbf{The Digital Control Unit (Software):} A desktop application responsible for the deterministic synthesis of waveforms and real-time visualization of acquired data for contrast. This subsystem acts as the signal generator controller, utilizing the host computer's audio sound card as a high-fidelity DAC source to output precise voltage fluctuations at set frequencies. The software has also included functionality to parse and playback clinical EEG data from EDF files, allowing for realistic simulation scenarios.
     
-    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale ($\mu V$) potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first splitted into two mono channels (left and right), each routed to an independent signal conditioning circuit containing a non-inverting opamp and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an EEG acquisition system and fed back into the software for analysis.
+    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale ($\mu V$) potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first splitted into two mono channels (left and right), each routed to an independent signal amplifier circuit containing a non-inverting opamp and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an EEG acquisition system and fed back into the software for analysis.
 \end{enumerate}
+
+\subsubsection{High-Level Block Diagram}
+Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the proposed solution, highlighting the interaction between the software and hardware components.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/high_level_block_diagram.png}
+    \caption{High-level block diagram of the solution}
+    \label{fig:block_diagram}
+\end{figure}
 
 \subsubsection{System Data Flow}
 \begin{enumerate}
-    \item \textbf{User Configuration:} The operator defines the desired EEG parameters via the dashboard interface.
+    \item \textbf{User Configuration:} The user defines the desired EEG parameters via the dashboard interface.
     \item \textbf{Digital Synthesis:} The Python backend generates a discrete-time signal array.
     \item \textbf{D/A Conversion:} The PC's audio DAC reconstructs the continuous analog signal.
     \item \textbf{Channel Splitting:} Each audio output is splitted into two mono signals, obtaining the channels left and right.
@@ -27,7 +37,7 @@ The system is conceptualized as two distinct but synchronized subsystems:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{images/high_level_block_diagram.png}
+    \includegraphics[width=\textwidth]{images/high_level_block_diagram.svg}
     \caption{High-Level Block Diagram of the solution.}
     \label{fig:block_diagram}
 \end{figure}
@@ -35,13 +45,15 @@ The system is conceptualized as two distinct but synchronized subsystems:
 \nota{Diagrama de bloques Usuario -> Software -> Audio DAC -> Phantom Head -> OpenBCI}
 
 \subsection{System Architecture}
+
 \subsubsection{Software Architecture Pattern}
 Description of the architecture using the Electron container (client) and Python Flask (server).
 
 \subsubsection{Technology Stack}
 \begin{itemize}
     \item \textbf{Frontend:} React, TypeScript, Vite.
-    \item \textbf{Backend:} Python
+    \item \textbf{Backend:} Python, Flask, Socket.IO, NumPy, Brainflow.
+    \item \textbf{Communication:} WebSocket (Socket.IO) event-driven protocol.
 \end{itemize}
 \subsection{Software Platform}
 
