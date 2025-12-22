@@ -19,7 +19,7 @@ Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the pr
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{../../02_Images/high_level_block_diagram.png}
-    \caption{High-level block diagram of the solution}
+    \caption[High-level block diagram of the solution]{High-level block diagram of the proposed EEG signal emulation system, showing the flow from user configuration to signal acquisition.}
     \label{fig:block_diagram}
 \end{figure}
 
@@ -29,20 +29,12 @@ Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the pr
     \item \textbf{Digital Synthesis:} The Python backend generates a discrete-time signal array.
     \item \textbf{D/A Conversion:} The PC's audio DAC reconstructs the continuous analog signal.
     \item \textbf{Channel Splitting:} Each audio output is splitted into two mono signals, obtaining the channels left and right.
-    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting opamp and potentiometer to control gain.
+    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting opamp and potentiometer for amplification.
     \item \textbf{Dipole Construction:} The channels are routed to the phantom head model as dipoles using audio jack terminals.
     \item \textbf{Volume Conduction:} The signal is injected into the phantom head, establishing an electric field distribution.
     \item \textbf{Acquisition:} The EEG electrodes detect the potential difference on the phantom's surface, closing the loop.
 \end{enumerate}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{images/high_level_block_diagram.svg}
-    \caption{High-Level Block Diagram of the solution.}
-    \label{fig:block_diagram}
-\end{figure}
-
-\nota{Diagrama de bloques Usuario -> Software -> Audio DAC -> Phantom Head -> OpenBCI}
 
 \subsection{System Architecture}
 
