@@ -39,7 +39,32 @@ Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the pr
 \subsection{System Architecture}
 
 \subsubsection{Software Architecture Pattern}
-Description of the architecture using the Electron container (client) and Python Flask (server).
+
+The software platform implements a local client-server architecture encapsulated within a desktop runtime environment. Unlike traditional monolithic desktop applications (compiled in C++ or C\#) or purely cloud-based web applications, this solution adopts a hybrid approach known as a decoupled monolith.
+
+Using this architecture, the presentation layer (frontend) and the logic layer (backend) execute as independent processes on the host machine, communicating via a local network loopback interface. This design leverages the visualization capabilities of modern web technologies while retaining the raw computational power and hardware access of a native Python environment.
+
+The designed architecture is composed of three primary layers:
+
+\begin{enumerate}
+    \item \textbf{The Client Container (Electron):} The application is wrapped in Electron, a framework that embeds a Chromium browser instance and a Node.js runtime. Electron serves two critical functions:
+    \begin{itemize}
+        \item \textbf{Process Orchestration:} Upon execution, the Electron main process spawns the Python backend as a child subprocess, ensuring that the server starts and terminates in sync with the application window.
+        \item \textbf{Native Integration:} It provides the application with native OS capabilities (file system access for exporting EDFs, window management, etc.) that are restricted in standard web browsers.
+    \end{itemize}
+
+    \item \textbf{The Application Server (Python Flask):} The core logic resides in a distinct Python process managed by the Flask micro-framework. Its responsibilities include:
+    \begin{itemize}
+        \item \textbf{Mathematical Synthesis:} executing the signal generation algorithms via \texttt{NumPy}.
+        \item \textbf{Hardware Abstraction:} managing the audio stream (via \texttt{sounddevice}) and the OpenBCI connection (via \texttt{BrainFlow}).
+        \item \textbf{EDF Management:} parsing and exporting clinical data using \texttt{pyedflib}.
+    \end{itemize}
+
+    \item \textbf{The Communication Bridge (Socket.IO):} To satisfy the non-functional requirement of low latency (NFR-01), the system bypasses standard HTTP REST protocols. Instead, it utilizes Socket.IO to establish a persistent, bidirectional WebSocket connection between the React frontend and the Flask backend. This event-driven protocol allows the server to push high-frequency signal data (60 packets/second) to the visualizer without the overhead of HTTP headers or polling.
+\end{enumerate}
+
+This architecture ensures Separation of Concerns (SOC): the frontend remains responsive even if the backend performs intensive signal processing, as the user interface and the audio engine run on separate threads and memory spaces.
+
 
 \subsubsection{Technology Stack}
 \begin{itemize}
