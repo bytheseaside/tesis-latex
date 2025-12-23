@@ -67,15 +67,26 @@ This architecture ensures Separation of Concerns (SOC): the frontend remains res
 
 
 \subsubsection{Technology Stack}
-\begin{itemize}
-    \item \textbf{Frontend:} React, TypeScript, Vite.
-    \item \textbf{Backend:} Python, Flask, Socket.IO, NumPy, Brainflow.
-    \item \textbf{Communication:} WebSocket (Socket.IO) event-driven protocol.
-\end{itemize}
-\subsection{Software Platform}
+The selection of technologies for the software platform was driven by the specific requirement to balance high-level user interface interactivity with low-level hardware control and deterministic signal processing.
 
-\subsubsection{Signal Generation Engine}
-\subsubsection{User Interface Design}
+\begin{enumerate}
+    \item\textbf{Frontend Layer (React Ecosystem):} The user interface is constructed using \textbf{React 18}, employing a component-based architecture to manage the independent state of multiple output modules.
+    
+    \begin{itemize}
+        \item \textbf{TypeScript:} Utilized to enforce strict static typing.
+        \item \textbf{Vite:} Selected as the build tool to minimize the application bundle size and optimize the hot-module replacement (HMR) cycle during development.
+    \end{itemize}
+
+    \item\textbf{Backend Layer (Python Ecosystem):} The computational core is developed in \textbf{Python 3.10+}, chosen for its extensive support for scientific computing and hardware integration.
+    
+    \begin{itemize}
+        \item \textbf{Flask:} Functions as the application server, managing the lifecycle of the background threads and serving the static assets to the Electron container.
+        \item \textbf{NumPy:} Serves as the mathematical engine for the system. It is responsible for the vectorized generation of sine wave arrays.
+        \item \textbf{BrainFlow:} Implemented as the Hardware Abstraction Layer (HAL) for the acquisition device. This library creates a unified interface to communicate with the OpenBCI Cyton board, handling serial port handshakes and stream parsing automatically.
+    \end{itemize}
+
+    \item\textbf{Communication Layer (Socket.IO):} To satisfy the real-time latency constraints, the system utilizes \textbf{Flask-SocketIO} (server) and \textbf{socket.io-client} (frontend). This establishes an event-driven WebSocket protocol, allowing the backend to push signal measurements to the interface immediately upon generation, rather than waiting for HTTP polling requests. This architecture is critical for the closed-loop visualization feature, ensuring that the delay between signal generation and visual feedback is minimized.
+\end{enumerate}
 \subsection{Hardware Architecture}
 
 \subsubsection{Phantom Head Building Specifications}
