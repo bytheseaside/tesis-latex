@@ -5,7 +5,7 @@ Phantom designs then consist of primarily three components: the electrode array 
 
 As phantom head design and composition where already covered in subsubsection~\ref{subsec:phantom_designs} and subsubsection~\ref{subsec:phantom_materials} respectively, this subsection focuses on the signal generation module (electrode array and driver) and the key characteristics of the generated signals.
 
-\paragraph{Signal Requirements}
+\paragraph*{Signal Requirements}
 \nota{ agregue una sección arriba, sobre eeg en gral y freq bands (use también una copia textual de acá) - quizás esto deberiamos cambiarlo un poco}
 
 Phantom heads are designed to mimic the frequency spectrum of human brain activity, which is characterized by a wide range of frequencies. Specific frequency bands
@@ -21,13 +21,13 @@ used in phantom validation include:
 
 The amplitude of the EEG under physiological conditions ranges from 15 to 150 \( \mu\text{V} \)~\cite{Naydenov2022}. However, the internal generators (electrodes) must drive significantly higher voltages to account for the attenuation caused by volume conduction through the phantom material~\cite{LEAHY1998159}. The electronics must provide a wide dynamic range, capable of generating signals that result in low surface potentials to reduce noise~\cite{Morsalin2020}.
 
-\paragraph{Electrode Driver}
+\paragraph*{Electrode Driver}
 
 The electrode driver acts as the interface between the digital simulation software (usually on a PC) and the physical phantom, generating complex, arbitrary waveforms used to mimic neural activity~\cite{LEAHY1998159}.
 
 Controlling the driver means knowing the exact location, orientation, amplitude, and timing of the source: the ``ground truth'' data~\cite{LEAHY1998159}. This known signal is crucial for validating the performance of EEG electrodes and acquisition systems, as it allows for objective comparisons between the generated signal and the recorded data.~\cite{Audette2020}
 
-\paragraph{Electrode Construction}
+\paragraph*{Electrode Construction}
 The driver controls the known electrical signals that are injected into physical electrodes embedded in the phantom head. These electrodes can be constructed in various ways depending on the design requirements of the phantom:
 
 \begin{itemize}
@@ -43,7 +43,7 @@ The driver controls the known electrical signals that are injected into physical
 \label{fig:dipole_leahy}
 \end{figure}
 
-\paragraph{Electronic module architecture}
+\paragraph*{Electronic module architecture}
 
 The choice of architecture dictates the fidelity, bandwidth, and flexibility of the phantom. Some common architectures include:
 
@@ -52,6 +52,6 @@ The choice of architecture dictates the fidelity, bandwidth, and flexibility of 
     \item Microcontroller-based architecture: for portable, battery-powered phantoms. A usual choice is the Teensy 3.2 that features a built-in 12-bit digital-to-analog converter (DAC)~\cite{PJRC_Teensy}. While having lower resolution than audio interfaces, 12 bits provides sufficient dynamic range for many verification tasks, especially when the signal is generated at a higher amplitude and then attenuated analogically~\cite{LEAHY1998159}.
 \end{itemize}
 
-\paragraph{Wireless Protocols}
+\paragraph*{Wireless Protocols}
 
 \nota{Me gustaría añadir una sección sobre protocolos wireless para la transmisión de datos y control del phantom, pero no encontré mucho todavía. Ver cómo esto afecta a la señal que se transmite. Ver Audette2020}
