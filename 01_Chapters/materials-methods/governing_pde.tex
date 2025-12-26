@@ -67,36 +67,6 @@ Accordingly, no Dirichlet or Neumann boundary condition is imposed at measuremen
 
 Over the frequency range of interest (DC to $\sim$100~Hz), the gel medium behaves as a linear, Ohmic conductor with negligible reactive (capacitive or inductive) effects. This is supported by experimental evidence from tissue-mimicking phantoms, which demonstrate frequency-independent conductivity across the EEG band~\cite{akor-2025}. For example, gelatin or saline phantoms typically exhibit less than 2\% variation in $\sigma$ from 0.1~Hz to 1~kHz, and negligible phase shift, confirming that conduction current dominates.~\cite{geddes-1967, Chandra2000}
 
-% In physical terms, the displacement current density $\partial \mathbf{D}/\partial t$ remains much smaller than the conduction current $\mathbf{J}$ in this regime. This is formally justified by examining the ratio:
-
-% \[
-% \frac{|\partial \mathbf{D}/\partial t|}{|\mathbf{J}|} = \frac{\omega \varepsilon}{\sigma} \ll 1,
-% \]
-
-% as discussed in detail below. Consequently, dielectric storage and capacitive charging are negligible, and the medium can be considered purely resistive. This assumption is central to the quasi-static approximation, and is further justified in Section~\ref{subsection:maxwell} using Maxwell’s equations.
-
-% \subsubsection{Summary of Assumptions}
-% \nota{So, the assumptions made \textbf{up until now} are... and they are based in the system materials and previously explained bla bla bla
-% Explain here why we do the "deprecitating of the displacement current" section later. or move it before and add it here... whats the best option? double check
-% }
-
-% \begin{itemize}
-%     \item The phantom’s materials are linear, homogeneous conductors with
-%     isotropic (effective) conductivity $\sigma(\mathbf{x})$ (piecewise constant: $\sigma_{\text{gel}}$ vs. $\sigma_{\text{shell}}$).
-    
-%     \item No internal current sources or sinks in the volume (all driving currents come from electrode boundary conditions).
-
-%     \item No significant polarization or capacitive storage in the bulk (conductive current dominates over displacement current in the frequency range of interest).
-
-%     \item Boundary conditions: Dirichlet ($u=V_i(t)$) on internal electrode surfaces; Neumann ($\sigma,\partial_n u=0$) on the external shell surface; no enforced condition for high-impedance measurement electrodes (they effectively float).
-
-%     \item Interfaces between gel and shell are in perfect electrical contact (no contact impedance or gaps), so continuity conditions apply. \nota{this we didnt say before... do we keep it here? do i add a text saying those were the already said pnes and we introudce some new ones: etc etc }
-
-% \end{itemize}
-
-
-% With this system defined, we proceed to derive the governing partial differential equation (PDE) for the electric potential $u(\mathbf{x},t)$ in the domain $\Omega = \Omega_{\text{gel}} \cup \Omega_{\text{shell}}$.
-
 \subsubsection{Summary of Assumptions}
 
 To recap, the modelling choices made so far rely on a set of assumptions that were previously introduced and justified in the preceding subsections. For clarity, they are listed here in compact form:
@@ -166,8 +136,7 @@ where $\mathbf{H}$ is the magnetic field intensity (A/m), $\mathbf{J}$ is the co
 where $\mathbf{B}$ is the magnetic flux density (T).  
 
 We now invoke the quasi-static approximation appropriate for bioelectric systems like EEG~\cite{troparevsky-2010, nunez-2025}. This approximation is justified when both temporal and spatial variations of the fields are sufficiently slow, so that wave propagation effects can be neglected. In this case, the highest relevant frequency (100 Hz) corresponds to a wavelength larger than 300\space km for both materials (as shown in Appendix~\ref{appendix:wavelength}). The effective wavelength remains many orders of magnitude larger than the phantom’s size (around 0.3~m). 
-% maybe we leave this commented, but this is the explanation for lambda ...
-% The wavelength $\lambda$ computed in Appendix~A quantifies the distance over which an electromagnetic wave completes one full oscillation at the highest frequency of interest (here, 100~Hz). In wave–propagating regimes, field quantities can vary significantly over distances comparable to $\lambda$. Conversely, when $\lambda$ is much larger than the physical dimensions of the system, spatial variations become negligible and the fields behave in an effectively instantaneous, diffusion–like manner rather than as travelling waves. Appendix~A shows that, even under conservative assumptions for the materials’ permittivity, the resulting wavelengths (tens to hundreds of kilometres) exceed the phantom's characteristic size ($\sim 0.3$~m) by more than five orders of magnitude. This disparity confirms that wave propagation effects cannot develop within the phantom, thereby validating the electroquasistatic treatment adopted in this section.
+
 This places the system deep within the electroquasistatic regime, where the electromagnetic fields adjust effectively instantaneously across the volume.
 
 Consequently, the spatial phase variation of the electric field is negligible, and potential changes propagate uniformly. Empirical EEG observations support this: “potentials show no measurable time delay between physically separated regions” \cite{nunez-2025}. This allows us to neglect the wave nature of the field and adopt a quasi-static treatment in which the electric field is determined solely by local sources (none in this case) and boundary conditions.
@@ -238,23 +207,6 @@ Combining Ohm’s law with $\mathbf{E}=-\nabla u$, we get the current density in
 \textbf{J}(\textbf{x},t) = -\,\sigma(\textbf{x})\,\nabla u(\textbf{x},t) \label{eq:JgradU}
 \]
 
-% We now enforce charge conservation in differential form. Maxwell’s equations include the continuity equation $\nabla\cdot \mathbf{J} + \partial \rho_f/\partial t = 0$. In steady or slowly varying conduction, no net charge builds up in any region (any small charge separations that do occur serve only to maintain the electric field in steady state, but do not accumulate over time). Thus $\partial_t \rho_f \approx 0$. Consequently:
-
-% \[
-% \nabla \cdot \textbf{J}(\textbf{x},t) = 0, \qquad\text{for all } \mathbf{x}\in \Omega_{\text{gel}}\cup\Omega_{\text{shell}}\label{eq:continuity}
-% \]
-
-% This condition simply states that electric current does not accumulate within the volume: whatever current enters a small region must also leave it. 
-
-% Finally, substituting the expression for the current density from
-% Eq.~\eqref{eq:JgradU} into the continuity relation in
-% Eq.~\eqref{eq:continuity} leads to the governing equation used in the
-% simulations:
-% \[
-% -\nabla \cdot \big(\sigma(\mathbf{x})\, \nabla u(\mathbf{x},t)\big) = 0,
-% \qquad \text{for all } \mathbf{x}\in \Omega_{\text{gel}}\cup\Omega_{\text{shell}}.
-% \tag{PDE}
-% \]
 
 We now enforce charge conservation in differential form. Maxwell’s equations 
 include the continuity equation $\nabla\cdot \mathbf{J} + \partial \rho_f/\partial t = 0$. 
