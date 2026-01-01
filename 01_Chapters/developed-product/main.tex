@@ -87,6 +87,56 @@ The selection of technologies for the software platform was driven by the specif
 
     \item\textbf{Communication Layer (Socket.IO):} To satisfy the real-time latency constraints, the system utilizes \textbf{Flask-SocketIO} (server) and \textbf{socket.io-client} (frontend). This establishes an event-driven WebSocket protocol, allowing the backend to push signal measurements to the interface immediately upon generation, rather than waiting for HTTP polling requests. This architecture is critical for the closed-loop visualization feature, ensuring that the delay between signal generation and visual feedback is minimized.
 \end{enumerate}
+
+\subsection{User Interface Design Process}
+
+The final interface architecture emerged from a user-centered design process involving three distinct iterations. Each phase addressed specific usability friction points and technical validity concerns regarding signal synchronization and visualization, based on feedback from usability testing sessions.
+
+\subsubsection{Iteration 1: High Cognitive Load}
+
+The initial design (Figure~\ref{fig:iteration_1_ui}) attempted to provide maximum control, exposing all available parameters as immediate buttons on the dashboard.
+
+\begin{itemize}
+    \item \textbf{Issue A (Usability):} The interface was cluttered with too many buttons, leading to user confusion and slow reaction times.
+    \item \textbf{Issue B (Synchronization):} The design allowed users to import distinct EDF files for each channel independently. Functional analysis revealed that this approach introduced significant risks of temporal misalignment (synchronization drift) between channels and increased the probability of user error during setup.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/iteration_1_ui.png}
+    \caption[User Interface {-} Iteration 1]{User Interface {-} Iteration 1: High Cognitive Load Design}
+    \label{fig:iteration_1_ui}
+\end{figure}
+
+\subsubsection{Iteration 2: Menu Consolidation \& The Visualization Fallacy}
+
+The second iteration (Figure~\ref{fig:iteration_2_ui}) addressed the clutter by moving secondary options to the window menu (leveraging Electron's native menu APIs) and solved the synchronization issue by implementing a global file with local routing logic (loading a single master file, and giving the user the option to select a channel from the imported file to replicate in the generation channels). However, this design introduced a new problem in the visualization paradigm:
+
+\begin{itemize}
+    \item \textbf{The New Problem:} This design superimposed the generated signal and the measured signal (OpenBCI) onto the same graph for each channel. Testing revealed this to be scientifically misleading. Due to volume conduction in the phantom head, a single generated dipole affects multiple acquisition electrodes simultaneously. Therefore, implying a direct 1-to-1 relationship between ``Generator 1'' and ``Sensor 1'' was incorrect and confused the validation process.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/iteration_2_ui.png}
+    \caption[User Interface {-} Iteration 2]{User Interface {-} Iteration 2: Menu Consolidation \& Visualization Fallacy}
+    \label{fig:iteration_2_ui}
+\end{figure}
+
+\subsubsection{Iteration 3: Final Split-View Design}
+The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization validity problem by strictly decoupling the views:
+\begin{itemize}
+    \item \textbf{Global Control:} The generation control panel remains persistently visible, allowing the user to manipulate the source dipoles in both views.
+    \item \textbf{Context-Switching Views:} The user can toggle between a \textit{Generation View} (previewing the ideal synthetic output) and a \textit{Measured View} (displaying the full 8-channel OpenBCI array). This structure allows the operator to modify a single generated source and correctly observe its distributed effect across the entire cranial surface, accurately reflecting the physics of the phantom head.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/iteration_3_ui.png}
+    \caption[User Interface {-} Iteration 3]{User Interface {-} Iteration 3: Final Split-View Design}
+    \label{fig:iteration_3_ui}
+\end{figure}
+
 \subsection{Hardware Architecture}
 
 \subsubsection{Phantom Head Building Specifications}
