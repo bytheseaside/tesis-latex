@@ -162,13 +162,49 @@ Applying this last changes resulted in the final UI design, with separate views 
 
 \subsection{Hardware Architecture}
 
-\subsubsection{Phantom Head Building Specifications}
-Detailed methodology for constructing the full phantom head:
+\subsubsection{Channel splitting}
+The audio signal from the PC sound card (Figure~\ref{fig:7_1_sound_card}) is split into two mono signals, one for each channel. This is done using a 3.5mm TRS splitter, which takes the stereo output from the sound card and splits it into two separate mono outputs (left and right channels). Each channel is then routed to its respective signal amplifier circuit.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/7_1_sound_card.png}
+    \caption[Sound card output splitter]{}
+    \label{fig:7_1_sound_card}
+\end{figure}
+
+\subsubsection{Signal Amplifier Circuit Design}
+The signal amplifier circuit (Figure~\ref{fig:channel_amplifier_circuit}) is composed of:
 \begin{itemize}
-    \item Gelatine formulation.
-    \item Assembly of the phantom head model.
-    \item 10{-}20 System electrode placement strategy.
+    \item Non-inverting opamp: A non-inverting opamp is used to amplify the signal. This configuration provides high input impedance and low output impedance, making it suitable for driving the phantom head model.
+    \item Resistor: One resistor is used to set the gain of the opamp when combined with the potentiometer. 
+    \item Potentiometer: A potentiometer is included to allow for manual adjustment of the gain. This enables the user to fine-tune the amplitude of the output signal to match the desired microvolt levels for EEG simulation. The gain is determined by the ratio of the potentiometer and the resistor.
+    \item Capacitors: Capacitors are used to filter out noise.
 \end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/channel_amplifier_circuit.png}
+    \caption[Channel amplifier circuit]{}
+    \label{fig:channel_amplifier_circuit}
+\end{figure}
+
+\subsubsection{Proposed Box Enclosure}
+
+To house the splitter and the signal amplifier circuits, providing a user-friendly interface, a box enclosure is proposed (Figure~\ref{fig:box_enclosure}). The box design includes:
+\begin{itemize}
+    \item 12 3.5mm female TRS connectors (4 inputs, 8 outputs).
+    \item 8 non-inverting opamps, one for each channel.
+    \item 8 resistors, one for each channel.
+    \item 8 potentiometers, one for each channel.
+    \item 16 capacitors, two for each channel.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/box_enclosure.png}
+    \caption[Proposed box enclosure]{}
+    \label{fig:box_enclosure}
+\end{figure}
 
 \biblio~% Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
