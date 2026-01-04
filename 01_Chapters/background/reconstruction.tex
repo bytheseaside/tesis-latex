@@ -57,7 +57,7 @@ which corresponds to the classical normal-equations solution. Geometrically, thi
 
 In physical systems, this interpretation is particularly relevant: the pseudoinverse does not attempt to reproduce all observations exactly, but instead identifies the actuator inputs that minimize the global mismatch between predicted and measured outputs. The resulting residual reflects components of the observations that lie outside the span of the system’s controllable subspace.
 
-\subsection{Regularization and Numerical Stability}
+\subsubsection{Regularization and Numerical Stability}
 
 While $A^{\dagger}$ provides the optimal least-squares solution, it may be unstable in the presence of noise or modeling errors for ill-conditioned systems. A system is ill-conditioned if its \textbf{condition number} $\kappa(A) = \sigma_{\max}/\sigma_{\min}$ is large, where $\sigma_{\max}$  and $\sigma_{\min}$ denote the largest and smallest singular values of $A$.
 

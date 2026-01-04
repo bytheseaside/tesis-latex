@@ -2,15 +2,12 @@
 % Parametric CAD Framework
 %-----------------------------------------------------------
 
-A fully parametric CAD workflow underpins the entire phantom-head model. 
 Instead of fixed dimensions, all critical geometric features, tolerances, and mating conditions were defined through named parameters. 
-This approach ensures global consistency, minimizes manual editing, and enables rapid regeneration of the model whenever design changes
- are required.
 
-The parametrization affects all major components of the assembly. 
-Examples include the shell thickness in the measuring region, the radius of the wire-guide channels, the width and depth of the sealing groove, and the height and keyed profile of the connector bases, along with their derived values.
+% The parametrization affects all major components of the assembly. 
+% Examples include the shell thickness in the measuring region, the radius of the wire-guide channels, the width and depth of the sealing groove, and the height and keyed profile of the connector bases, along with their derived values.
 
-The CAD model organizes parameters into two categories: system-wide parameters shared across all project files, and component-specific parameters defined locally within individual part files. Some parameters are user-defined input values, while others are automatically calculated from dependencies to maintain geometric consistency throughout the assembly.
+% The CAD model organizes parameters into two categories: system-wide parameters shared across all project files, and component-specific parameters defined locally within individual part files. Some parameters are user-defined input values, while others are automatically calculated from dependencies to maintain geometric consistency throughout the assembly.
 
 Table~\ref{tab:system_params} lists the system-wide parameters that affect multiple components across the entire assembly.
 Beyond these global parameters, component-specific parameters are defined within individual part files (Tables~\ref{tab:head_shell_params} 
