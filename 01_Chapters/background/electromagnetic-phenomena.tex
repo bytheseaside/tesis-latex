@@ -82,3 +82,28 @@ provide a rigorous definition of the quasistatic approximation as it is applied 
 specifically at the stage where electric fields and potentials in tissue are computed from prescribed stimulation sources. Under this framework,
 the approximation rests on four assumptions: negligible wave propagation and self-induction in tissue, linear material response, purely resistive behavior,
  and non-dispersive electrical properties over the relevant frequency range.
+
+To derive the specific equation governing potential distributions, we combine the irrotational field definition with the principle of charge conservation.
+The continuity equation, derived from Maxwell’s equations
+$$\nabla \cdot \mathbf{J} + \frac{\partial \rho_f}{\partial t} = 0$$
+In the quasi-static regime, charge relaxation happens on a timescale which is far faster than the variations of the field, therefore, no net charge builds up ($\partial \rho_f / \partial t \approx 0$), leading to $\nabla \cdot \mathbf{J} = 0$ for passive regions.
+
+In the presence of internal sources (e.g., neural dipoles), the divergence of the total current is zero, but we can separate the current into a primary current density $\mathbf{J}_p$ and a secondary Ohmic current $\sigma \mathbf{E}$.
+
+Substituting $\mathbf{J} = \mathbf{J}_p + \sigma \mathbf{E}$ into the continuity equation gives: $$\nabla \cdot (\sigma \mathbf{E}) = -\nabla \cdot \mathbf{J}_p$$
+
+By substituting $\mathbf{E} = -\nabla u$, we arrive at the governing partial differential equation for the potential $u(\mathbf{X},t)$ 
+$$-\nabla \cdot (\sigma \nabla u) = f$$
+
+where $f = \nabla \cdot \mathbf{J}_p$ represents the source term (the divergence of the primary current density). In passive regions or phantoms driven solely by surface boundary conditions, $f = 0$ and the equation reduces to the variable-coefficient Laplace equation.
+
+\subsubsection{Summary of Modeling Assumptions}
+
+The transition from Maxwell's equations to the potential-based PDE is valid only if the following conditions are simultaneously satisfied
+
+\begin{enumerate}
+    \item \textbf{Electroquasistatic regime.} The frequency of the signal is low enough (< 100 kHz) and the system size small enough ($L \ll \lambda$) that wave propagation and self-induction are negligible.
+    \item \textbf{Purely resistive media.} The material conductivity $\sigma$ is much larger than $\omega\varepsilon$, rendering capacitive storage effects negligible.
+    \item \textbf{Linear and instantaneous response.} Media exhibits linear constitutive properties, and potential changes propagate effectively instantaneously throughout the volume.
+    \item \textbf{Conservation of current.} Charge accumulation is zero at every instant.
+\end{enumerate}
