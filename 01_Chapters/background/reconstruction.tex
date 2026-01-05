@@ -1,0 +1,84 @@
+The study of complex physical systems commonly leads to a bifurcation of mathematical modeling into \textit{forward} and \textit{inverse} problems. A forward problem follows the deductive application of governing physical laws—such as those of electromagnetism, mechanics, or physiology—to a known set of causal factors in order to predict observable outcomes~\cite{mueller-2012}. For instance, in electroencephalography, the forward problem consists of computing scalp potentials at specified locations given a distribution of internal dipole sources. Such problems are typically well-posed, admitting solutions that are unique and stable with respect to perturbations in the input data~\cite{burger}.
+
+Inverse problems, by contrast, proceed inductively: given a set of observations, the objective is to reconstruct the underlying causes or internal states responsible for those measurements~\cite{mueller-2012}. While the term \textit{inverse problem} suggests a direct mathematical reversal of a corresponding forward problem, this relationship is not guaranteed in general~\cite{burger}. In particular, inverse formulations frequently violate one or more of the classical criteria for well-posedness.
+
+According to Hadamard, a mathematical problem is well-posed if a solution exists, is unique, and depends continuously on the input data~\cite{burger}. In system reconstruction contexts, the stability condition is often the most critical and the most frequently violated. When stability is lacking, even minute errors arising from measurement noise, discretization, or numerical round-off can be severely amplified during inversion, yielding reconstructions that are physically meaningless~\cite{burger}.
+
+The transition from a continuous physical description to a computational model introduces discretization, reducing the governing differential or integral equations to a finite-dimensional numerical system. This process typically yields a linear algebraic representation of the form
+\[
+y = Ax,
+\]
+where $y$ denotes the vector of observations, $x$ represents the unknown system parameters or states, and $A$ is the system matrix (or forward operator) encoding the discretized physical model~\cite{mueller-2012}. The feasibility and stability of reconstruction or control-oriented tasks are therefore governed by the mathematical properties of this operator~\cite{mueller-2012, burger}.
+
+In finite-dimensional settings, the operator $A$ arises from a mapping between an actuator space $X$ and an observation space $Y$, leading to a matrix $A \in \mathbb{R}^{m \times n}$, where $n$ denotes the number of parameters and $m$ the number of measurements~\cite{mueller-2012}. The relative dimensions of these spaces fundamentally determine the nature of the reconstruction problem. If $m = n$ and $A$ is nonsingular, the system admits a unique solution through the exact inverse $A^{-1}$~\cite{abdumuminova-2025}. Such ideal conditions, however, are rarely encountered in practical engineering applications.
+
+Instead, two non-ideal regimes dominate:
+\begin{enumerate}
+    \item \textbf{Overdetermined Systems $m > n$:} There are more measurements than parameters. While this redundancy can be exploited to mitigate measurement noise, it generally results in inconsistent systems for which no exact solution $x$ satisfies $y = Ax$. Reconstruction in this regime is therefore formulated in a least-squares sense.
+
+    \item \textbf{Underdetermined Systems $m < n$:} There are fewer measurements than  parameters, and the available data are insufficient to uniquely determine every degree of freedom of the system. Consequently, infinitely many solutions satisfy the measurement constraints, and additional criteria are required to select a physically meaningful solution.
+\end{enumerate}
+
+This work focuses on the overdetermined regime, in which the system matrix $A$ is non-square and therefore not invertible. In such cases, reconstruction must be reformulated in terms of a \textit{generalized solution} satisfying an auxiliary optimality criterion~\cite{mueller-2012}.
+
+\subsubsection{The Moore--Penrose pseudoinverse}
+As a robust generalization of the matrix inverse, the Moore--Penrose pseudoinverse $A^\dagger$ provides a unique solution for any matrix A, regardless of its dimensions or rank.
+A matrix $G \in \mathbf{R}^{n \times m}$ is the Moore--Penrose pseudoinverse of $A$ if and only if it satisfies the following four algebraic conditions:
+\begin{enumerate}
+    \item $AGA = A$, maps the column vectors of $A$ back to themselves;
+    \item $GAG = G$, establishing $G$ as a weak inverse of $A$;
+    \item $(AG)^* = AG$, implying that $AG$ is Hermitian;
+    \item $(GA)^* = GA$, implying that $GA$ is Hermitian.
+\end{enumerate}
+Here, $(\cdot)^*$ denotes the conjugate transpose. When considering real matrices, $(\cdot)^* = (\cdot)^T$, which implies the matrix is symmetric. While multiple generalized inverses may satisfy the first condition alone, the additional Hermitian constraints enforce orthogonality properties that guarantee the uniqueness of the Moore--Penrose pseudoinverse~\cite{penrose-1955}.
+
+\subsubsection{Solutions in Overdetermined Systems}
+
+When the number of observations exceeds the number of available actuators ($m > n$), the linear system
+\[
+y = Ax, \qquad A \in \mathbb{R}^{m \times n},
+\]
+is generally overdetermined and does not admit an exact solution for arbitrary measurement vectors $y$. In such cases, reconstruction must be interpreted in an approximate sense.
+
+The Moore--Penrose pseudoinverse provides a principled mechanism for defining an optimal solution by reformulating the problem as a least-squares minimization:
+\[
+x^\star = \arg\min_{x \in \mathbb{R}^n} \|Ax - y\|_2^2.
+\]
+The unique minimizer of this problem is given by
+\[
+x^\star = A^{\dagger} y.
+\]
+
+For full column-rank matrices ($\operatorname{rank}(A) = n$), the pseudoinverse admits the explicit form
+\[
+A^{\dagger} = (A^{T}A)^{-1}A^{T},
+\]
+which corresponds to the classical normal-equations solution. Geometrically, this operation projects the observation vector $y$ orthogonally onto the column space of $A$, yielding the actuator configuration whose forward response best approximates the measurements in an energy-optimal sense~\cite{bindel-2012}.
+
+In physical systems, this interpretation is particularly relevant: the pseudoinverse does not attempt to reproduce all observations exactly, but instead identifies the actuator inputs that minimize the global mismatch between predicted and measured outputs. The resulting residual reflects components of the observations that lie outside the span of the system’s controllable subspace.
+
+\subsubsection{Regularization and Numerical Stability}
+
+While $A^{\dagger}$ provides the optimal least-squares solution, it may be unstable in the presence of noise or modeling errors for ill-conditioned systems. A system is ill-conditioned if its \textbf{condition number} $\kappa(A) = \sigma_{\max}/\sigma_{\min}$ is large, where $\sigma_{\max}$  and $\sigma_{\min}$ denote the largest and smallest singular values of $A$.
+
+In such cases, small perturbations in the observation vector $y$ can be strongly amplified in the reconstructed solution, since $\|A^{\dagger}\|_2 = 1/\sigma_{\min}(A)$~\cite{golub-2013, mueller-2012}.
+
+When a system is ill-conditioned, the naive application of the exact pseudoinverse can introduce error. Regularization must be used to stabilize the solution by introducing a bias toward physically plausible outcomes~\cite{mueller-2012}.
+
+
+Tikhonov regularization (also known as $L_2$ regularization) transforms the ill-posed least-squares problem into a well-posed penalized problem:
+
+
+$$\min_{x} \left\{ \|Ax - y\|_2^2 + \lambda^2 \|L x\|_2^2 \right\}$$
+
+where $\lambda$ is the regularization parameter and $L$ is the regularization operator.
+The regularized solution $x_{\lambda}$ is:
+
+
+$$x_{\lambda} = (A^T A + \lambda^2 L^T L)^{-1}A^T y$$
+
+
+The additional term $\lambda^2 L^TL$ increases the smallest singular values of the system, thereby reducing noise amplification and improving numerical stability~\cite{golub-2013, mueller-2012, vara-kumar-2022}.
+
+The most common choice is $L = I$, the identity matrix, which penalizes all components of the solution vector $x$ uniformly, favoring solutions with small overall energy. More generally, however, $L$ may be chosen to encode prior knowledge or design preferences about the system. By appropriately selecting $L$, specific components or spatial patterns of the solution can be penalized more strongly than others, thereby biasing the reconstruction toward solutions that maintain accuracy in the outcomes of greatest interest. In this way, regularization not only stabilizes the inversion, but also provides a mechanism to prioritize fidelity in selected aspects of the system response.
+

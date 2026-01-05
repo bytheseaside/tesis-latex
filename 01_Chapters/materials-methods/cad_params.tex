@@ -2,15 +2,12 @@
 % Parametric CAD Framework
 %-----------------------------------------------------------
 
-A fully parametric CAD workflow underpins the entire phantom-head model. 
 Instead of fixed dimensions, all critical geometric features, tolerances, and mating conditions were defined through named parameters. 
-This approach ensures global consistency, minimizes manual editing, and enables rapid regeneration of the model whenever design changes
- are required.
 
-The parametrization affects all major components of the assembly. 
-Examples include the shell thickness in the measuring region, the radius of the wire-guide channels, the width and depth of the sealing groove, and the height and keyed profile of the connector bases, along with their derived values.
+% The parametrization affects all major components of the assembly. 
+% Examples include the shell thickness in the measuring region, the radius of the wire-guide channels, the width and depth of the sealing groove, and the height and keyed profile of the connector bases, along with their derived values.
 
-The CAD model organizes parameters into two categories: system-wide parameters shared across all project files, and component-specific parameters defined locally within individual part files. Some parameters are user-defined input values, while others are automatically calculated from dependencies to maintain geometric consistency throughout the assembly.
+% The CAD model organizes parameters into two categories: system-wide parameters shared across all project files, and component-specific parameters defined locally within individual part files. Some parameters are user-defined input values, while others are automatically calculated from dependencies to maintain geometric consistency throughout the assembly.
 
 Table~\ref{tab:system_params} lists the system-wide parameters that affect multiple components across the entire assembly.
 Beyond these global parameters, component-specific parameters are defined within individual part files (Tables~\ref{tab:head_shell_params} 
@@ -19,15 +16,16 @@ and~\ref{tab:antenna_layout_params}). Although these parameters are localized to
   that reference or depend on those geometries. This hierarchical organization ensures that changes to a base component propagate
    appropriately to dependent features while maintaining local control where needed.
 
+
 \begin{table}[h!]
   \centering
   \caption[System-wide CAD parameters]{System-wide parametric variables shared across all project files.}
   \label{tab:system_params}
   \small
-  \begin{tabular}{l@{\hspace{1em}}p{5.5cm}l}
-    \hline
+  \begin{tabularx}{\textwidth}{l X l}
+    \toprule
     \textbf{Parameter} & \textbf{Description} & \textbf{Value} \\
-    \hline
+    \midrule
     \texttt{shell\_thickness} & Nominal wall thickness in the \textit{measuring region}, covering the 21 electrode positions (Figure~\ref{fig:head_shell_section}) & 3.2~mm \\[2pt]
     \texttt{base\_height} & Vertical height of the connector lid (Figure~\ref{fig:antenna_connector_lid}) & 10~mm \\[2pt]
     \texttt{connector\_int\_rad} & Inner radius of the cylindrical wire-guide connector (Figure~\ref{fig:antenna_connector_lid}) & 5~mm \\[2pt]
@@ -35,8 +33,8 @@ and~\ref{tab:antenna_layout_params}). Although these parameters are localized to
     \texttt{connector\_offset\_base} & Thickness of the lid base below the connector recess, maintaining structural support while allowing wire passage (Figure~\ref{fig:antenna_connector_lid}) & 2~mm \\[2pt]
     \texttt{connector\_wall\_width} & Radial wall thickness of the connector cylinder (Figure~\ref{fig:antenna_connector_lid}) & 2~mm \\[2pt]
     \texttt{mating\_tolerance\_mm} & Clearance between mating features to ensure assembly fit, applied by enlarging female or reducing male dimensions as needed & 0.5~mm \\[2pt] 
-    \hline
-  \end{tabular}
+    \bottomrule
+  \end{tabularx}
 \end{table}
 
 \begin{table}[h!]
@@ -44,10 +42,10 @@ and~\ref{tab:antenna_layout_params}). Although these parameters are localized to
   \caption[Head shell CAD parameters]{Head shell parametric variables (\texttt{printable\_hollow\_head}).}
   \label{tab:head_shell_params}
   \small
-  \begin{tabular}{l@{\hspace{1em}}@{\extracolsep{\fill}}p{8cm}l}
-    \hline
+  \begin{tabularx}{\textwidth}{l X l}
+    \toprule
     \textbf{Parameter} & \textbf{Description} & \textbf{Value} \\
-    \hline
+    \midrule
     \texttt{opening\_height}  & Vertical distance from ground plane to the parting plane that divides the head shell into upper and lower halves & 72~mm \\[2pt]
     \texttt{groove\_width}  & Width of the channel for sealing material (gasket or liquid silicone) & 8~mm \\[2pt]
     \texttt{groove\_depth}  & Depth of the sealing channel in the flange. Calculated as $\mathrm{round}(0.7 \cdot \texttt{flange\_thickness})$ & 5~mm \\[2pt]
@@ -59,8 +57,8 @@ and~\ref{tab:antenna_layout_params}). Although these parameters are localized to
     \texttt{flange\_offset}  & Horizontal distance from the head edge to the start of the flange tab & 20~mm \\[2pt]
     \texttt{mating\_male\_depth}  & Depth of the male interlocking feature on the upper head shell half. Calculated as $\texttt{mating\_female\_depth} - \texttt{mating\_tolerance\_mm}$ & 5.5~mm \\[2pt]
     \texttt{mating\_male\_width}  & Width of the male interlocking feature on the upper head shell half. Calculated as $\texttt{mating\_female\_width} - \texttt{mating\_tolerance\_mm}$ & 4.5~mm \\[2pt]
-    \hline
-  \end{tabular}
+    \bottomrule
+  \end{tabularx}
 \end{table}
 
 \begin{table}[h!]
@@ -68,15 +66,15 @@ and~\ref{tab:antenna_layout_params}). Although these parameters are localized to
   \caption[Antenna layout CAD parameters]{Antenna layout parametric variables (\texttt{antenna\_layout}).}
   \label{tab:antenna_layout_params}
   \small
-  \begin{tabular}{l@{\hspace{1em}}@{\extracolsep{\fill}}p{8cm}l}
-    \hline
+  \begin{tabularx}{\textwidth}{l X l}
+    \toprule
     \textbf{Parameter} & \textbf{Description} & \textbf{Value} \\
-    \hline
+    \midrule
     \texttt{layer\_1\_offset} & Vertical offset from ground plane to the opening of wire-guides 1–5 & 135~mm \\[2pt]
     \texttt{layer\_2\_offset} & Vertical offset from ground plane to the opening of wire-guide 6 & 170~mm \\[2pt]
     \texttt{layer\_3\_offset} & Vertical offset from ground plane to the opening of wire-guides 7–9 & 200~mm \\[2pt]
-    \hline
-  \end{tabular}
+    \bottomrule
+  \end{tabularx}
 \end{table}
 
 Any of these parameters may be modified to accommodate different fabrication processes, material choices, or experimental designs. 

@@ -1,0 +1,184 @@
+The modeling of bioelectric phenomena, particularly the propagation of electrical potentials within the human head during electroencephalography (EEG), necessitates a rigorous mathematical framework capable of bridging the gap between fundamental electromagnetic theory and the complex biological realities of human anatomy~\cite{bauer-2015, vatta-2010}. While the foundations of this problem are rooted in Maxwell’s equations the transition from theoretical expressions to actionable computational models requires understanding of numerical methods, specifically the Finite Element Method (FEM).
+
+The resolution of the EEG forward problem—defined as the calculation of the electric potential distribution on the scalp surface from a known configuration of internal electrical sources—is a prerequisite for accurate source localization---also called the inverse problem---and the interpretation of neurophysiological data~\cite{dayarian-2024, hallez-2007,  erdbrugger-2023}. Traditionally, researchers relied on analytical solutions derived for simplified geometries, such as concentric spherical shells. However, as the field has advanced toward high-resolution imaging, the limitations of these idealized models have become increasingly apparent, driving the development and widespread adoption of numerical techniques like FEM~\cite{vatta-2010, hallez-2007}.
+
+The historical reliance on analytical models in electrophysiology was primarily motivated by the lack of sufficient computational resources to handle the millions of degrees of freedom required by realistic anatomical representations~\cite{vatta-2010}. Analytical methods typically solve the governing field equations using spherical harmonics or Fourier series, assuming the head can be approximated as a set of perfectly concentric spheres representing the different tissues (brain, cerebrospinal fluid (CSF), skull, and scalp)~\cite{vatta-2010, nss-2017}. While these models offer valuable insights, they fail to capture several critical features of biological systems that significantly influence the accuracy of the solution~\cite{nss-2017}.
+
+The primary motivation for the shift toward numerical methods is the irregular geometry of biological structures. Human anatomy is characterized by complex curvatures, varying thicknesses, and intricate features, such as the gyri and sulci of the cerebral cortex. Analytical solutions require the domain to be defined by simple coordinate surfaces, which forces a drastic simplification of these features. Numerical methods, by contrast, allow for the explicit representation of individual anatomy, including the precise boundaries of internal compartments and spatially varying thickness of different tissue layers~\cite{hallez-2007, vatta-2010}.
+
+
+\begin{table}[htbp]
+\centering
+\caption[Analytical vs FEM forward models]{Comparison between analytical spherical models and numerical FEM approaches for EEG forward modeling.}
+\label{tab:analytical-vs-fem}
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Feature} 
+& \textbf{Analytical (Spherical) Models} 
+& \textbf{Numerical (FEM) Methods} \\
+\midrule
+Geometry            
+& Simplified concentric spheres; fails to capture gyri/sulci.
+& Arbitrary irregular geometries; conforms to real anatomy. \\
+[3pt]
+Inhomogeneity       
+& Piecewise constant within layers; no local variation.                  
+& Arbitrarily complex spatial distribution of $\sigma(\mathbf{X})$. \\
+[3pt]
+Anisotropy          
+& Extremely limited or impossible to implement.
+& Full support for tensorial conductivity $\sigma_{ij}$. \\
+[3pt]
+Computational Cost  
+& Very low; instant calculation of potential formulas.
+& High; requires solving large sparse linear systems. \\
+[3pt]
+Accuracy            
+& High for spheres, low for realistic head shapes.                           
+& High for realistic anatomy if mesh is fine enough. \\
+[3pt]
+Boundary Conditions 
+& Restricted to simple coordinate surfaces.             
+& Can handle complex, local, and mixed conditions. \\\bottomrule
+\end{tabularx}
+\end{table}
+
+A secondary motivation is the inhomogeneous and anisotropic nature of biological materials. In bioelectric modeling, inhomogeneity refers to the spatial variation of electrical conductivity $\sigma(\mathbf{X})$ throughout the domain. The human head is composed of tissues with conductivities that span several orders of magnitude~\cite{chauveau-2003}. Analytical models can handle piecewise constant inhomogeneity within concentric shells, but they struggle with local inhomogeneities, such as lesions or blood vessels, which break the assumed symmetry~\cite{vatta-2010}. Furthermore, biological tissues frequently exhibit anisotropy, where the conductivity depends on the direction of current flow~\cite{hallez-2007, vatta-2010}. This is particularly prominent in the white matter of the brain, where current flow is favored along the length of myelinated axons, resulting in an anisotropy ratio of approximately $1:10$~\cite{lee-2009}. Analytical models are generally incapable of incorporating this tensorial conductivity without introducing complex mathematical modifications that compromise their efficiency and applicability to realistic geometries~\cite{hallez-2007}.
+
+\subsection{Finite Element Method Overview}
+The Finite Element Method is a numerical technique for solving partial differential equations (PDEs) by approximating the continuous solution over a collection of discrete subdomains~\cite{cae-2025}. In the context of bioelectric modeling, FEM allows for the calculation of the scalar potential $u(\mathbf{X})$ throughout a complex volume by transforming the governing electromagnetic equations into a system of simultaneous algebraic equations~\cite{hallez-2007}. This process relies on two fundamental concepts: domain discretization and field approximation using basis functions.
+
+Domain discretization involves partitioning the volume $\Omega$ into a large number of non-overlapping geometric units called elements, forming a mesh. In three-dimensional modeling, the most common element types are tetrahedra and hexahedra~\cite{fem-org}. Tetrahedral elements are particularly favored for biological modeling because they can easily follow complex, irregular organ geometries. The mesh resolution is a critical parameter; regions with high potential gradients, such as those immediately surrounding internal electrodes or thin conductive layers, require a finer mesh to ensure numerical convergence\cite{hallez-2007}.
+
+\begin{table}[htbp]
+\centering
+\caption[Finite element types and characteristics]{Comparison of common finite element types, and typical usage in bioelectric field modeling.}
+\label{tab:fem_element_types}
+\small
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Element Type}  
+& \textbf{Node Count}                      
+& \textbf{Geometric Flexibility}                     
+& \textbf{Common Usage} \\
+\midrule
+Tetrahedral (P1)       
+& 4 nodes per element                              
+& High; best for irregular surfaces.                 
+& General biological modeling. \\
+Tetrahedral (P2)       
+& 10 nodes per element                             
+& High; handles curved gradients.                    
+& High-accuracy forward solutions. \\
+Hexahedral (Trilinear) 
+& 8 nodes per element                              
+& Moderate; efficient for volumes.                   
+& Voxel-based MRI models. \\
+Prismatic/Pyramidal    
+& Variable                                         
+& Specialized for transition zones.                  
+& Hybrid mesh implementations. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+Once the domain is discretized, the continuous potential field $u(x)$ is approximated by a discrete function $u_h(x)$. This approximation is constructed as a linear combination of finite basis functions (also known as shape functions) $\phi_i(x)$, such that:
+$$u_h(x) = \sum_{i=1}^{N} \hat{u}_i \phi_i(x)$$
+where $\hat{u}_i$ is the potential at node $i$ and $N$ is the total number of nodes in the mesh. Each basis function $\phi_i(x)$ is defined to have local support, meaning it is equal to one at node $i$, zero at all other nodes, and vanishes outside the elements connected to node $i$~\cite{fem-org}. This local support ensures that the resulting system of equations is sparse, which is computationally advantageous when dealing with millions of degrees of freedom\cite{hallez-2007}.
+
+Electrophysiology research often employs higher-order elements, such as second-order tetrahedral elements (P2), to improve accuracy. P2 elements utilize quadratic basis functions and include mid-edge nodes, allowing them to capture curved potential distributions and steep gradients more effectively than linear elements~\cite{erdbrugger-2023}. This is especially relevant for modeling thin structures where a single layer of P2 elements can accurately represent the potential drop that would otherwise require multiple layers of P1 elements~\cite{zhang-2004}.
+
+\subsubsection{Boundary Conditions in Conductive Domains}
+To obtain a unique and physically consistent solution for the electric potential within a volume conductor, the governing equations must be supplemented with well-defined boundary conditions~\cite{simscale-boundary-conditions}. These conditions define the interaction between the internal conductive medium and the external environment. The two most fundamental types of boundary conditions used in this context are Dirichlet and Neumann conditions, which are applied to distinct subsets of the total boundary $\Gamma$.
+
+Dirichlet boundary conditions, also referred to as Type I conditions, specify the value of the potential $u$ at particular locations on a boundary subset $\Gamma_D$. Mathematically, this is expressed as:
+
+$$u(x) = V_{\text{prescribed}}(x), \quad \text{for } x \in \Gamma_D$$
+
+In the physical context of an EEG phantom or neural stimulation, Dirichlet conditions represent perfectly conductive electrodes or voltage sources connected to an ideal power supply. For instance, if an internal electrode is held at a prescribed potential, the potential at all nodes on the electrode surface is set to this value. The solution within the volume must then adjust to satisfy this constraint, resulting in current flow away from or toward the electrode depending on the surrounding potential distribution.
+
+Neumann boundary conditions, or Type II conditions, specify the normal derivative of the potential—which is proportional to the current flux—across a boundary subset $\Gamma_N$. This is expressed as:
+
+$$\sigma \frac{\partial u}{\partial n} = \sigma \nabla u \cdot n = g, \quad \text{for } x \in \Gamma_N$$
+
+where $n$ is the outward-pointing unit normal vector to the surface and $g$ represents the prescribed current flux density. In the case of $g = 0$, the condition represents perfect electrical insulation, indicating that no current can flow across the boundary~\cite{simscale-boundary-conditions,simion}.
+
+\begin{table}[htbp]
+\centering
+\caption[Boundary condition types in conductive models]{Common boundary condition types used in conductive domain modeling, their mathematical formulation, physical interpretation, and representative EEG or phantom-related examples.}
+\label{tab:boundary_conditions}
+\small
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Boundary Condition}
+& \textbf{Mathematical Form}
+& \textbf{Physical Meaning}
+& \textbf{EEG / Phantom Example} \\
+\midrule
+Dirichlet
+& $u = V$
+& Fixed potential
+& Active internal voltage sources. \\
+Homogeneous Neumann
+& $\sigma \nabla u \cdot \mathbf{n} = 0$
+& Perfect insulation
+& Scalp–air interface; insulating boundaries. \\
+Non-homogeneous Neumann
+& $\sigma \nabla u \cdot \mathbf{n} = g$
+& Fixed flux
+& Controlled current injection. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Measurement electrodes used for recording EEG signals are connected to amplifiers designed with extremely high input impedance to avoid signal distortion . Modern research-grade systems typically feature input impedances (at least 10M$\Omega$~\cite{eeg-measurement-teplan-2002})  . High input impedance, ideally at least 100 times the electrode-skin impedance, ensures that signal attenuation remains below 1. Physically, this means the recording system draws a negligible amount of current, effectively acting as an insulator. Consequently, in the Point Electrode Model, measurement locations are often modeled as "floating" observation points where no boundary condition is explicitly enforced, allowing the potential to be sampled without perturbing the underlying distribution~\cite{pursiainen-2012}.
+
+
+\subsubsection{Weak Formulation of the Governing Equations}
+The direct application of FEM to the \textit{strong form} of electromagnetic field equations presents significant mathematical challenges. The strong formulation requires the solution $u$ to be twice continuously differentiable ($u \in C^2(\Omega)$) for the derivatives to be well-defined at every point~\cite{alberta}. However, the physical characteristics of some problems, in bioelectricity particularly source singularities and material interfaces can violate this requirement~\cite{ockendon}.
+
+
+One primary reason for the weak formulation is the handling of source singularities. Neural activity is frequently modeled as a current dipole, which mathematically corresponds to a Dirac delta distribution or its gradient. Because the Dirac delta is infinite at a point and zero elsewhere, its derivatives do not exist in the classical sense required by the strong form. The weak formulation resolves this by using an integral approach, where the "load" is distributed against a test function $v$, making the source term mathematically tractable~\cite{alberta, valli-maths, ockendon}.
+
+
+The transition to the weak form is achieved through the method of weighted residuals. The strong-form equation is multiplied by an arbitrary smooth test function $v$ and integrated over the domain $\Omega$~\cite{fem-org}. Applying integration by parts (Green's first identity) shifts the derivative requirements from the solution $u$ to the test function $v$~\cite{ockendon,fem-org}:
+
+$$\int_{\Omega} \sigma \nabla u \cdot \nabla v \, dx - \int_{\partial \Omega} v (\sigma \nabla u \cdot n) \, ds = \int_{\Omega} f v \, dx$$
+
+
+This integral representation is not only stable in the presence of singular sources but also incorporates Neumann boundary conditions naturally through the surface integral term~\cite{ockendon}. The mathematical necessity of this formulation lies in the reduction of the regularity requirements for the solution $u$. While the strong form requires second-order derivatives, the weak form only involves first-order derivatives ($\nabla u$). This allows the solution to be sought in the Sobolev space $H^1(\Omega)$, which consists of functions that are square-integrable and possess square-integrable weak derivatives~\cite{ockendon, alberta}. In summary, the recasting of the field equations into their weak form is a rigorous mathematical requirement that enables the representation of singular sources and ensures the numerical stability necessary for large-scale biological simulations~\cite{ockendon}.
+
+
+\subsection{Mesh Quality and Numerical Accuracy}
+
+The accuracy of finite element solutions depends not only on mesh resolution (element size) but also on the geometric quality of individual elements. While refining the mesh by reducing element size improves the approximation of the solution space, poorly shaped elements—even if small—can introduce significant numerical errors and compromise solution reliability~\cite{zienkiewicz-2013}.
+
+Regions exhibiting steep spatial gradients in the solution require finer mesh resolution to capture the local behavior accurately. In bioelectric field modeling, such gradients typically arise near current or voltage sources, at material interfaces with conductivity discontinuities, and along thin high-contrast layers such as the skull~\cite{erdbrugger-2023}. Insufficient resolution in these regions leads to poor approximation of the field, regardless of element quality. Conversely, regions with smooth, slowly varying potentials—such as the homogeneous interior of a big volume can tolerate coarser meshes without loss of accuracy. Adaptive refinement strategies therefore concentrate computational effort where it is needed most, balancing accuracy with computational cost~\cite{zienkiewicz-2013} .
+
+
+\subsubsection{Mesh Quality Metrics}
+
+Beyond element size, the \textit{shape} of finite elements directly affects the accuracy and stability of numerical solutions. Distorted, elongated, or poorly proportioned elements degrade the quality of basis function interpolation, amplify truncation errors, and can lead to ill-conditioned system matrices~\cite{shewchuk-2002}. To quantify element geometry, several dimensionless quality metrics have been developed. These metrics typically range from 0 (degenerate element) to 1 (ideal element), with values closer to 1 indicating better-shaped elements.
+
+\paragraph*{SICN (Signed Inverse Condition Number)}
+
+The signed inverse condition number (SICN), also referred to as the normalized Jacobian, measures how close an element is to its ideal (equilateral) reference shape.
+where $J$ is the Jacobian matrix mapping the reference element to the physical element, $\det(J)$ is its determinant, and $J_i$ are the column vectors of $J$~\cite{gmsh,knupp}. The determinant $\det(J)$ encodes the signed volume of the element, while the denominator penalizes elongation and skewness. Values of SICN near 1 indicate a well-proportioned element; values near 0 indicate severe distortion; negative values indicate inverted (invalid) elements. SICN is particularly sensitive to aspect ratio and is widely used in adaptive meshing workflows~\cite{knupp}.
+
+\paragraph*{SIGE (Signed Inverse Gradient Error)}
+
+The signed inverse gradient error (SIGE), also known as the mean ratio or shape quality metric, evaluates how uniformly the element approximates the gradient of the solution. This metric compares the element's actual volume to what it would be if it were regular (equilateral) with the same edge lengths. SIGE penalizes elements with highly disparate edge lengths—such as flat or needle-like tetrahedra—which produce inaccurate gradient approximations. Like SICN, SIGE ranges from 0 to 1, with higher values indicating better elements~\cite{gmsh, pebay-2003}.
+
+\paragraph*{Gamma (Minimum Solid Angle)}
+
+The gamma metric quantifies the smallest dihedral angle in the element, normalized to detect nearly flat or collapsed faces. Elements with very small dihedral angles (needle-shaped or sliver elements) yield gamma values near 0, indicating poor quality. Gamma is particularly useful for detecting thin or degenerate elements that may pass coarser metrics but still degrade numerical performance~\cite{knupp}.
+
+\subsubsection{Impact on Numerical Solutions}
+
+Poorly shaped elements compromise solution accuracy in several ways. First, they produce ill-conditioned local stiffness matrices, which propagate into the global system and reduce the effectiveness of iterative solvers~\cite{shewchuk-2002}. Second, they distort the basis functions used for interpolation, leading to large errors in computed gradients—critical quantities in electrostatic problems where the electric field $\mathbf{E} = -\nabla u$ is derived directly from the potential gradient~\cite{erdbrugger-2023}. Third, poor elements can violate the assumptions underlying convergence proofs, meaning that simply refining the mesh may not guarantee convergence to the correct solution~\cite{zienkiewicz-2013}.
+
+In practice, automated mesh generators such as Gmsh employ optimization algorithms—including node smoothing, edge swapping, and element subdivision—to improve quality metrics after initial mesh generation~\cite{gmsh}.
+
+
