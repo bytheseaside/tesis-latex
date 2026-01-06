@@ -10,7 +10,7 @@ The system is conceptualized as two distinct but synchronized subsystems:
 \begin{enumerate}
     \item \textbf{The Digital Control Unit (Software):} A desktop application responsible for the deterministic synthesis of waveforms and real-time visualization of acquired data for contrast. This subsystem acts as the signal generator controller, utilizing the host computer's audio sound card as a high-fidelity DAC source to output precise voltage fluctuations at set frequencies. The software has also included functionality to parse and playback clinical EEG data from EDF files, allowing for realistic simulation scenarios.
     
-    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale ($\mu V$) potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first splitted into two mono channels (left and right), each routed to an independent signal amplifier circuit containing a non-inverting opamp and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an EEG acquisition system and fed back into the software for analysis.
+    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale ($\mu V$) potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first splitted into two mono channels (left and right), each routed to an independent signal amplifier circuit containing a non-inverting op-amp and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an EEG acquisition system and fed back into the software for analysis.
 \end{enumerate}
 
 \subsubsection{High-Level Block Diagram}
@@ -29,7 +29,7 @@ Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the pr
     \item \textbf{Digital Synthesis:} The Python backend generates a discrete-time signal array.
     \item \textbf{D/A Conversion:} The PC's audio DAC reconstructs the continuous analog signal.
     \item \textbf{Channel Splitting:} Each audio output is splitted into two mono signals, obtaining the channels left and right.
-    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting opamp and potentiometer for amplification.
+    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting op-amp and potentiometer for amplification.
     \item \textbf{Dipole Construction:} The channels are routed to the phantom head model as dipoles using audio jack terminals.
     \item \textbf{Volume Conduction:} The signal is injected into the phantom head, establishing an electric field distribution.
     \item \textbf{Acquisition:} The EEG electrodes detect the potential difference on the phantom's surface, closing the loop.
@@ -40,7 +40,7 @@ Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the pr
 
 \subsubsection{Software Architecture Pattern}
 
-The software platform implements a local client-server architecture encapsulated within a desktop runtime environment. Unlike traditional monolithic desktop applications (compiled in C++ or C\#) or purely cloud-based web applications, this solution adopts a hybrid approach known as a decoupled monolith.
+The software platform implements a local client-server architecture encapsulated within a desktop runtime environment. Unlike traditional monolithic desktop applications or purely cloud-based web applications, this solution adopts a hybrid approach known as a decoupled monolith.
 
 Using this architecture, the presentation layer (frontend) and the logic layer (backend) execute as independent processes on the host machine, communicating via a local network loopback interface. This design leverages the visualization capabilities of modern web technologies while retaining the raw computational power and hardware access of a native Python environment.
 
@@ -162,49 +162,62 @@ Applying this last changes resulted in the final UI design, with separate views 
 
 \subsection{Hardware Architecture}
 
-\subsubsection{Channel splitting}
-The audio signal from the PC sound card (Figure~\ref{fig:7_1_sound_card}) is split into two mono signals, one for each channel. This is done using a 3.5mm TRS splitter, which takes the stereo output from the sound card and splits it into two separate mono outputs (left and right channels). Each channel is then routed to its respective signal amplifier circuit.
+\subsubsection{Channel Splitting}
+The audio signal from the PC sound card is split into two mono signals, one for each channel. This is done using a 3.5mm TRS splitter, which takes the stereo output from the sound card and splits it into two separate mono outputs (left and right channels). Each channel is then routed to its respective signal amplifier circuit.
+
+The preferred hardware for this application is the PCI 7.1 sound card (Figure~\ref{fig:7_1_channel_pci_card}), which provides multiple output channels and high-quality audio performance, ensuring accurate signal reproduction for EEG simulation. If the user doesn't have one, an external USB sound card with similar specifications can be used as an alternative (Figure~\ref{fig:7_1_channel_usb_card}).
+
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{../../02_Images/7_1_sound_card.png}
-    \caption[Sound card output splitter]{}
-    \label{fig:7_1_sound_card}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/7_1_channel_pci_card.jpg}
+        \caption{PCI 7.1 Sound Card}
+        \label{fig:7_1_channel_pci_card}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/7_1_channel_usb_card.jpg}
+        \caption{USB 7.1 Sound Card}
+        \label{fig:7_1_channel_usb_card}
+    \end{subfigure}
+    \caption[PCI and USB 7.1 Sound Cards]{PCI (left) and USB (right) 7.1 sound cards for multi-channel audio output.}
 \end{figure}
 
 \subsubsection{Signal Amplifier Circuit Design}
-The signal amplifier circuit (Figure~\ref{fig:channel_amplifier_circuit}) is composed of:
+The signal amplifier circuit (Figure~\ref{fig:splitter_amplifier_circuit}) is composed of:
 \begin{itemize}
-    \item Non-inverting opamp: A non-inverting opamp is used to amplify the signal. This configuration provides high input impedance and low output impedance, making it suitable for driving the phantom head model.
-    \item Resistor: One resistor is used to set the gain of the opamp when combined with the potentiometer. 
+    \item Non-inverting operational amplifier: A non-inverting operational amplifier (op-amp) is used to amplify the signal. This configuration provides high input impedance and low output impedance, making it suitable for driving the phantom head model.
+    \item Resistor: One resistor is used to set the gain of the op-amp when combined with the potentiometer. 
     \item Potentiometer: A potentiometer is included to allow for manual adjustment of the gain. This enables the user to fine-tune the amplitude of the output signal to match the desired microvolt levels for EEG simulation. The gain is determined by the ratio of the potentiometer and the resistor.
-    \item Capacitors: Capacitors are used to filter out noise.
+    % \item Capacitors: Capacitors are used to filter out noise.
 \end{itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{../../02_Images/channel_amplifier_circuit.png}
-    \caption[Channel amplifier circuit]{}
-    \label{fig:channel_amplifier_circuit}
+    \includegraphics[width=0.6\textwidth]{../../02_Images/splitter_amplifier_circuit.png}
+    \caption{Circuit for channel splitting and signal amplification}
+    \label{fig:splitter_amplifier_circuit}
 \end{figure}
 
-\subsubsection{Proposed Box Enclosure}
+\subsubsection{Final Hardware Design}
 
-To house the splitter and the signal amplifier circuits, providing a user-friendly interface, a box enclosure is proposed (Figure~\ref{fig:box_enclosure}). The box design includes:
+To house the splitter and the signal amplifier circuits, providing a user-friendly interface, an electronic module box enclosure is proposed as shown in Figure~\ref{fig:hardware_system}. The box design includes:
 \begin{itemize}
     \item 12 3.5mm female TRS connectors (4 inputs, 8 outputs).
-    \item 8 non-inverting opamps, one for each channel.
+    \item 8 operational amplifiers, one for each channel.
     \item 8 resistors, one for each channel.
     \item 8 potentiometers, one for each channel.
-    \item 16 capacitors, two for each channel.
 \end{itemize}
 
+Using double jack audio cables, the output from the PC sound card is connected to the input jacks of the box. Inside the box, the channel splitting and amplification take place. The amplified output signals are then connected to the phantom head model using additional cables, with the audio jacks acting as dipoles for signal injection.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{../../02_Images/box_enclosure.png}
-    \caption[Proposed box enclosure]{}
-    \label{fig:box_enclosure}
+    \includegraphics[width=0.6\textwidth]{../../02_Images/hardware_system.png}
+    \caption[Final hardware system design]{Final hardware system design for channel splitting and signal amplification}
+    \label{fig:hardware_system}
 \end{figure}
-
 \biblio~% Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
