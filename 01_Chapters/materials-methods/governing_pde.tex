@@ -33,7 +33,7 @@ To solve for the potential $u$, we must define how the phantom interacts with it
 The absence of internal current sinks and the perfectly insulated exterior boundary ensure that the divergence of the current density is zero throughout the volume, satisfying \textbf{Condition 4 (Conservation of Current)}.
 
 
-\subsubsection{Final PDE Formulation}
+\subsubsection{PDE Formulation and Simulation Cases}
 Because the four conditions mentioned in the Background are satisfied by the physical parameters and the environment of our phantom, the electric potential $u(\mathbf{x}, t)$ can be described by the variable-coefficient Laplace equation:
 
 \begin{equation}
@@ -41,4 +41,11 @@ Because the four conditions mentioned in the Background are satisfied by the phy
 \label{eq:pde_final}
 \end{equation}
 
-This equation allows for the simulation of the scalp potential distribution by accounting for the specific geometry and material transitions of the head phantom.
+The external shell surface was modeled with a homogeneous Neumann boundary 
+condition ($\sigma \partial u/\partial n = 0$) as mentioned previously, 
+representing the insulating air boundary. This equation was solved numerically 
+using the finite element method (FEniCSx) for multiple electrode configurations. 
+Base simulations employed symmetrical Jack stimulation with $V_{i,T} = -V_{i,R}$ 
+and $V_{i,S} = 0$ for all nine electrodes ($i = 1,\ldots,9$), representing typical 
+differential voltage injection. Additional cases with randomized electrode voltages 
+were also simulated to explore the full parameter space of potential distributions.
