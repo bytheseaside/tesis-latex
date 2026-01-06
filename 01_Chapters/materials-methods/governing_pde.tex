@@ -1,111 +1,44 @@
-%-----------------------------------------------------------
-% PDE
-%-----------------------------------------------------------
-We consider an EEG phantom composed of two contiguous regions—the inner gel volume and the 3D-printed head shell—together with the closed electrical circuit used for signal generation.
+The numerical simulation of the phantom's electrical behavior is based on the interaction between the internal conductive medium and the 3D-printed shell. To transition from physical materials to a mathematical model, we verify that the phantom satisfies the four modeling assumptions established in the \textbf{Background} (~\ref{subsubsec:modeling_assumptions}).
 
-\subsubsection{Conductivity}
-The phantom contains two conductive regions with distinct electrical properties: the saline–gelatin interior and the conductive PLA shell.
+\subsubsection{Physical Context and Dimensional Analysis}
 
+The phantom has the dimensions of a realistic adult head, with a characteristic length scale of $L \approx  18-22~\text{cm}$. As detailed in \ref{appendix:wavelength},  the electromagnetic wavelength $\lambda$ for the signals of interest (up to 100 Hz) in this case is on the order of several kilometers. 
 
-The solidified saline–gelatin mixture behaves as a linear, Ohmic conductor with
-conductivity in the range $\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$~\cite{akor-2025}, comparable to
-physiological saline and to values reported in electrophysiology phantom literature.
-
-The outer shell is considered to be made of a commercially available conductive PLA filament~\cite{cpla}. The manufacturer's datasheet~\cite{cpla-datasheet} reports volume resistivities ($\rho$) ranging from $14.4~\Omega\!\cdot\!\mathrm{cm}$ to $33.6~\Omega\!\cdot\!\mathrm{cm}$ for printed test bars, with the exact value depending on both the printing temperature and the measurement orientation. For each tested temperature (210$^{\circ}$C and 230$^{\circ}$C), two resistivities are reported: one measured in the X–Y plane and one measured in the Z direction.
-
-For the present work, the pair of values reported at $210^{\circ}\mathrm{C}$ is adopted to provide a consistent reference range: $19.2~\Omega\!\cdot\!\mathrm{cm}$ (X–Y direction) and
-$33.6~\Omega\!\cdot\!\mathrm{cm}$ (Z direction). These values represent, respectively, the more conductive and the less conductive orientations of the printed material.
-
-Converting resistivity $\rho$ to conductivity using $\sigma = 1/\rho$, and applying the unit conversion $1~\Omega\!\cdot\!\mathrm{cm} = 10^{-2}~\Omega\!\cdot\!\mathrm{m}$, yields conductivities in the approximate range
-\[
-\sigma_{\text{print}} \approx 3.0{-}5.2~\text{S/m}.
-\]
-
-Because these values reflect orthotropic measurements (planar vs.\ through-layer directions), the printed material is known to be electrically anisotropic: planar traces typically exhibit higher conductivity than the layer-normal direction. This behaviour is well documented in conductive-polymer additive manufacturing~\cite{akor-2025,tilve-martinez-2024,nowka-2024} and by the conductive PLA fabricant~\cite{cpla-datasheet}. Importantly, recent work shows that this anisotropy is not an intrinsic limitation; it can be significantly reduced through appropriate fabrication choices. For example, \cite{tilve-martinez-2024,tilve-martinez-2023} report that adjusting curing delays and resin temperature can diminish conductivity anisotropy by nearly two orders of magnitude, enabling the fabrication of electrically uniform 3D structures despite the layer-by-layer process. Comparable effects are observed in extrusion-based printing: \cite{paz-2020} shows that manufacturing parameters—such as layer thickness, extrusion width, screw speed, and extrusion temperature—strongly influence the electrical properties of the printed part. Likewise, \cite{nowka-2024} identifies path-planning variables, particularly infill pattern and infill angle, as key determinants of the resulting conductivity.
+Because the condition $L \ll \lambda$ is satisfied by several orders of magnitude, the system operates deep within the \textbf{Electroquasistatic Regime (Condition 1)}.
 
 
-Collectively, these studies show that anisotropy in conductive polymers can be adjusted, sometimes dramatically, through processing, post-processing, curing strategies, and print-parameter selection. In practice, users fabricating the phantom may tune their printing conditions according to these guidelines to limit anisotropy as far as their equipment and workflow allow.
-
-\subparagraph{Choice of $\sigma_{\text{shell}} = 4.1~\text{S/m}$.}
-For the simulations, a concrete scalar value must be assigned to the shell conductivity. The datasheet values for printed test bars~\cite{cpla-datasheet} span approximately
-$3.0$ to $5.2~\text{S/m}$, corresponding to the least and most conductive measurement directions. In this context, choosing the intermediate value
-$\sigma_{\text{shell}} \approx 4.1~\text{S/m}$ serves as a balanced representative of a reasonably optimized print where the anistropy is already reduced, avoiding bias toward either the most conductive in–plane direction or the least conductive through–layer direction.
-
-At the same time, the framework does not fix this value: $\sigma_{\text{shell}}$ is exposed as a user–defined parameter. Users who characterise their own printed material (or adopt specific print/curing strategies to further reduce anisotropy) can directly substitute their measured or preferred value, or perform parameter sweeps over the range $3{-}5.2~\text{S/m}$ to assess the sensitivity of their particular setup.
-
-\subsubsection{Electrical insulation.}
-\label{subsubsec:insulation}
-There are no prescribed current sources within the volume; all currents arise solely in response to the applied voltages. 
-Any current injected by one internal electrode necessarily returns to the generator through another. 
-
-Although the shell material is conductive, it is not connected to any external circuitry. 
-The only interfaces with the outside are the EEG measurement electrodes placed on the shell surface, which --- as in any EEG system ---
-are assumed to have a very high input impedance (at least 100 $\text{M}\Omega$~\cite{eeg-measurement-teplan-2002}). 
-This makes the approximation of zero net current flow through them theoretically justified.
-
-Consequently, the phantom can be modeled as an electrically insulated volume. 
-This is expressed mathematically through homogeneous Neumann boundary conditions
-\[
-    \sigma\,\frac{\partial u}{\partial n} = 0,
-\]
-where $u$ is the electric potential (in volts), $\sigma$ is the electrical conductivity of the 
-material at the boundary (in S/m), $n$ is the outward-pointing unit normal vector to the 
-surface, and $\partial u / \partial n = \nabla u \cdot n$ denotes the normal derivative of 
-the potential.
-
-This condition simply states that no current flows out of the shell surface: the outward normal current density $J_n = \sigma\,(\partial u/\partial n)$ is zero at the exterior boundary~\cite{simscale-boundary-conditions}.
-
-Physically, the phantom behaves as a closed volume conductor: currents injected inside must return inside, with no leakage into the air (which behaves as an excellent insulator at these field strengths).
-
-External EEG electrodes used for recording do not inject current; they simply sample the surface potential. 
-Real EEG amplifiers have input impedances on the order of $1$--$10~\text{M}\Omega$ or higher, so the current they draw is negligible~\cite{van-rijn-1990, jackson2014}
-
-Thus, from the phantom’s perspective, a recording electrode is electrically passive: it does not clamp or perturb the surface potential. 
-Accordingly, no Dirichlet or Neumann boundary condition is imposed at measurement locations; they are treated purely as observation points for $u$.
-
-\subsubsection{Ohmic and Frequency Response Behavior.}
-
-Over the frequency range of interest (DC to $\sim$100~Hz), the gel medium behaves as a linear, Ohmic conductor with negligible reactive (capacitive or inductive) effects. This is supported by experimental evidence from tissue-mimicking phantoms, which demonstrate frequency-independent conductivity across the EEG band~\cite{akor-2025}. For example, gelatin or saline phantoms typically exhibit less than 2\% variation in $\sigma$ from 0.1~Hz to 1~kHz, and negligible phase shift, confirming that conduction current dominates.~\cite{geddes-1967, Chandra2000}
-
-\subsubsection{Summary of Assumptions}
-
-To recap, the modelling choices made so far rely on a set of assumptions that were previously introduced and justified in the preceding subsections. For clarity, they are listed here in compact form:
+\subsubsection{Conductivity and Material Properties}
+The phantom is modeled as a piecewise homogeneous domain $\Omega = \Omega_{\text{gel}} \cup \Omega_{\text{shell}}$
 
 \begin{itemize}
-    \item The phantom materials are treated as linear, homogeneous conductors with isotropic \emph{effective} conductivity $\sigma(\mathbf{x})$, piecewise constant in each region ($\sigma_{\text{gel}}$ and $\sigma_{\text{shell}}$).
-
-    \item No impressed current sources or sinks are present inside the volume: all currents originate from electrode boundary conditions.
-
-    \item Displacement currents, capacitive storage, and polarization effects are negligible in the EEG frequency range, so conduction current dominates (quasi-static regime).
-
-    \item Boundary conditions are defined as follows: Dirichlet ($u = V_i(t)$) on internal electrode surfaces, homogeneous Neumann ($\sigma\,\partial_n u = 0$) on the external shell surface,  
-    and no enforced condition on high-impedance measurement electrodes (which electrically “float”).
+    \item \textbf{The inner medium ($\Omega_{\text{gel}}$):} The saline–gelatin mixture acts as the primary volume conductor. Consistent with electrophysiology literature \cite{akor-2025}, the solidified mixture behaves as a linear Ohmic conductor. We adopt a conductivity range of $\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$, which matches human intracranial tissues. Experimental data confirms that for the EEG frequency band ($<100$ Hz), $\sigma_{\text{gel}}$ remains frequency-independent with negligible capacitive phase shifts~\cite{geddes-1967, Chandra2000}.
+    \item \textbf{The conductive shell  ($\Omega_{\text{shell}}$):}  The outer boundary consists of a 3D-printed conductive PLA shell. Manufacturer data \textbackslash{}cite\{cpla-datasheet\} and recent studies \textbackslash{}cite\{akor-2025, tilve-martinez-2024\} indicate that 3D-printed polymers exhibit orthotropic conductivity due to the layer-by-layer deposition process. While resistivities vary between the $X-Y$ plane ($19.2~\Omega\cdot\text{cm}$) and the $Z$-axis ($33.6~\Omega\cdot\text{cm}$), research suggests that anisotropy can be mitigated through optimized printing parameters such as extrusion temperature and path planning~\cite{paz-2020, nowka-2024}. \\
+    For this model, we define a representative scalar value of $\sigma_{shell} = 4.1~\text{S/m}$. This value serves as a balanced estimate for a reasonably optimized print, though $\sigma_{\text{shell}}$ remains a user-definable parameter to allow for sensitivity analysis or material-specific characterization.
 \end{itemize}
 
-In addition to these assumptions—which follow directly from material properties, fabrication details, and the quasi-static approximation—the following modelling simplifications are introduced for completeness:
+Given these properties, we can conclude that\textbf{ Condition 2 (Purely Resistive Media) }is satisfied, as the high conductivity $\sigma$ of both regions ensures that conduction currents dominate over displacement currents ($\sigma \gg \omega\epsilon$). Furthermore, the verified frequency-independence and Ohmic behavior confirm that \textbf{Condition 3 (Linear and Instantaneous Response) }holds.
+
+\subsubsection{Boundary Conditions and Interface.}
+To solve for the potential $u$, we must define how the phantom interacts with its environment:
 
 \begin{itemize}
-    \item \textbf{Interface continuity.}
-    The gel and shell are assumed to be in perfect electrical contact (no gaps or interfacial
-    impedance), so both the potential and the normal current density are continuous across
-    their boundary. This reflects the physical construction—where the liquid gelatin–saline
-    mixture is poured into the shell and solidifies against its inner surface—as well as the CAD
-    procedure used to generate the simulation geometry, in which a ``boundary fill'' operation
-    produces a watertight, conformal gel–shell interface.
+    \item \textbf{External Insulation (Neumann BC): } The phantom is a closed volume surrounded by air. Since air is a near-perfect insulator, no current flows out of the shell surface. This is represented by a homogeneous Neumann boundary condition:
+    $$ \sigma \frac{\partial u}{\partial n} = 0 \quad \text{on } \partial\Omega_{\text{ext}} $$
+    
+    \item \textbf{High-Impedance Electrodes: }Recording electrodes on the shell surface are connected to amplifiers with input impedances $>100~\text{M}\Omega$. Consequently, the current they draw is negligible, allowing us to treat these locations as passive observation points where the potential $u$ \textit{floats} without perturbing the field.
 
-    \item \textbf{Unified domain.}  
-    The gel and shell are treated as parts of a single connected conductive domain $\Omega$, with only material parameters changing across regions. This allows the governing PDE to be written compactly over $\Omega = \Omega_{\text{gel}} \cup
-    \Omega_{\text{shell}}$.
+    \item \textbf{Internal Interface}: We assume a \textit{watertight} conformal interface between the gel and the shell. This implies interface continuity, where both the potential and the normal current density are continuous across the internal boundary ($\Omega_{\text{gel}} \cap \Omega_{\text{shell}}$).
 \end{itemize}
 
-With these assumptions established, the derivation of the governing equation for the
-electric potential $u(\mathbf{x},t)$ in the composite domain follows.
+The absence of internal current sinks and the perfectly insulated exterior boundary ensure that the divergence of the current density is zero throughout the volume, satisfying \textbf{Condition 4 (Conservation of Current)}.
 
-Therefore, it's justified to use
 
-\[
--\nabla \cdot \big(\sigma(\mathbf{x})\, \nabla u(\mathbf{x},t)\big) = 0,
-\qquad \text{for all } \mathbf{x}\in 
-\Omega_{\text{gel}}\cup\Omega_{\text{shell}}.
-\tag{PDE}\label{eq:pde}
-\]
+\subsubsection{Final PDE Formulation}
+Because the four conditions mentioned in the Background are satisfied by the physical parameters and the environment of our phantom, the electric potential $u(\mathbf{x}, t)$ can be described by the variable-coefficient Laplace equation:
+
+\begin{equation}
+-\nabla \cdot \big(\sigma(\mathbf{x})\, \nabla u(\mathbf{x},t)\big) = 0, \qquad \text{for all } \mathbf{x} \in \Omega_{\text{gel}} \cup \Omega_{\text{shell}}.
+\label{eq:pde_final}
+\end{equation}
+
+This equation allows for the simulation of the scalp potential distribution by accounting for the specific geometry and material transitions of the head phantom.
