@@ -180,3 +180,118 @@ In addition to the distribution statistics reported in Table~\ref{tab:sphere-err
     {Spatial localization of discretization error for a representative Dirichlet--Dirichlet spherical benchmark case with $\sigma_1=\sigma_2=1$.}
     \label{fig:sphere-error-localization}
 \end{figure}
+
+
+\subsubsection{Phantom--Head Response}
+
+% --- 4 figures: front / left / right / back ---
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_front.png}
+    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: front view (all 9 cases)}}}
+    \caption[Phantom--head response: front view]{Front view of the phantom shell surface response for the nine basis stimuli.}
+    \label{fig:phantom_response_front}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_left.png}
+    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: left view (all 9 cases)}}}
+    \caption[Phantom--head response: left view]{Left view of the phantom shell surface response for the nine basis stimuli.}
+    \label{fig:phantom_response_left}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_right.png}
+    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: right view (all 9 cases)}}}
+    \caption[Phantom--head response: right view]{Right view of the phantom shell surface response for the nine basis stimuli.}
+    \label{fig:phantom_response_right}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_back.png}
+    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: back view (all 9 cases)}}}
+    \caption[Phantom--head response: back view]{Back view of the phantom shell surface response for the nine basis stimuli.}
+    \label{fig:phantom_response_back}
+\end{figure}
+
+Figures~\ref{fig:phantom_response_front}-\ref{fig:phantom_response_back} present the surface potential maps of the simulated
+phantom shell for the nine basis stimuli. Responses are shown from four viewpoints
+(front, left, right, and back). Surface potentials were sampled at the $N_m=21$ probe
+locations corresponding to the international 10--20 electrode system. For the basis
+stimulation set (tip at $+1~\mathrm{V}$, ring at $-1~\mathrm{V}$, sleeve at $0~\mathrm{V}$), the global
+minimum and maximum values over all responses were $15.963~\text{mV}$ and $54.122~\text{mV}$, respectively; these limits were used for consistent colormap scaling across all panels.
+
+\paragraph{Transfer Matrix Diagnostics}
+
+The transfer matrix $F$ was evaluated for the complete set of nine electrode stimuli.
+The rank of $F$ was $\mathrm{rank}(F)=9$ and the condition number was
+$\kappa(F)=135.82$.
+
+% --- Correlation plot (columns) ---
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../02_Images/F_correlation_heatmap.png}
+    \caption[Column correlation of $F$]{Correlation between columns of $F$. Summary statistics over off-diagonal entries: mean = 0.094969, std = 0.36485.}
+    \label{fig:F_column_correlation}
+\end{figure}
+
+% --- Singular values scree plot ---
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../02_Images/F_singular_values.png}
+    \caption[Singular values of $F$]{Singular value spectrum of $F$ (descending order). $\sigma_{\max}=0.3101$, $\sigma_{\min}=0.0023$.}
+    \label{fig:F_singular_values}
+\end{figure}
+
+
+Regularization diagnostics were evaluated for the transfer matrix $F$ using both
+generalized cross-validation (GCV) and L-curve criteria. The GCV analysis produced
+optimal Tikhonov parameters equal to $\sigma_{\min}^2 = 5.22 \times 10^{-6}$ in most cases.
+The L-curve analysis did not exhibit a pronounced corner, consistent with the moderate
+condition number of $F$; as a result, corner-detection algorithms identified minor local
+curvature variations as candidate optima, yielding parameter values in the range
+$1\times 10^{-5}$ to $1\times 10^{-2}$. Owing to the lack of convergence toward a
+single characteristic regularization parameter across these diagnostics, no unique
+regularization value was selected for subsequent analyses. Consequently, subsequent analyses involving $F$ were performed using the unregularized pseudoinverse.
+
+\paragraph{Probe-wise Statistics}
+Probe-wise summary statistics were computed over the set of basis stimuli. For each
+probe, the Table~\ref{tab:probe_stats} shows the mean response magnitude, standard deviation, and coefficient of variation
+($\text{CV} = \sigma/\mu$) were evaluated.
+
+\begin{table}[htbp]
+\centering
+\caption[Probe-wise response statistics]{Probe-wise response statistics computed over the nine basis stimuli.}
+\label{tab:probe_stats}
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Probe} & \textbf{Mean [mV]} & \textbf{Std [mV]} & \textbf{CV} \\
+\midrule
+Fp1 & 22.376 & 4.836 & 0.216 \\
+Fp2 & 22.304 & 4.741 & 0.213 \\
+F7 & 22.252 & 4.690 & 0.211 \\
+F3 & 22.820 & 4.553 & 0.199 \\
+Fz & 23.961 & 10.226 & 0.427 \\
+F4 & 22.812 & 6.296 & 0.276 \\
+F8 & 22.430 & 6.414 & 0.286 \\
+T3 & 22.538 & 8.725 & 0.388 \\
+C3 & 23.623 & 11.067 & 0.469 \\
+Cz & 23.588 & 5.974 & 0.253 \\
+C4 & 22.986 & 6.096 & 0.265  \\
+T4 & 21.793 & 4.875 & 0.224 \\
+T5 & 21.875 & 5.853 & 0.268 \\
+P3 & 22.537 & 5.038 & 0.224 \\
+Pz & 22.641 & 4.720 & 0.208  \\
+P4 & 22.437 & 5.788 & 0.258 \\
+T6 & 22.010 & 8.432 & 0.383  \\
+O1 & 22.111 & 8.214 & 0.371  \\
+Oz & 21.704 & 6.229 & 0.287  \\
+O2 & 21.613 & 5.265 & 0.244 \\
+FPz & 22.343 & 4.704 & 0.211 \\
+\bottomrule
+\end{tabular}
+\end{table}
