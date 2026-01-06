@@ -187,32 +187,28 @@ In addition to the distribution statistics reported in Table~\ref{tab:sphere-err
 % --- 4 figures: front / left / right / back ---
 \begin{figure}[htbp]
     \centering
-    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_front.png}
-    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: front view (all 9 cases)}}}
+    \includegraphics[width=0.9\textwidth]{../../02_Images/response_views/front.png}
     \caption[Phantom--head response: front view]{Front view of the phantom shell surface response for the nine basis stimuli.}
     \label{fig:phantom_response_front}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_left.png}
-    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: left view (all 9 cases)}}}
+    \includegraphics[width=0.9\textwidth]{../../02_Images/response_views/left.png}
     \caption[Phantom--head response: left view]{Left view of the phantom shell surface response for the nine basis stimuli.}
     \label{fig:phantom_response_left}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_right.png}
-    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: right view (all 9 cases)}}}
+    \includegraphics[width=0.9\textwidth]{../../02_Images/response_views/right.png}
     \caption[Phantom--head response: right view]{Right view of the phantom shell surface response for the nine basis stimuli.}
     \label{fig:phantom_response_right}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    % \includegraphics[width=0.9\textwidth]{../../02_Images/phantom_response_back.png}
-    \fbox{\parbox[c][4.5cm][c]{0.9\textwidth}{\centering \textit{Image placeholder: back view (all 9 cases)}}}
+    \includegraphics[width=0.9\textwidth]{../../02_Images/response_views/back.png}
     \caption[Phantom--head response: back view]{Back view of the phantom shell surface response for the nine basis stimuli.}
     \label{fig:phantom_response_back}
 \end{figure}
@@ -224,7 +220,7 @@ locations corresponding to the international 10--20 electrode system. For the ba
 stimulation set (tip at $+1~\mathrm{V}$, ring at $-1~\mathrm{V}$, sleeve at $0~\mathrm{V}$), the global
 minimum and maximum values over all responses were $15.963~\text{mV}$ and $54.122~\text{mV}$, respectively; these limits were used for consistent colormap scaling across all panels.
 
-\paragraph{Transfer Matrix Diagnostics}
+\paragraph*{Transfer Matrix Diagnostics}
 
 The transfer matrix $F$ was evaluated for the complete set of nine electrode stimuli.
 The rank of $F$ was $\mathrm{rank}(F)=9$ and the condition number was
@@ -257,7 +253,7 @@ $1\times 10^{-5}$ to $1\times 10^{-2}$. Owing to the lack of convergence toward 
 single characteristic regularization parameter across these diagnostics, no unique
 regularization value was selected for subsequent analyses. Consequently, subsequent analyses involving $F$ were performed using the unregularized pseudoinverse.
 
-\paragraph{Probe-wise Statistics}
+\paragraph*{Probe-wise Statistics}
 Probe-wise summary statistics were computed over the set of basis stimuli. For each
 probe, the Table~\ref{tab:probe_stats} shows the mean response magnitude, standard deviation, and coefficient of variation
 ($\text{CV} = \sigma/\mu$) were evaluated.
