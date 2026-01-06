@@ -153,6 +153,11 @@ $\sigma_1=4.1,\ \sigma_2=0.33$
 \end{tabularx}
 \end{table}
 
+This indicates that while the overall mean error may appear significant, the median and
+95th percentile values reveal that the majority of the domain experiences low discretization
+error, with high-error regions being spatially localized.
+
+
 In addition to the distribution statistics reported in Table~\ref{tab:sphere-error-distributions}, the spatial structure of the discretization error was examined for a representative Dirichlet–Dirichlet case. Figure~\ref{fig:sphere-error-localization} illustrates the absolute error field and its radial distribution, highlighting the localized nature of high-error regions within an otherwise low-error domain.
 
 \begin{figure}[htbp]
@@ -181,6 +186,11 @@ In addition to the distribution statistics reported in Table~\ref{tab:sphere-err
     \label{fig:sphere-error-localization}
 \end{figure}
 
+
+Taking both the distribution statistics and spatial localization into account, it is evident that the finite element discretization
+effectively captures the potential field across most of the spherical domain, with significant errors confined to localized regions
+near material interfaces. This insight informs mesh refinement strategies for future modeling efforts, emphasizing targeted improvements
+in areas prone to higher discretization errors.
 
 \subsubsection{Phantom--Head Response}
 
@@ -256,7 +266,7 @@ regularization value was selected for subsequent analyses. Consequently, subsequ
 \paragraph*{Probe-wise Statistics}
 Probe-wise summary statistics were computed over the set of basis stimuli. For each
 probe, the Table~\ref{tab:probe_stats} shows the mean response magnitude, standard deviation, and coefficient of variation
-($\text{CV} = \sigma/\mu$) were evaluated.
+($\text{CV} = \sigma/\mu$).
 
 \begin{table}[htbp]
 \centering
