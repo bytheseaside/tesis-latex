@@ -1,9 +1,14 @@
 \subsubsection{Finite Element Meshes}
 
-This section reports the finite element meshes employed in the numerical simulations,
 including both the analytical spherical benchmark and the full phantom--head geometry.
-Figures~\ref{fig:phantom_mesh} and~\ref{fig:sphere_mesh} show the corresponding meshes,
-and Table~\ref{tab:mesh_comparison} summarizes global mesh statistics and quality indicators.
+Figures~\ref{fig:phantom_mesh} and~\ref{fig:sphere_mesh} illustrate the corresponding meshes,
+while Table~\ref{tab:mesh_comparison} summarizes global mesh statistics and quality indicators.
+
+The spherical benchmark mesh was designed to provide a controlled reference configuration
+with known analytical solutions, enabling quantitative assessment of discretization errors.
+The phantom--head mesh, in contrast, reflects the geometric complexity and material interfaces
+of the physical experimental system, resulting in a substantially higher number of degrees
+of freedom.
 
 \begin{figure}[htbp]
     \centering
@@ -74,3 +79,104 @@ SIGE
 \bottomrule
 \end{tabularx}
 \end{table}
+
+
+\subsubsection{Spherical Benchmark Error Statistics}
+
+The discretization error of the spherical benchmark model was evaluated by comparing the
+finite element solution $u_h$ with the analytical reference solution $u_{\text{exact}}$.
+Error statistics were computed over all sampled points for each conductivity configuration
+and for two spatial regions: the full domain and an outer region defined as $r \ge 79\,\mathrm{mm}$.
+
+The outer region threshold was selected to include the material interface at
+$r_1 = 80\,\mathrm{mm}$ together with a narrow surrounding band, allowing numerical effects
+localized near the conductivity discontinuity to be captured in the statistical analysis.
+
+Table~\ref{tab:sphere-error-distributions} reports distribution statistics of the absolute
+discretization error for each configuration and spatial region. In addition to these global
+measures, the spatial structure of the error was examined for a representative
+Dirichlet--Dirichlet case. Figure~\ref{fig:sphere-error-localization} illustrates both the
+absolute error field and its radial distribution, highlighting the localized nature of
+high-error regions within an otherwise low-error domain.
+
+
+\begin{table}[htbp]
+\centering
+\caption[Spherical benchmark discretization error distributions]
+{Distribution statistics of the absolute discretization error for the spherical benchmark. Statistics are computed over all sampled points for each conductivity configuration and spatial region.}
+\label{tab:sphere-error-distributions}
+\small
+\begin{tabularx}{\textwidth}{l l c c r}
+\toprule
+\textbf{Conductivity} 
+& \textbf{Region} 
+& \textbf{Mean [V]} 
+& \textbf{Median [V]}
+& \textbf{P95 [V]} \\
+\midrule
+$\sigma_1=\sigma_2=1$
+& Full domain
+& $0.32$
+& $4.96\times10^{-5}$
+& $1.53$ \\
+
+$\sigma_1=\sigma_2=1$
+& Outer region
+& $0.21$
+& $4.43\times10^{-7}$
+& $0.99$ \\[4pt]
+
+$\sigma_1=0.33,\ \sigma_2=4.1$
+& Full domain
+& $0.12$
+& $4.44\times10^{-5}$
+& $0.99$ \\
+
+$\sigma_1=0.33,\ \sigma_2=4.1$
+& Outer region
+& $0.14$
+& $2.98\times10^{-8}$
+& $0.99$ \\[4pt]
+
+$\sigma_1=4.1,\ \sigma_2=0.33$
+& Full domain
+& $0.12$
+& $2.78\times10^{-5}$
+& $0.98$ \\
+
+$\sigma_1=4.1,\ \sigma_2=0.33$
+& Outer region
+& $0.142$
+& $2.23\times10^{-6}$
+& $0.99$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+In addition to the distribution statistics reported in Table~\ref{tab:sphere-error-distributions}, the spatial structure of the discretization error was examined for a representative Dirichlet–Dirichlet case. Figure~\ref{fig:sphere-error-localization} illustrates the absolute error field and its radial distribution, highlighting the localized nature of high-error regions within an otherwise low-error domain.
+
+\begin{figure}[htbp]
+    \centering
+
+    % --- Top: narrow 3D sphere (context) ---
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/error_internal-spikes.png}
+        \caption{Absolute discretization error field in a central view of the spherical domain.}
+        \label{fig:sphere-error-field}
+    \end{subfigure}
+
+    \vspace{0.6em}
+
+    % --- Bottom: wide radial plot (primary quantitative result) ---
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/error-radius.png}
+        \caption{Radial distribution of the absolute discretization error for the same case.}
+        \label{fig:sphere-error-radial}
+    \end{subfigure}
+
+    \caption[Spatial localization of discretization error in the spherical benchmark]
+    {Spatial localization of discretization error for a representative Dirichlet--Dirichlet spherical benchmark case with $\sigma_1=\sigma_2=1$.}
+    \label{fig:sphere-error-localization}
+\end{figure}
