@@ -1,0 +1,223 @@
+\documentclass[../00_Main.tex]{subfiles}
+\begin{document}
+
+\subsection{Conceptual Design}
+The proposed solution is a hybrid electro-acoustic emulation system. It integrates a digital signal processing platform with a physical analog transduction architecture to simulate electrophysiological activity in a phantom head mimicking EEG signals.
+
+\subsubsection{Software and Hardware Subsystems}
+The system is conceptualized as two distinct but synchronized subsystems:
+
+\begin{enumerate}
+    \item \textbf{The Digital Control Unit (Software):} A desktop application responsible for the deterministic synthesis of waveforms and real-time visualization of acquired data for contrast. This subsystem acts as the signal generator controller, utilizing the host computer's audio sound card as a high-fidelity DAC source to output precise voltage fluctuations at set frequencies. The software has also included functionality to parse and playback clinical EEG data from EDF files, allowing for realistic simulation scenarios.
+    
+    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale ($\mu V$) potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first splitted into two mono channels (left and right), each routed to an independent signal amplifier circuit containing a non-inverting op-amp and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an EEG acquisition system and fed back into the software for analysis.
+\end{enumerate}
+
+\subsubsection{High-Level Block Diagram}
+Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the proposed solution, highlighting the interaction between the software and hardware components.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/high_level_block_diagram.png}
+    \caption[High-level block diagram of the solution]{High-level block diagram of the proposed EEG signal emulation system, showing the flow from user configuration to signal acquisition.}
+    \label{fig:block_diagram}
+\end{figure}
+
+\subsubsection{System Data Flow}
+\begin{enumerate}
+    \item \textbf{User Configuration:} The user defines the desired EEG parameters via the dashboard interface.
+    \item \textbf{Digital Synthesis:} The Python backend generates a discrete-time signal array.
+    \item \textbf{D/A Conversion:} The PC's audio DAC reconstructs the continuous analog signal.
+    \item \textbf{Channel Splitting:} Each audio output is splitted into two mono signals, obtaining the channels left and right.
+    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting op-amp and potentiometer for amplification.
+    \item \textbf{Dipole Construction:} The channels are routed to the phantom head model as dipoles using audio jack terminals.
+    \item \textbf{Volume Conduction:} The signal is injected into the phantom head, establishing an electric field distribution.
+    \item \textbf{Acquisition:} The EEG electrodes detect the potential difference on the phantom's surface, closing the loop.
+\end{enumerate}
+
+
+\subsection{System Architecture}
+
+\subsubsection{Software Architecture Pattern}
+
+The software platform implements a local client-server architecture encapsulated within a desktop runtime environment. Unlike traditional monolithic desktop applications or purely cloud-based web applications, this solution adopts a hybrid approach known as a decoupled monolith.
+
+Using this architecture, the presentation layer (frontend) and the logic layer (backend) execute as independent processes on the host machine, communicating via a local network loopback interface. This design leverages the visualization capabilities of modern web technologies while retaining the raw computational power and hardware access of a native Python environment.
+
+The designed architecture is composed of three primary layers:
+
+\begin{enumerate}
+    \item \textbf{The Client Container (Electron):} The application is wrapped in Electron, a framework that embeds a Chromium browser instance and a Node.js runtime. Electron serves two critical functions:
+    \begin{itemize}
+        \item \textbf{Process Orchestration:} Upon execution, the Electron main process spawns the Python backend as a child subprocess, ensuring that the server starts and terminates in sync with the application window.
+        \item \textbf{Native Integration:} It provides the application with native OS capabilities (file system access for exporting EDFs, window management, etc.) that are restricted in standard web browsers.
+    \end{itemize}
+
+    \item \textbf{The Application Server (Python Flask):} The core logic resides in a distinct Python process managed by the Flask micro-framework. Its responsibilities include:
+    \begin{itemize}
+        \item \textbf{Mathematical Synthesis:} executing the signal generation algorithms via \texttt{NumPy}.
+        \item \textbf{Hardware Abstraction:} managing the audio stream (via \texttt{sounddevice}) and the OpenBCI connection (via \texttt{BrainFlow}).
+        \item \textbf{EDF Management:} parsing and exporting clinical data using \texttt{pyedflib}.
+    \end{itemize}
+
+    \item \textbf{The Communication Bridge (Socket.IO):} To satisfy the non-functional requirement of low latency (NFR-01), the system bypasses standard HTTP REST protocols. Instead, it utilizes Socket.IO to establish a persistent, bidirectional WebSocket connection between the React frontend and the Flask backend. This event-driven protocol allows the server to push high-frequency signal data (60 packets/second) to the visualizer without the overhead of HTTP headers or polling.
+\end{enumerate}
+
+This architecture ensures Separation of Concerns (SOC): the frontend remains responsive even if the backend performs intensive signal processing, as the user interface and the audio engine run on separate threads and memory spaces.
+
+
+\subsubsection{Technology Stack}
+The selection of technologies for the software platform was driven by the specific requirement to balance high-level user interface interactivity with low-level hardware control and deterministic signal processing.
+
+\begin{enumerate}
+    \item\textbf{Frontend Layer (React Ecosystem):} The user interface is constructed using \textbf{React 18}, employing a component-based architecture to manage the independent state of multiple output modules.
+    
+    \begin{itemize}
+        \item \textbf{TypeScript:} Utilized to enforce strict static typing.
+        \item \textbf{Vite:} Selected as the build tool to minimize the application bundle size and optimize the hot-module replacement (HMR) cycle during development.
+    \end{itemize}
+
+    \item\textbf{Backend Layer (Python Ecosystem):} The computational core is developed in \textbf{Python 3.10+}, chosen for its extensive support for scientific computing and hardware integration.
+    
+    \begin{itemize}
+        \item \textbf{Flask:} Functions as the application server, managing the lifecycle of the background threads and serving the static assets to the Electron container.
+        \item \textbf{NumPy:} Serves as the mathematical engine for the system. It is responsible for the vectorized generation of sine wave arrays.
+        \item \textbf{BrainFlow:} Implemented as the Hardware Abstraction Layer (HAL) for the acquisition device. This library creates a unified interface to communicate with the OpenBCI Cyton board, handling serial port handshakes and stream parsing automatically.
+    \end{itemize}
+
+    \item\textbf{Communication Layer (Socket.IO):} To satisfy the real-time latency constraints, the system utilizes \textbf{Flask-SocketIO} (server) and \textbf{socket.io-client} (frontend). This establishes an event-driven WebSocket protocol, allowing the backend to push signal measurements to the interface immediately upon generation, rather than waiting for HTTP polling requests. This architecture is critical for the closed-loop visualization feature, ensuring that the delay between signal generation and visual feedback is minimized.
+\end{enumerate}
+
+\subsection{User Interface Design Process}
+
+The final interface architecture emerged from a user-centered design process involving three distinct iterations. Each phase addressed specific usability friction points and technical validity concerns regarding signal synchronization and visualization, based on feedback from usability testing sessions.
+
+\subsubsection{Iteration 1: High Cognitive Load}
+
+The initial design (Figure~\ref{fig:iteration_1_ui}) attempted to provide maximum control, exposing all available parameters as immediate buttons on the dashboard.
+
+\begin{itemize}
+    \item \textbf{Issue A (Usability):} The interface was cluttered with too many buttons, leading to user confusion and slow reaction times.
+    \item \textbf{Issue B (Synchronization):} The design allowed users to import distinct EDF files for each channel independently. Functional analysis revealed that this approach introduced significant risks of temporal misalignment (synchronization drift) between channels and increased the probability of user error during setup.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/iteration_1_ui.png}
+    \caption[User Interface {-} Iteration 1]{User Interface {-} Iteration 1: High Cognitive Load Design}
+    \label{fig:iteration_1_ui}
+\end{figure}
+
+\subsubsection{Iteration 2: Menu Consolidation \& The Visualization Fallacy}
+
+The second iteration (Figure~\ref{fig:iteration_2_ui}) addressed the clutter by moving secondary options to the window menu (leveraging Electron's native menu APIs) and solved the synchronization issue by implementing a global file with local routing logic (loading a single master file, and giving the user the option to select a channel from the imported file to replicate in the generation channels). However, this design introduced a new problem in the visualization paradigm:
+
+\begin{itemize}
+    \item \textbf{The New Problem:} This design superimposed the generated signal and the measured signal (OpenBCI) onto the same graph for each channel. Testing revealed this to be scientifically misleading. Due to volume conduction in the phantom head, a single generated dipole affects multiple acquisition electrodes simultaneously. Therefore, implying a direct 1-to-1 relationship between ``Generator 1'' and ``Sensor 1'' was incorrect and confused the validation process.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/iteration_2_ui.png}
+    \caption[User Interface {-} Iteration 2]{User Interface {-} Iteration 2: Menu Consolidation \& Visualization Fallacy}
+    \label{fig:iteration_2_ui}
+\end{figure}
+
+\subsubsection{Iteration 3: Final Split-View Design}
+The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization validity problem by strictly decoupling the views:
+\begin{itemize}
+    \item \textbf{Global Control:} The generation control panel remains persistently visible, allowing the user to manipulate the source dipoles in both views.
+    \item \textbf{Context-Switching Views:} The user can toggle between a \textit{Generation View} (previewing the ideal synthetic output) and a \textit{Measured View} (displaying the full 8-channel OpenBCI array). This structure allows the operator to modify a single generated source and correctly observe its distributed effect across the entire cranial surface, accurately reflecting the physics of the phantom head.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/iteration_3_ui.png}
+    \caption[User Interface {-} Iteration 3]{User Interface {-} Iteration 3: Final Split-View Design}
+    \label{fig:iteration_3_ui}
+\end{figure}
+
+Applying this last changes resulted in the final UI design, with separate views for generation and measurement as shown in Figure~\ref{fig:final_ui_views}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/generated_view_ui.png}
+        \caption{Generation View}
+        \label{fig:generated_view_ui}
+    \end{subfigure}
+    
+    \vspace{1em}
+    
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/measured_view_ui.png}
+        \caption{Measured View}
+        \label{fig:measured_view_ui}
+    \end{subfigure}
+    \caption[Final User Interface Design]{Final User Interface Design: (a) Generation View showing the synthetic signal preview, and (b) Measured View displaying the full 8-channel OpenBCI array}
+    \label{fig:final_ui_views}
+\end{figure}
+
+\subsection{Hardware Architecture}
+
+\subsubsection{Channel Splitting}
+The audio signal from the PC sound card is split into two mono signals, one for each channel. This is done using a 3.5mm TRS splitter, which takes the stereo output from the sound card and splits it into two separate mono outputs (left and right channels). Each channel is then routed to its respective signal amplifier circuit.
+
+The preferred hardware for this application is the PCI 7.1 sound card (Figure~\ref{fig:7_1_channel_pci_card}), which provides multiple output channels and high-quality audio performance, ensuring accurate signal reproduction for EEG simulation. If the user doesn't have one, an external USB sound card with similar specifications can be used as an alternative (Figure~\ref{fig:7_1_channel_usb_card}).
+
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/7_1_channel_pci_card.jpg}
+        \caption{PCI 7.1 Sound Card}
+        \label{fig:7_1_channel_pci_card}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/7_1_channel_usb_card.jpg}
+        \caption{USB 7.1 Sound Card}
+        \label{fig:7_1_channel_usb_card}
+    \end{subfigure}
+    \caption[PCI and USB 7.1 Sound Cards]{PCI (left) and USB (right) 7.1 sound cards for multi-channel audio output.}
+\end{figure}
+
+\subsubsection{Signal Amplifier Circuit Design}
+The signal amplifier circuit (Figure~\ref{fig:splitter_amplifier_circuit}) is composed of:
+\begin{itemize}
+    \item Non-inverting operational amplifier: A non-inverting operational amplifier (op-amp) is used to amplify the signal. This configuration provides high input impedance and low output impedance, making it suitable for driving the phantom head model.
+    \item Resistor: One resistor is used to set the gain of the op-amp when combined with the potentiometer. 
+    \item Potentiometer: A potentiometer is included to allow for manual adjustment of the gain. This enables the user to fine-tune the amplitude of the output signal to match the desired microvolt levels for EEG simulation. The gain is determined by the ratio of the potentiometer and the resistor.
+    % \item Capacitors: Capacitors are used to filter out noise.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/splitter_amplifier_circuit.png}
+    \caption{Circuit for channel splitting and signal amplification}
+    \label{fig:splitter_amplifier_circuit}
+\end{figure}
+
+\subsubsection{Final Hardware Design}
+
+To house the splitter and the signal amplifier circuits, providing a user-friendly interface, an electronic module box enclosure is proposed as shown in Figure~\ref{fig:hardware_system}. The box design includes:
+\begin{itemize}
+    \item 12 3.5mm female TRS connectors (4 inputs, 8 outputs).
+    \item 8 operational amplifiers, one for each channel.
+    \item 8 resistors, one for each channel.
+    \item 8 potentiometers, one for each channel.
+\end{itemize}
+
+Using double jack audio cables, the output from the PC sound card is connected to the input jacks of the box. Inside the box, the channel splitting and amplification take place. The amplified output signals are then connected to the phantom head model using additional cables, with the audio jacks acting as dipoles for signal injection.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/hardware_system.png}
+    \caption[Final hardware system design]{Final hardware system design for channel splitting and signal amplification}
+    \label{fig:hardware_system}
+\end{figure}
+\biblio~% Needed for referencing to working when compiling individual subfiles - Do not remove
+\end{document}
