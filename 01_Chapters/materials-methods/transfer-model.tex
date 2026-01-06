@@ -1,255 +1,84 @@
-%-----------------------------------------------------------
-% Phantom-Head Transfer Model
-%-----------------------------------------------------------
+\subsection{Phantom--Head Transfer Model}
 
-Having established the physical model of the phantom and the quasi-static PDE
-governing its behaviour, the next step is to construct a purely numerical
-representation of the system. In this section we no longer work with Maxwell’s
-equations or the FEM solver directly; instead, we treat the simulated results as
-the “ground-truth’’ behaviour of the phantom and build a linear model that maps
-voltages applied to the \emph{internal electrodes} to the potentials measured at
-the 21 \emph{scalp probes}.
+Having validated the numerical solver and quantified discretization error using an analytical benchmark, the finite element model is now used to characterize the electrical behavior of the phantom--head geometry itself. In this context, the phantom is treated as a linear conductive system that maps prescribed internal excitations to measurable surface potentials.
 
-Our objective is to express this relationship in the compact form
-\begin{equation}\label{eq:forward-operator}
-V_{\text{scalp}} = A\,V_{\text{electrode}},
-\end{equation}
-where \(V_{\text{electrode}}\) contains the voltages that can be actively imposed on the
-nine internal electrodes, and \(A\) is an effective forward operator derived from
-the FEM simulations. This linear model allows us to predict scalp potentials
-resulting from arbitrary internal stimulation patterns.
+The purpose of this section is to construct a linear transfer model for the phantom head, analyze its numerical properties, and define the procedure used to evaluate reconstruction performance under controlled conditions.
 
-In practice, however, the intended use of the system is the inverse one: the
-user specifies a desired potential pattern on the scalp probes, and we seek the
-internal electrode voltages that best reproduce it. Because nine controllable
-electrodes must reproduce twenty-one probe measurements, the inverse problem is
-inherently underdetermined and the matrix \(A\) is not invertible. For this
-reason, the solution is obtained through a conditioned pseudoinverse of \(A\),
-which yields the internal voltages that minimise the reconstruction error at the
-scalp while maintaining numerical stability.
+\subsubsection{Transfer Matrix Construction}
 
-\subsubsection{Rationale for using dipoles instead of single-electrode stimulation}
+The phantom--head model comprises $N_e = 9$ internal electrodes, each capable of generating an electrical excitation. A set of basis stimulation patterns was defined by activating one electrode at a time, while all remaining electrodes were held at a fixed reference potential.
 
-Before constructing the numerical model, we evaluated a ``monopolar''
-stimulation protocol in which a single internal electrode was set to
-\(+1~\mathrm{V}\) while the remaining eight were held at \(0~\mathrm{V}\),
-following the procedure described in \cite{CITE-LATER cuando me encuentre en donde anote la fuente}. For each of the nine
-electrodes, the resulting potentials at the 21 scalp probes were obtained from
-the FEM simulations.
+For each basis stimulus, the electrode under consideration was driven using a fixed potential configuration (\textit{tip} at $+1~\mathrm{V}$, \textit{ring} at $-1~\mathrm{V}$, \textit{sleeve} at $0~\mathrm{V}$), while all other electrode surfaces were explicitly assigned a Dirichlet potential of $0~\mathrm{V}$. All remaining boundaries followed the material and interface definitions of the phantom model. This procedure yields a well-defined and reproducible set of input excitations.
 
-A consistent and problematic phenomenon appeared: although the absolute voltage
-levels differed across probes, the \emph{pattern} of probe responses was almost
-independent of which electrode was activated. In practical terms, every
-monopolar excitation produced nearly the same 21-dimensional output vector. This
-renders the forward operator associated with monopolar stimulation extremely
-poorly conditioned, since its nine columns are nearly collinear. Such a system
-cannot support meaningful inversion or reconstruction.
+The outputs of the system were defined as the electric potentials evaluated at $N_m = 21$ measurement locations on the outer surface of the phantom, corresponding to the electrode positions of the international 10--20 EEG system.
 
-This behaviour is consistent with the geometry and scale of the phantom: at the
-distance of the scalp probes, the spatial electric field patterns produced by
-individual electrodes become very similar, making it difficult for a probe to
-distinguish which electrode was responsible for the excitation. For the purposes
-of inversion, the monopolar protocol therefore provides insufficient independent
-information.
+For each basis excitation, a forward finite element simulation was performed and the resulting surface potentials were sampled at the measurement locations. The phantom--head transfer matrix $F \in \mathbb{R}^{N_m \times N_e}$ was then assembled by stacking the measured responses column-wise, such that the $i$-th column of $F$ represents the surface response to the $i$-th electrode excitation.
 
-To address this limitation, we instead use \emph{dipolar} stimulation. A dipole
-creates a stronger spatial gradient in the electric field due to the opposing
-polarities of its two electrodes. This gradient enhances the sensitivity of scalp
-measurements to the specific location and orientation of the dipole source.
-Consequently, different dipole configurations produce probe patterns that are
-more distinguishable from one another. This controllable dependence on the
-stimulation source improves the conditioning of the forward operator \(A\),
-enabling more robust inverse reconstruction.
-
-A dipole is defined by selecting a pair of distinct
-electrodes \((e_i,e_j)\), and, for definiteness, we always label them so that
-\(i<j\). Under a fixed polarity convention, electrode \(e_i\) is set to
-\(+1~\mathrm{V}\), electrode \(e_j\) to \(-1~\mathrm{V}\), and all remaining
-electrodes are held at \(0~\mathrm{V}\):
+Under the assumption of linearity, the relationship between an arbitrary excitation vector $x \in \mathbb{R}^{N_e}$ and the resulting measurement vector $y \in \mathbb{R}^{N_m}$ can be written as
 \[
-u_{e_i} = +1~\mathrm{V},\qquad 
-u_{e_j} = -1~\mathrm{V},\qquad 
-u_{e_k}=0~\mathrm{V}\ \text{for } k\neq i,j.
-\]
-% The ``ordered'' condition \(i<j\) is used solely to avoid duplicates; mathematically,
-% the physical dipole is defined by this exact polarity convention.
-
-With nine electrodes, every unordered pair of distinct electrodes generates one
-dipole. The number of such pairs is
-\[
-\binom{9}{2} = \frac{9\cdot 8}{2} = 36.
-\]
-Each of these 36 dipoles produces a spatially distinct electric field pattern,
-leading to substantially different scalp voltage distributions. The resulting
-probe responses are far more dipole-dependent than those obtained from monopolar
-stimulation: each dipole generates a characteristic signature at the scalp that
-can be more easily distinguished from the others. Although the 36 dipole
-orientations span only a three-dimensional physical space and therefore contain
-some degree of redundancy, they yield a forward operator \(A\) with significantly
-improved conditioning, making the system amenable to inversion.
-
-\subsubsection{Forbidden triads: definition, interpretation, and general form}
-
-Dipoles encode strict pairwise voltage differences: a dipole \((e_i,e_j)\)
-imposes \(u_{e_i} > u_{e_j}\) under our fixed \(+1/-1\) convention. When several
-dipoles are selected simultaneously, the electrode voltages must satisfy all
-their pairwise inequalities at once.
-
-A \emph{forbidden triad} (FT) is a set of three dipoles involving the same
-triplet of electrodes, whose required pairwise inequalities cannot all be
-satisfied by any assignment of scalar voltages to the electrodes.
-
-Formally, for three distinct electrodes \(e_i,e_j,e_k\), the dipoles
-\[
-(e_i,e_j),\qquad (e_i,e_k),\qquad (e_j,e_k)
-\]
-constitute a forbidden triad. Under our sign convention, they impose:
-\[
-u_{e_i} > u_{e_j}, \qquad
-u_{e_i} > u_{e_k}, \qquad
-u_{e_j} > u_{e_k}.
-\]
-Taken individually, each inequality is valid; however, together they imply two
-requirements that cannot be simultaneously satisfied with the fixed voltage
-offsets forced by dipoles. In other words, no choice of electrode voltages
-\(\{u_{e_i}\}\) can generate these three dipoles at once.
-
-More generally, for any distinct \(i<j<k\), the triad
-\[
-\{(e_i,e_j),\ (e_i,e_k),\ (e_j,e_k)\}
-\]
-is forbidden. Any dipole-selection algorithm must therefore avoid selecting all
-three dipoles from such a triplet.
-
-We will refer to these structures as \emph{forbidden triads} throughout the
-remainder of this work. Enforcing their exclusion ensures that the selected
-dipoles always correspond to a physically realisable set of electrode voltages.
-
-\subsubsection*{Transition to the algebraic model}
-
-\nota{Lo que sigue es un \textit{fancy} borrador de la idea, falta explicar más y ajustar cosas.}
-\nota{Básicamente, la matriz A que definimos antes, deja de ser "lo que sea que sea A" y le damos dimensiones, valores e interpretación física de que representa, cómo se obtiene y planea optimizar}
-
-We will use \textbf{one} equation for \textbf{all} cases:
-
-\[
-\boxed{
-V_{\text{scalp}}^{(w)} \;=\; W \, F \, S \, B \, V_{\text{antena}}
-}
+y = F x.
 \]
 
-where:
+In this formulation, the excitation vector $x$ does not represent all electrode surface potentials independently. Instead, each component $x_i$ corresponds to the scalar excitation amplitude applied to the \emph{tip} of the $i$-th electrode. For each electrode, the remaining electrode surfaces are constrained by design: the ring potential is set to the opposite value of the tip, and the sleeve potential is fixed at zero. As a result, each electrode contributes a single degree of freedom to the system, and the vector $x$ fully parameterizes the applied boundary conditions used to construct the columns of $F$.
 
+
+\subsubsection{Transfer Matrix Analysis}
+
+The phantom--head transfer matrix was analyzed to characterize the numerical properties of the forward mapping between electrode excitations and surface measurements. The rank of $F$, its singular value spectrum, and its condition number were computed to assess identifiability and numerical stability of the system.
+
+Column-wise similarity between electrode responses was evaluated using correlation- and coherence-based metrics in order to quantify linear dependencies and potential redundancy among excitation patterns. These analyses complement the singular value decomposition by providing pairwise measures of similarity between columns of the transfer matrix.
+
+In addition to global matrix diagnostics, probe-wise statistics were computed to characterize the distribution of responses across measurement locations. For each probe, summary statistics including the mean response magnitude, standard deviation, and coefficient of variation were evaluated over the set of electrode excitations. These quantities provide a measure of the relative sensitivity and variability of each measurement location within the transfer model.
+
+Several column-selection (electrode-reduction) strategies were evaluated as part of the transfer matrix analysis. The tested approaches included:
 \begin{itemize}
-  \item $V_{\text{antena}} \in \mathbb{R}^{9\times 1}$:  
-  antenna voltage vector; values that can be set on the 9 internal electrodes. Units: V 
-  
-  \item $B \in \mathbb{R}^{36\times 9}$:  
-  \textbf{antenna $\to$ dipole} difference matrix.  
-  Each \textbf{row} corresponds to one dipole $(e_x, e_y)$: it has $+1$ in column $x$, $-1$ in column $y$, and $0$ elsewhere.
-
-  \item $S \in \mathbb{R}^{36\times 36}$:  
-  \textbf{selection / mask matrix} (diagonal).
-  \begin{itemize}
-    \item $S_{jj} = 1$: dipole $j$ is \textbf{enabled}.
-    \item $S_{jj} = 0$: dipole $j$ is \textbf{disabled}.
-  \end{itemize}
-  Each selection algorithm returns such an \texttt{S}.
-
-  \item $F \in \mathbb{R}^{21\times 36}$:  
-  \textbf{dipole $\to$ scalp} transfer matrix (this is the one already computed from the 36 unit-dipole simulations).  
-  Column $j$ of $F$ is the 21-probe response to dipole $j$ excited with $\pm 1$ V.
-
-  \item $W \in \mathbb{R}^{21\times 21}$:  
-  \textbf{probe-weighting} matrix (diagonal).
-  \begin{itemize}
-    \item $W = I_{21}$ $\to$ unweighted model
-    \item $W \neq I_{21}$ $\to$ emphasize/de-emphasize regions (frontal, occipital, etc.)
-  \end{itemize}
-
-  \item $V_{\text{scalp}}^{(w)} \in \mathbb{R}^{21\times 1}$:  
-  weighted scalp voltages predicted by the model.
+    \item selection based on singular value contributions,
+    \item correlation- and coherence-based redundancy criteria,
+    \item condition-number–driven reduction strategies,
+    \item energy-based metrics,
+    \item residual- or reconstruction-error–based criteria.
 \end{itemize}
 
-So, the data flow is:
+For each strategy, reduced transfer matrices were constructed and then analyzed using the same numerical diagnostics as the full matrix. In addition, comparative analyses were performed to assess agreement and consistency across selection methods, including identification of electrodes consistently selected or discarded by multiple criteria.
+
+\subsubsection{Reconstruction Operator Definition}
+
+Let $A \in \mathbb{R}^{N_m \times N_d}$ denote a forward operator representing the phantom--head system, where $A$ may correspond to the full transfer matrix $F$ or to a reduced matrix obtained by selecting a subset of its columns. The relationship between excitation amplitudes $x \in \mathbb{R}^{N_d}$ and surface measurements $y \in \mathbb{R}^{N_m}$ is written as
+\[
+y = A x.
+\]
+
+A reconstruction operator $B$ was defined to estimate excitation amplitudes from measurements. Both the Moore--Penrose pseudoinverse and regularized pseudoinverse formulations were considered. When evaluating regularization, a zero-order Tikhonov formulation was used, with the regularization operator chosen as the identity matrix. Standard parameter-selection criteria, including the L-curve and generalized cross-validation (GCV) methods, were applied to assess the relevance of the regularization parameter $\lambda$.
+
+The reconstructed excitation vector is obtained as
+\[
+\hat{x} = B y.
+\]
+
+\subsubsection{Resolution Matrix}
+
+To assess identifiability and cross-talk independently of specific test cases, the resolution matrix
+\[
+R = B A
+\]
+was computed for the reconstruction operators under consideration. The resolution matrix maps true excitation amplitudes to their reconstructed counterparts and provides a compact description of how accurately and independently individual excitation channels can be recovered.
+
+Quantitative diagnostics derived from $R$ included deviations of diagonal entries from unity, norms of off-diagonal contributions associated with cross-talk, and global measures quantifying the departure of $R$ from the identity matrix.
+
+\subsubsection{Reconstruction Validation Tests}
+
+Reconstruction performance was evaluated using a set of complementary validation tests designed to probe different aspects of the inverse mapping. These tests were formulated to separately assess algebraic invertibility, consistency with the finite element model, and the ability to reproduce physically realizable surface potential patterns.
 
 \begin{enumerate}
-  \item \textbf{antennas} $\to$ $B V_{\text{antena}}$ $\to$ \textbf{dipole amplitudes}
-  \item dipoles $\to$ $S (B V_{\text{antena}})$ $\to$ \textbf{only allowed/selected dipoles}
-  \item selected dipoles $\to$ $F S B V_{\text{antena}}$ $\to$ \textbf{scalp voltages}
-  \item scalp voltages $\to$ $W F S B V_{\text{antena}}$ $\to$ \textbf{weighted scalp voltages}
+    \item \textbf{Matrix-only reconstruction (algebraic consistency):}  
+    Random excitation vectors $x_{\mathrm{true}}$ were generated and mapped to measurement space using the forward operator, $y = A x_{\mathrm{true}}$. The reconstructed excitation $\hat{x} = B y$ was then compared to $x_{\mathrm{true}}$. This test evaluates the intrinsic behavior of the inverse operator under idealized, noise-free conditions and isolates the effects of conditioning and cross-talk in excitation space.
+
+    \item \textbf{FEM-consistent reconstruction:}  
+    Random excitation vectors $x_{\mathrm{true}}$ were applied in the finite element solver to obtain measurement vectors $y_{\mathrm{FEM}}$. The reconstructed excitation $\hat{x} = B y_{\mathrm{FEM}}$ was compared to $x_{\mathrm{true}}$. This test assesses the consistency between the linear transfer model and the numerical forward solver, and captures the influence of discretization, sampling, and numerical approximation errors.
+
+    \item \textbf{Feasible target tracking (round-trip validation):}  
+    Physically realizable target patterns were defined as $y_{\mathrm{target}} = A x_{\mathrm{true}}$. The corresponding excitation $\hat{x} = B y_{\mathrm{target}}$ was computed and mapped forward to obtain $\hat{y} = A \hat{x}$. The comparison between $\hat{y}$ and $y_{\mathrm{target}}$ evaluates the ability of the inverse--forward pipeline to reproduce achievable surface potential patterns, independently of errors expressed in excitation space.
+
+    \item \textbf{Noise and error sensitivity:}  
+    Robustness to perturbations was evaluated by introducing noise at the measurement level, $y_{\eta} = y + \eta$. Both constant-amplitude and signal-dependent noise models were considered, informed by numerical error levels observed in the analytical benchmark. Reconstruction error was evaluated as a function of the noise level for the tests described above.
 \end{enumerate}
-
-\nota{Sobre W: opcional, quizás luego solo usamos W=I21 en el desarrollo del proyecto}.
-
-
-\subsubsection*{Why masking \textbf{B} and not \textbf{F}?}
-
-\begin{itemize}
-  \item masking \textbf{B} via $S B$ keeps the original \textbf{F} intact — no duplications;
-  \item mathematically:
-  \[
-  F \, S \, B = F \, (S B)
-  \]
-  because matrix multiplication is associative;
-  \item disabling a dipole means: ``this dipole will \textbf{never} be produced from any antenna voltage'' $\to$ that is naturally a constraint on the \textbf{dipole-generation} side (\texttt{B}), not on the measurement side (\texttt{F});
-  \item selection algorithms can therefore \textbf{always} return $S_{alg}$.
-\end{itemize}
-
-\bigskip
-
-\subsubsection{Selection algorithms}
-
-All algorithms described below operate on the same base matrices defined previously:
-the dipole $\rightarrow$ scalp matrix $F$, the antenna $\rightarrow$ dipole matrix $B$,
-and the optional probe weighting matrix $W$.
-
-Each algorithm builds a list of selected dipoles
-\(\text{selected} = \{(i,j), (k,l), \dots\}\)
-subject to the physical constraint that no forbidden triad
-\(\{(i,j), (i,k), (j,k)\}\)
-is ever formed.  
-The output of each algorithm is a diagonal selection (mask) matrix \(S \in \mathbb{R}^{36\times36}\)
-whose diagonal entries are one for selected dipoles and zero otherwise.
-The mask \(S\) is applied on the dipole–generation side of the system,
-yielding $A = W \cdot F \cdot S \cdot B$ as the effective forward model.
-
-\nota{
-Para cada algoritmo de selección hay que explicar mínimamente:
-\begin{itemize}
-  \item \textbf{Objetivo:} qué busca optimizar el algoritmo (ej: minimizar $\kappa$, maximizar cobertura espacial, etc.)
-  \item \textbf{Justificación:} por qué ese criterio mejora el sistema (ej: reducir $\kappa$ mejora la estabilidad numérica del pseudoinverso)
-  \item \textbf{Procedimiento:} pasos del algoritmo (1. inicializar con..., 2. en cada iteración..., 3. criterio de parada...)
-  \item \textbf{Parámetros:} qué inputs recibe el algoritmo (ej: número máximo de dipolos, umbral de tolerancia, etc.)
-  \item \textbf{Output:} la matriz diagonal $S$ con los dipolos seleccionados
-\end{itemize}
-}
-
-
-\nota{
-Luego iría la sección con la definición de pseudoinversa (anotada en apuntes) y en resultados se mostrarían 
-los resultados de cada algoritmo/los mejores algoritmos y sus comparaciones: dipolos seleccionados, error al reconstruir el sistema, 
-número de condición, rango, etc.
-
-\textbf{Comparaciones/validaciones a realizar:}
-\begin{enumerate}
-  \item \textbf{Validación del modelo directo (forward):} 
-  \[
-  \|V_{\text{out}}^{\text{solver}} - V_{\text{out}}^{\text{matriz}}\| = \|V_{\text{out}}^{\text{solver}}(V_{\text{in}}) - (A \cdot V_{\text{in}})\| \approx 0
-  \]
-  Comparar la respuesta del solver FEM vs. la del sistema matricial $A = WFSB$ ante la misma entrada $V_{\text{in}}$, 
-  para varios casos de voltajes de entrada.
-  
-  \item \textbf{Validación del modelo inverso (reconstruction):} 
-  \[
-  \|V_{\text{in}}^{\text{solver}} - A^{\dagger} \cdot V_{\text{out}}^{\text{solver}}\| \approx 0
-  \]
-  Meter un $V_{\text{in}}$ conocido al solver, obtener $V_{\text{out}}^{\text{solver}}$, y verificar que 
-  al aplicar la pseudoinversa $A^{\dagger}$ al output del solver, se recupera el $V_{\text{in}}$ original.
-  
-  \item \textbf{Métricas de condicionamiento:} Número de condición $\kappa(M)$, rango efectivo, valores singulares.
-  
-  \item \textbf{Otras métricas potencialmente relevantes:} Error RMS entre patrones de voltaje, cobertura espacial 
-  de los dipolos seleccionados, sensibilidad a ruido en las mediciones, robustez ante variaciones de conductividad, etc.
-\end{enumerate}
-}

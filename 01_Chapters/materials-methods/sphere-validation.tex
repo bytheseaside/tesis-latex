@@ -1,0 +1,74 @@
+After deriving the governing equation and defining the discretization strategy employed for the phantom--head simulations, it is necessary to quantify the numerical error introduced by the finite element approximation. Since no analytical solution exists for the full phantom geometry, this assessment must be carried out on a simplified configuration for which a closed--form reference solution is available (derived analytically under symmetry assumptions, see \textbf{Appendix}~\ref{appendix:laplace-r}).
+
+
+The objective of this validation is not to assess the physical fidelity of the phantom model itself, but to characterize the numerical behavior of the solver and the expected level of discretization error under controlled conditions. In particular, this procedure aims to isolate discretization effects from geometric complexity, allowing the observed error to be attributed primarily to the finite element formulation, mesh resolution, and parameter choices.
+
+To this end, a radially symmetric benchmark problem based on concentric spherical shells was constructed. This geometry eliminates geometric irregularities while retaining numerically relevant features present in the phantom model, such as thin conductive layers and sharp material interfaces.
+
+\subsubsection{Benchmark Geometry}
+
+The validation geometry consists of two concentric spherical volumes. The inner boundary is defined at radius
+\[
+r_0 = 1~\mathrm{mm},
+\]
+an internal material interface at
+\[
+r_1 = 70~\mathrm{mm},
+\]
+and an outer boundary at
+\[
+r_2 = 73.2~\mathrm{mm}.
+\]
+
+The inner sphere does not represent a physical electrode geometry. Instead, it provides a compact Dirichlet boundary used to prescribe a known potential while preserving strict radial symmetry. Introducing a finite electrode geometry at this location would break symmetry and complicate the interpretation of discretization error, and was therefore deliberately avoided.
+
+The outer shell thickness,
+\[
+r_2 - r_1 = 3.2~\mathrm{mm},
+\]
+was chosen to exactly match the thickness of the electrically relevant shell region in the phantom--head model. This choice preserves the numerical challenge associated with resolving a thin conductive layer and allows discretization effects observed in the benchmark to be meaningfully related to those expected in the full phantom simulations. The interface radius $r_1$ was selected to yield a plausible head--scale geometry while avoiding additional geometric features that would introduce confounding error sources.
+
+\subsubsection{Material Configurations}
+
+Several conductivity configurations were evaluated in the spherical benchmark. In the analysis presented here, two representative cases are emphasized.
+
+The first is a homogeneous reference configuration, defined by
+\[
+\sigma_1 = \sigma_2 = 1~\mathrm{S/m}.
+\]
+This case eliminates material discontinuities and serves as a baseline to verify that the solver reproduces the expected smooth solution of the Laplace equation in a uniform medium.
+
+The second is a bilayer configuration with
+\[
+\sigma_1 = 0.33~\mathrm{S/m}, \qquad \sigma_2 = 4.1~\mathrm{S/m},
+\]
+matching the conductivities assigned to the inner and outer regions of the phantom--head model. This configuration introduces a sharp conductivity jump at $r = r_1$ and allows assessment of discretization error in the presence of material interfaces.
+
+Additional conductivity ratios were explored to verify qualitative consistency of the numerical behavior, but are not discussed in detail here.
+
+\subsubsection{Test Cases and Boundary Excitation}
+
+All benchmark simulations were driven exclusively by boundary excitation, with no internal source terms. Two families of test cases were defined based on the boundary condition applied at the outer spherical surface.
+
+In all configurations, a Dirichlet condition was imposed at the inner boundary,
+\[
+u(r_0) = V_0,
+\]
+providing a controlled excitation while preserving radial symmetry. No boundary condition is applied at the internal interface $r = r_1$, where continuity of the potential and conservation of normal current flux are enforced implicitly by the formulation.
+
+At the outer boundary $r = r_2$, either a Dirichlet or a homogeneous Neumann condition was applied, resulting in two families of configurations:
+\begin{itemize}
+    \item \textbf{Dirichlet--Dirichlet (DD):} Dirichlet conditions imposed at both $r_0$ and $r_2$.
+    \item \textbf{Dirichlet--Neumann (DN):} Dirichlet condition at $r_0$ and homogeneous Neumann condition at $r_2$.
+\end{itemize}
+
+\subsubsection{Numerical Analysis and Error Metrics}
+
+The extent of the numerical analysis performed differs between the two families of test cases, reflecting the analytical structure of their corresponding solutions.
+
+For the Dirichlet--Neumann (DN) family, the resulting solution is spatially constant throughout the domain.
+Consequently, the numerical assessment for these cases was restricted to verification of the absolute error magnitude and its numerical consistency across the domain, with particular attention to the vicinity of the inner Dirichlet boundary at $r = r_0$. This level of analysis is sufficient to confirm correct solver behavior in this regime, as the resulting solution does not admit additional numerical features that would support further error analysis.
+
+
+For the Dirichlet--Dirichlet (DD) family, nontrivial radial potential gradients develop across the domain, including across the material interface at $r = r_1$. These configurations therefore expose multiple numerical features suitable for validation throughout the full computational volume, with particular attention to regions near the material interface. The numerical assessment for this family included evaluation of absolute and relative error with respect to the analytical solution, accuracy of the radial potential gradient, consistency of the numerical Laplacian, and statistical characterization of the error distribution, including measures such as mean, standard deviation, and selected percentiles.
+

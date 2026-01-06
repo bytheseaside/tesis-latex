@@ -1,0 +1,119 @@
+\section{Analytical Solution of the Radially Symmetric Laplace Problem}
+\label{appendix:laplace-r}
+
+This appendix derives the analytical solution used as a reference for the numerical validation of the discretized model. The derivation applies to radially symmetric conductive domains composed of concentric spherical regions with piecewise constant conductivity, driven exclusively by boundary conditions.
+
+\subsection{Governing Equation Under Radial Symmetry}
+
+In the absence of internal sources, the electric potential $u(\mathbf{x})$ in a conductive medium satisfies the Laplace equation
+\[
+\nabla \cdot (\sigma \nabla u) = 0.
+\]
+For spherical geometries with isotropic and piecewise constant conductivity, and under the assumption of radial symmetry, the potential depends only on the radial coordinate $r$. In each homogeneous region, the governing equation reduces to
+\[
+\frac{1}{r^2}\frac{d}{dr}\left(r^2 \frac{du}{dr}\right) = 0.
+\]
+
+The general solution of this equation is
+\[
+u(r) = \frac{A}{r} + B,
+\]
+where $A$ and $B$ are constants. For a domain composed of multiple concentric spherical regions, this solution applies independently within each region.
+
+\subsection{Piecewise Solution for a Two--Layer Geometry}
+
+In the present work, the domain consists of two concentric spherical volumes:
+\begin{itemize}
+    \item Region 1: $r_0 \le r \le r_1$, conductivity $\sigma_1$,
+    \item Region 2: $r_1 \le r \le r_2$, conductivity $\sigma_2$.
+\end{itemize}
+
+The potential is therefore expressed as a piecewise function:
+\[
+u_1(r) = \frac{A_1}{r} + B_1, \qquad r_0 \le r < r_1,
+\]
+\[
+u_2(r) = \frac{A_2}{r} + B_2, \qquad r_1 \le r \le r_2,
+\]
+where $A_1, B_1, A_2, B_2$ are constants to be determined.
+
+\subsection{Boundary and Interface Conditions}
+
+The four unknown constants are fixed by four independent conditions.
+
+\paragraph*{Dirichlet boundary conditions}
+Prescribed potentials are imposed at the inner and outer boundaries:
+\[
+u_1(r_0) = V_0, \qquad u_2(r_2) = V_2.
+\]
+
+\paragraph*{Continuity of the potential}
+The electric potential must be continuous across the material interface:
+\[
+u_1(r_1) = u_2(r_1).
+\]
+
+\paragraph*{Conservation of normal current flux}
+Charge conservation requires that the normal component of the current density be continuous across the interface. For a spherically symmetric configuration, this condition reduces to
+\[
+\sigma_1 \left.\frac{du_1}{dr}\right|_{r=r_1}
+=
+\sigma_2 \left.\frac{du_2}{dr}\right|_{r=r_1}.
+\]
+
+Substituting the analytical expressions for $u_1$ and $u_2$, this condition becomes
+\[
+\sigma_1 \left(-\frac{A_1}{r_1^2}\right)
+=
+\sigma_2 \left(-\frac{A_2}{r_1^2}\right),
+\]
+which directly relates the coefficients $A_1$ and $A_2$ through the conductivities.
+
+\subsection{Determination of the Coefficients}
+
+The four conditions above define a linear system for the coefficients $A_1, B_1, A_2, B_2$, which can be solved uniquely in terms of the geometric parameters $r_0, r_1, r_2$, the boundary potentials $V_0, V_2$, and the conductivities $\sigma_1, \sigma_2$.
+
+The resulting coefficients are given by
+\[
+A_1 =
+\frac{
+r_0 r_1 r_2 \, \sigma_2 \, (V_2 - V_0)
+}{
+r_0 r_1 \sigma_1 - r_1 r_2 \sigma_2 + r_0 r_2 (\sigma_2 - \sigma_1)
+},
+\]
+
+\[
+B_1 =
+\frac{
+- r_1 r_2 V_2 \sigma_2
++ r_0 V_0 \big( r_1 \sigma_1 + r_2 (\sigma_2 - \sigma_1) \big)
+}{
+r_0 r_1 \sigma_1 - r_1 r_2 \sigma_2 + r_0 r_2 (\sigma_2 - \sigma_1)
+},
+\]
+
+\[
+A_2 =
+\frac{
+r_0 r_1 r_2 \, \sigma_1 \, (V_2 - V_0)
+}{
+r_0 r_1 \sigma_1 - r_1 r_2 \sigma_2 + r_0 r_2 (\sigma_2 - \sigma_1)
+},
+\]
+
+\[
+B_2 =
+\frac{
+r_0 r_1 V_0 \sigma_1
+- r_1 r_2 V_2 \sigma_2
++ r_0 r_2 V_2 (\sigma_2 - \sigma_1)
+}{
+r_0 r_1 \sigma_1 - r_1 r_2 \sigma_2 + r_0 r_2 (\sigma_2 - \sigma_1)
+}.
+\]
+
+
+These expressions define a continuous potential field across the entire domain and were
+used as the analytical reference solution for numerical validation in the main text.
+
