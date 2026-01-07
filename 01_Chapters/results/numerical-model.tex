@@ -460,36 +460,64 @@ The value $\mu=\sigma_{\min}$ serves as a reference corresponding to a noise lev
 
 \subsubsection{FEM Consistency and Numerical Self-Validation}
 
-To verify the internal consistency of the finite element (FEM) model, a set of controlled electrical excitations was applied to the phantom--head geometry.
-For each excitation case, the forward problem was solved using the FEM model to obtain the corresponding potential distribution at the measurement locations.
-These measurements were then used to reconstruct the original excitation vector according to $\hat{\mathbf{x}} = \mathbf{A}^\dagger \mathbf{y}$.
-The reconstructed excitations $\hat{\mathbf{x}}$ were compared against the known applied stimuli $\mathbf{x}$ to assess numerical self-consistency.
-Figure~\ref{fig:fem_consistency_error} illustrates the relative reconstruction error for all tested cases.
+To assess the internal consistency of the mathematical model, a set of controlled electrical excitations was applied to the phantom--head geometry. For each excitation case, the forward problem was solved using the FEM model to obtain the corresponding potential distribution at the measurement locations.
+
+These measurements were then used to reconstruct the original excitation vector using the inverse operator already defined. The reconstructed excitations were compared against the known applied stimuli to assess numerical self-consistency.
+
+Figure~\ref{fig:fem_consistency_error} presents the relative reconstruction error plotted against the excitation norm for all tested cases.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.7\textwidth]{<path-to-consistency-error-figure>}
-    \caption{Relative reconstruction error for FEM self-consistency tests.
-    Errors are computed by comparing reconstructed excitations $\hat{\mathbf{x}}$ against the known applied stimuli $\mathbf{x}$.}
+    \includegraphics[width=0.7\textwidth]{../../02_Images/analysis_plot.png}
+    \caption[Relative reconstruction error versus excitation norm]{
+    Relative reconstruction error $\|\mathbf{x} - \hat{\mathbf{x}}\| / \|\mathbf{x}\|$
+    plotted against the excitation norm for all FEM self-consistency test cases.}
     \label{fig:fem_consistency_error}
 \end{figure}
 
-Quantitative error statistics are summarized in Table~\ref{tab:fem_consistency_stats}.
-Across all test cases, the mean relative reconstruction error is on the order of \nota{X}, with similarly low median and maximum values.
-These errors are consistent with machine-precision limits and indicate that the numerical pipeline---including FEM discretization, matrix assembly,
-and pseudoinverse-based reconstruction---is internally consistent.
-
+Quantitative error statistics are summarized in Table~\ref{tab:global_error_metrics}. 
 \begin{table}[htbp]
     \centering
-    \caption{Reconstruction error statistics for FEM self-consistency tests.}
-    \label{tab:fem_consistency_stats}
+    \caption[Global reconstruction error metrics]{
+    Global reconstruction error metrics obtained from FEM self-consistency tests.}
+    \label{tab:global_error_metrics}
     \small
-    \begin{tabular}{lccc}
+    \begin{tabular}{lcccc}
         \toprule
-        \textbf{Metric} & \textbf{Mean} & \textbf{Median} & \textbf{Maximum} \\
+        \textbf{Metric} & \textbf{Mean} & \textbf{Median} & \textbf{Std.\ Dev.} & \textbf{Maximum} \\
         \midrule
-        Relative error $\|\mathbf{x} - \hat{\mathbf{x}}\| / \|\mathbf{x}\|$
-        & $O(10^{-15})$ & $O(10^{-15})$ & $O(10^{-14})$ \\
+        Relative error $\|\mathbf{x}-\hat{\mathbf{x}}\|/\|\mathbf{x}\|$ [--]
+        & $1.66\times10^{-4}$ & $1.18\times10^{-4}$ & $1.26\times10^{-4}$ & $6.23\times10^{-4}$ \\
+        Absolute error $\|\mathbf{x}-\hat{\mathbf{x}}\|_{2}$ [V]
+        & $4.44\times10^{-4}$ & $3.23\times10^{-4}$ & $3.54\times10^{-4}$ & $2.04\times10^{-3}$ \\
         \bottomrule
     \end{tabular}
 \end{table}
+
+
+In addition to global metrics, per-actuator reconstruction error statistics were computed to evaluate whether individual excitation channels exhibit systematic deviations. These results are reported in Table~\ref{tab:fem_consistency_per_actuator_stats}.
+
+\begin{table}[htbp]
+    \centering
+    \caption[Per-actuator reconstruction error statistics]{
+    Per-actuator reconstruction error statistics for FEM self-consistency tests.
+    Errors are computed between applied and reconstructed excitation amplitudes
+    for each actuator across all excitation cases.}
+    \label{tab:fem_consistency_per_actuator_stats}
+    \small
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Actuator} & \textbf{Mean} [V]& \textbf{ Std [V]} & \textbf{Max Error [V]} \\
+        \midrule
+            E1          & $2.79\times10^{-4}$  & $3.8\times10^{-4}$   &  $1.35\times10^{-3}$ \\
+            E2           & $9.39\times10^{-5}$ & $1.28\times10^{-4}$   &  $6.29\times10^{-4}$ \\
+            E3           & $1.54\times10^{-4}$ &$2.08\times10^{-4}$   &  $9.46\times10^{-4}$ \\
+            E4           & $1.27\times10^{-4}$ & $1.66\times10^{-4}$   &  $5.75\times10^{-4}$ \\
+            E5           & $1.69\times10^{-4}$ & $2.47\times10^{-4}$   &  $8.7\times10^{-4}$ \\
+            E7           & $5.48\times10^{-5}$ & $7.72\times10^{-5}$   &  $3.96\times10^{-4}$ \\
+            E8           & $5.74\times10^{-5}$& $8.04\times10^{-5}$   &  $3.31\times10^{-4}$ \\
+            E9           & $9.06\times10^{-5}$ & $1.29\times10^{-4}$   &  $5.66\times10^{-4}$\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
