@@ -6,18 +6,8 @@ Phantom designs then consist of primarily three components: the electrode array 
 As phantom head design and composition where already covered in subsubsection~\ref{subsec:phantom_designs} and subsubsection~\ref{subsec:phantom_materials} respectively, this subsection focuses on the signal generation module (electrode array and driver) and the key characteristics of the generated signals.
 
 \paragraph*{Signal Requirements}
-\nota{ agregue una sección arriba, sobre eeg en gral y freq bands (use también una copia textual de acá) - quizás esto deberiamos cambiarlo un poco}
 
-Phantom heads are designed to mimic the frequency spectrum of human brain activity, which is characterized by a wide range of frequencies. Specific frequency bands
-used in phantom validation include:
-
-\begin{itemize}
-    \item Standard bands: Phantoms are often tested against standard clinical bands, such as Delta (0.5{-}4 Hz), Theta (4{-}7 Hz), Alpha (8{-}12 Hz) and
-        Beta (13{-}30 Hz)~\cite{akor-2025}.
-    \item Higher frequencies: Gamma, 30{-}80 Hz and higher, are more difficult to study in the human body as they are heavily attenuated by the skull and
-        scalp layers, and obfuscated by muscular and ocular artifacts~\cite{FREEMAN20031053}. Head phantom validation often involves ensuring that the
-        components accurately mimic these behaviours~\cite{9475461}.
-\end{itemize}
+Phantom heads are designed to mimic the frequency spectrum of human brain activity, which is characterized by a wide range of frequency bands as described in Table~\ref{tab:eeg_frequency_bands}.
 
 The amplitude of the EEG under physiological conditions ranges from 15 to 150 \( \mu\text{V} \)~\cite{Naydenov2022}. However, the internal generators (electrodes) must drive significantly higher voltages to account for the attenuation caused by volume conduction through the phantom material~\cite{LEAHY1998159}. The electronics must provide a wide dynamic range, capable of generating signals that result in low surface potentials to reduce noise~\cite{Morsalin2020}.
 
@@ -51,7 +41,3 @@ The choice of architecture dictates the fidelity, bandwidth, and flexibility of 
     \item Computer audio interface: frequently used for this task due to their high resolution (typically 24-bit), excellent signal-to-noise ratio (>100 dB), and low cost~\cite{Collier2012}. The downside is that they tether the phantom to a computer, introducing ground loops and mains noise unless USB isolators are used~\cite{LEAHY1998159}.
     \item Microcontroller-based architecture: for portable, battery-powered phantoms. A usual choice is the Teensy 3.2 that features a built-in 12-bit digital-to-analog converter (DAC)~\cite{PJRC_Teensy}. While having lower resolution than audio interfaces, 12 bits provides sufficient dynamic range for many verification tasks, especially when the signal is generated at a higher amplitude and then attenuated analogically~\cite{LEAHY1998159}.
 \end{itemize}
-
-\paragraph*{Wireless Protocols}
-
-\nota{Me gustaría añadir una sección sobre protocolos wireless para la transmisión de datos y control del phantom, pero no encontré mucho todavía. Ver cómo esto afecta a la señal que se transmite. Ver Audette2020}

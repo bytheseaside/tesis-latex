@@ -1,10 +1,1 @@
-
-Data is typically collected using digital EEG amplifiers with sampling frequencies ranging from 250 Hz to 5 kHz~\cite{veniero-2009}\nota{agregar jsutificacion de 250 o 200 approx.}. To prevent aliasing and remove noise, signal filters are applied prior to sampling, such as a 0.1 Hz high-pass and 100 Hz low-pass filters~\cite{LEAHY1998159}.
-
-\nota{Acá había algo sobre el sistema 10/20 pero lo movi arriba a EEG en general}
-\paragraph*{Signal Filters}
-
-\nota{Completar con filtros típicos usados en la adquisición de señales EEG en phantoms, tanto hardware como software.}
-
-\paragraph*{Feature Selection Algorithms}
-\nota{Completar con algoritmos usados para validar las señales adquiridas de los phantoms.}
+Data is typically collected using digital EEG amplifiers with sampling frequencies ranging from 250 Hz to 5 kHz~\cite{veniero-2009}. Based on the Nyquist theorem, the sampling frequency must be at least twice the highest frequency component present in the signal to avoid aliasing~\cite{todo}. Given that EEG signals of interest generally fall below 100 Hz, a sampling rate of 250 Hz is often sufficient for most applications~\cite{Naydenov2022}. However, higher sampling rates (e.g., 1 kHz or more) are sometimes employed to capture finer temporal details and to facilitate advanced signal processing techniques~\cite{LEAHY1998159}.
