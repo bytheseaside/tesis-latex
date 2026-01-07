@@ -11,12 +11,12 @@ Because the condition $L \ll \lambda$ is satisfied by several orders of magnitud
 The phantom is modeled as a piecewise homogeneous domain $\Omega = \Omega_{\text{gel}} \cup \Omega_{\text{shell}}$
 
 \begin{itemize}
-    \item \textbf{The inner medium ($\Omega_{\text{gel}}$):} The saline–gelatin mixture acts as the primary volume conductor. Consistent with electrophysiology literature \cite{akor-2025}, the solidified mixture behaves as a linear Ohmic conductor. We adopt a conductivity range of $\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$, which matches human intracranial tissues. Experimental data confirms that for the EEG frequency band ($<100$ Hz), $\sigma_{\text{gel}}$ remains frequency-independent with negligible capacitive phase shifts~\cite{geddes-1967, Chandra2000}.
+    \item \textbf{The inner medium ($\Omega_{\text{gel}}$):} The saline–gelatin mixture acts as the primary volume conductor. Consistent with electrophysiology literature, like Akor~\emph{et al.}~\cite{akor-2025}, the solidified mixture behaves as a linear Ohmic conductor. A conductivity range of $\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$, which matches human intracranial tissues is adopted. Experimental data confirms that for the EEG frequency band ($<100$ Hz), $\sigma_{\text{gel}}$ remains frequency-independent with negligible capacitive phase shifts~\cite{geddes-1967, Chandra2000}.
     \item \textbf{The conductive shell  ($\Omega_{\text{shell}}$):}  The outer boundary consists of a 3D-printed conductive PLA shell. Manufacturer data \textbackslash{}cite\{cpla-datasheet\} and recent studies \textbackslash{}cite\{akor-2025, tilve-martinez-2024\} indicate that 3D-printed polymers exhibit orthotropic conductivity due to the layer-by-layer deposition process. While resistivities vary between the $X-Y$ plane ($19.2~\Omega\cdot\text{cm}$) and the $Z$-axis ($33.6~\Omega\cdot\text{cm}$), research suggests that anisotropy can be mitigated through optimized printing parameters such as extrusion temperature and path planning~\cite{paz-2020, nowka-2024}. \\
-    For this model, we define a representative scalar value of $\sigma_{shell} = 4.1~\text{S/m}$. This value serves as a balanced estimate for a reasonably optimized print, though $\sigma_{\text{shell}}$ remains a user-definable parameter to allow for sensitivity analysis or material-specific characterization.
+    For this model, a representative scalar value of $\sigma_{shell} = 4.1~\text{S/m}$ is defined. This value serves as a balanced estimate for a reasonably optimized print, though $\sigma_{\text{shell}}$ remains a user-definable parameter to allow for sensitivity analysis or material-specific characterization.
 \end{itemize}
 
-Given these properties, we can conclude that\textbf{ Condition 2 (Purely Resistive Media) }is satisfied, as the high conductivity $\sigma$ of both regions ensures that conduction currents dominate over displacement currents ($\sigma \gg \omega\epsilon$). Furthermore, the verified frequency-independence and Ohmic behavior confirm that \textbf{Condition 3 (Linear and Instantaneous Response) }holds.
+Given these properties, \textbf{ Condition 2 (Purely Resistive Media) }is satisfied, as the high conductivity $\sigma$ of both regions ensures that conduction currents dominate over displacement currents ($\sigma \gg \omega\epsilon$). Furthermore, the verified frequency-independence and Ohmic behavior confirm that \textbf{Condition 3 (Linear and Instantaneous Response) }holds.
 
 \subsubsection{Boundary Conditions and Interface.}
 To solve for the potential $u$, we must define how the phantom interacts with its environment:
@@ -27,7 +27,7 @@ To solve for the potential $u$, we must define how the phantom interacts with it
     
     \item \textbf{High-Impedance Electrodes: }Recording electrodes on the shell surface are connected to amplifiers with input impedances $>100~\text{M}\Omega$. Consequently, the current they draw is negligible, allowing us to treat these locations as passive observation points where the potential $u$ \textit{floats} without perturbing the field.
 
-    \item \textbf{Internal Interface}: We assume a \textit{watertight} conformal interface between the gel and the shell. This implies interface continuity, where both the potential and the normal current density are continuous across the internal boundary ($\Omega_{\text{gel}} \cap \Omega_{\text{shell}}$).
+    \item \textbf{Internal Interface}: A \textit{watertight} conformal interface between the gel and the shell is expected. This implies interface continuity, where both the potential and the normal current density are continuous across the internal boundary ($\Omega_{\text{gel}} \cap \Omega_{\text{shell}}$).
 \end{itemize}
 
 The absence of internal current sinks and the perfectly insulated exterior boundary ensure that the divergence of the current density is zero throughout the volume, satisfying \textbf{Condition 4 (Conservation of Current)}.
