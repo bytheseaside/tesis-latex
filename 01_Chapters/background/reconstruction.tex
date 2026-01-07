@@ -80,5 +80,4 @@ $$x_{\lambda} = (A^T A + \lambda^2 L^T L)^{-1}A^T y$$
 
 The additional term $\lambda^2 L^TL$ increases the smallest singular values of the system, thereby reducing noise amplification and improving numerical stability~\cite{golub-2013, mueller-2012, vara-kumar-2022}.
 
-The most common choice is $L = I$, the identity matrix, which penalizes all components of the solution vector $x$ uniformly, favoring solutions with small overall energy. More generally, however, $L$ may be chosen to encode prior knowledge or design preferences about the system. By appropriately selecting $L$, specific components or spatial patterns of the solution can be penalized more strongly than others, thereby biasing the reconstruction toward solutions that maintain accuracy in the outcomes of greatest interest. In this way, regularization not only stabilizes the inversion, but also provides a mechanism to prioritize fidelity in selected aspects of the system response.
-
+The most common choice is $L = I$, the identity matrix, which penalizes all components of the solution vector $x$ uniformly, favoring solutions with small overall energy. More generally, however, $L$ may be chosen to encode prior knowledge or design preferences about the system.
