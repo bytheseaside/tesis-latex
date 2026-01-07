@@ -354,3 +354,25 @@ Probe-wise statistics for $A_7$ yielded a mean coefficient of variation of $0.28
 measurement locations.
 
 Correlation among columns of $A_7$ produced a mean value of $-0.143$ (standard deviation $0.300$).
+
+\subsubsection{Reconstruction Operator and Resolution Analysis}
+
+Following the comparative analysis of candidate forward operators, the matrix $A_8$ was selected as the forward operator of the system for all subsequent analyses. 
+This choice reflects a substantial improvement in numerical conditioning: the condition number was reduced from approximately $135$ (for $A_9$) to approximately $20$, at the modest cost of removing a single actuator (column). 
+This trade-off was deemed favorable, as it significantly improves numerical stability and noise robustness while preserving sufficient actuation capability.
+
+Since $A_8$ is full column rank and exhibits satisfactory numerical conditioning, the Moore--Penrose pseudoinverse was employed without regularization. 
+In this setting, the associated resolution matrix
+\[
+R = A_8^{\dagger} A_8
+\]
+is theoretically equal to the identity matrix, reflecting the absence of a null space and the formal identifiability of all control variables.
+
+For completeness, the resolution matrix was computed numerically. All off--diagonal entries were found to be on the order of $10^{-15}$ or smaller, consistent with floating--point round--off errors, confirming that
+\[
+R \approx I
+\]
+within numerical precision. As a result, the resolution matrix does not provide additional discriminatory information in this case.
+
+
+
