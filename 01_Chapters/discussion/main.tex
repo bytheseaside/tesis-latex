@@ -16,8 +16,72 @@ the \textbf{Phantom Head Numerical Model} as the integration reference for a two
 Section~\ref{sec:materials_and_methods}. This theoretical validation demonstrates that, given the proven performance of the individual components, the complete system functions according to the design specifications when the modules are combined.
 
 \subsection{Characterization of the Gelatine-based Layer}
-\label{subsec:gelatine}
+\label{subsec:materials}
 \input{gelatine}
+
+
+\subsection{Numerical Phantom Validation and System-Level Implications}
+
+The numerical modeling strategy adopted in this work was validated in a staged manner,
+progressing from analytically tractable benchmark problems to the full phantom head
+geometry. Initial validation was performed using simplified spherical domains for which
+closed-form or well-established reference solutions exist. These benchmarks primarily
+quantify discretization error and numerical consistency, allowing the finite element
+implementation to be verified independently of geometric complexity. Across all tested
+configurations, reconstruction errors were consistently low and the numerical behavior
+remained stable, providing confidence in the correctness of the governing equations,
+boundary condition implementation, and solution strategy.
+
+While these spherical benchmarks establish numerical accuracy, they do not capture the
+geometric complexity of a realistic head-shaped phantom. Unlike the sphere, the phantom
+head geometry exhibits nonuniform curvature, localized geometric features, and a lack of
+global symmetry, all of which can influence field distributions and numerical sensitivity.
+Additional modeling discrepancies may also arise from idealizations in the material
+representation, including the assumption of homogeneous layers and the omission of
+manufacturing-induced microstructures.
+
+In particular, more detailed physical modeling could be achieved by further mesh
+refinement or by explicitly representing features introduced by the additive manufacturing
+process, such as layer interfaces, anisotropic conduction paths, or internal air gaps in
+the printed conductive shell. Such refinements were not pursued in this work, as they fall
+outside the intended scope and would significantly increase computational and modeling
+complexity. The objective here is not to reproduce all physical non-idealities, but to
+establish a sufficiently accurate and tractable reference model for system-level analysis.
+
+Building on the validated formulation, the same numerical framework was applied to the full
+phantom head geometry. In the absence of a fully fabricated physical phantom, the simulated
+head was probed in a manner analogous to the experiments envisioned for the physical system.
+The resulting potential distributions and reconstruction outcomes were well behaved, with
+consistently low reconstruction errors and favorable stability properties.
+
+Within the scope of this work, the numerical phantom therefore serves as a reference system
+for subsequent analyses, rather than as a validated substitute for an existing physical
+implementation. The phantom--head transfer operator derived from the numerical model is
+adopted as the internal ground truth against which reconstruction performance and system
+behavior are assessed.
+
+If the electrical properties of a future fabricated phantom closely match those assumed in
+the model, the resulting operator is expected to provide a close approximation of the
+physical system. If deviations arise, the methodology employed to construct the operator—
+encompassing geometry definition, material assignment, numerical simulation, and response
+extraction—can be applied directly to the physical phantom to regenerate an updated mapping.
+In this sense, the robustness of the proposed approach lies not in fixed numerical values,
+but in the generality and repeatability of the modeling and reconstruction pipeline.
+
+The original system design targeted a low-cost and easily reproducible physical phantom,
+constructed from readily available materials and simple fabrication processes. While the
+numerical and experimental results presented in this work demonstrate the feasibility of
+this approach, the fabrication of the complete physical phantom head was not carried out
+within the scope of the project due to practical and funding constraints. Importantly, these
+constraints did not affect the architectural or methodological aspects of the system, which
+were developed with physical realization as a guiding objective. Based on the present
+results, the physical phantom can be fabricated following the specified material properties
+and geometric design without requiring further modifications to the modeling or control
+framework.
+
+\textbf{TBD: Discussion of the desktop platform}
+
+\textbf{TBD: System-level discussion of component integration and interactions}
 
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove

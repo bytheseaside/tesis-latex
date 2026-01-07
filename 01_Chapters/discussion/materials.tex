@@ -1,0 +1,66 @@
+\subsection{Materials: Electrical Behavior and Suitability for Phantom Construction}
+
+The phantom head design relies on a bilayer architecture composed of an external conductive
+shell and an internal conductive volume. These two layers are subject to fundamentally
+different material constraints. The outer shell is fabricated using a commercially
+available conductive polymer, selected for accessibility, cost, and mechanical
+printability. While alternative formulations or custom composites could, in principle, be
+developed, the electrical properties of the shell material are largely fixed by the
+commercial product and the 3D printing process. As such, its characterization is primarily
+based on manufacturer data and literature, rather than on experimental tunability.
+
+In contrast, the inner conductive layer is based on a saline--gelatine medium, which is
+readily available, inexpensive, and highly customizable through formulation parameters.
+For this reason, the experimental characterization efforts focused on the inner layer, with
+the goal of assessing its electrical behavior, tunability, and reproducibility in the
+context of phantom construction. Rather than aiming at a precise metrological determination
+of conductivity values, the experiments were designed to qualitatively evaluate how the
+electrical response of the material evolves with ionic concentration, and whether these
+properties can be reliably reproduced across fabrication batches.
+
+The characterization was performed using three formulations with NaCl concentrations of
+0\%, 2.5\%, and 5\%. These values were deliberately chosen to span a range of electrical
+behaviors, from predominantly resistive to increasingly reactive, and to ensure that
+capacitive effects would be observable within the resolution limits of the available
+measurement equipment. As the salt concentration increases, the magnitude of the impedance
+decreases across the explored frequency range, reflecting the expected increase in ionic
+conductivity. In parallel, the phase response progressively departs from purely resistive
+behavior, with higher concentrations exhibiting increasingly negative phase angles at low
+frequencies.
+
+The emergence of this reactive component is attributed to interfacial polarization effects
+at the electrode--gelatine interface. At higher ionic strengths, the increased density of
+mobile charge carriers promotes the formation of an electrical double layer, which enhances
+the effective capacitance of the system, particularly in the low-frequency regime relevant
+to EEG measurements. These observations are consistent with prior studies on gelatine-based
+phantoms. In particular, Owda~\emph{et al.}~\cite{Owda2020} reported analogous trends in
+impedance magnitude and phase response as a function of salt concentration, including the
+appearance of capacitive effects at higher salinities. The agreement in qualitative behavior
+supports the interpretation that the observed phase shifts arise from intrinsic
+material--electrode interactions rather than artifacts of the specific experimental setup.
+
+While the higher concentrations explored in this study are not representative of the
+intended operating regime of the final phantom, they serve to clearly delineate the
+transition from predominantly Ohmic to increasingly reactive behavior. From a design
+perspective, this regime separation is informative, as it demonstrates that the electrical
+properties of the gelatine medium are systematically adjustable through ionic concentration.
+For the final phantom implementation, lower concentrations will be selected to ensure
+operation within the linear and Ohmic regime required by the electroquasistatic modeling
+framework.
+
+Beyond tunability, a key outcome of the impedance analysis is the high degree of
+repeatability observed between batches prepared with identical formulations. Both impedance
+magnitude and phase responses exhibited negligible variation across repeated fabrications.
+This batch-to-batch consistency is a critical requirement for phantom construction, as it
+ensures that multiple physical realizations can be produced with stable and reproducible
+electrical properties, enabling meaningful comparison across experiments and long-term use
+of the phantom platform.
+
+The qualitative signal localization experiments further support the suitability of the
+gelatine medium as a volume conductor. The measured potentials varied coherently with
+electrode position and relative distance to multiple internal sources, with measurement
+locations closer to a given source exhibiting higher signal amplitudes at the corresponding
+excitation frequency. Although no quantitative localization accuracy is claimed, these
+results confirm that the medium supports spatially structured potential distributions and
+allows the superposition and differentiation of simultaneous sources—an essential
+requirement for realistic phantom operation.
