@@ -1,0 +1,27 @@
+Following the definition of the optimal gelatine formulation in previous experiments, a functional validation prototype was constructed to evaluate the audio-to-voltage transduction and signal attenuation in the gelatine medium. The objective of this experiment is to validate this approach as a viable method for generating bioelectric potentials within the phantom structure.
+
+\paragraph{Setup}
+A dedicated phantom cube was fabricated with an embedded audio interface (3.5mm Mono Jack) positioned centrally within the conductive volume. This allowed for the direct injection of analog audio signals into the medium.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/transduction_ingredients.jpg}
+    \caption[Transduction Ingredients]{Ingredients for audio-to-voltage transduction experiment within the gelatine phantom.}
+    \label{fig:transduction_ingredients}
+\end{figure}
+
+\paragraph{Signal Generation and Acquisition}
+The experiment utilized two distinct signal sources for comparison:
+\begin{enumerate}
+    \item \textbf{Reference Source:} A verified third-party mobile application (Frequency Sound Generator) with a high user rating, used to establish a baseline for sine wave fidelity.
+    \item \textbf{Our Software Platform:} The proprietary software developed for this thesis.
+\end{enumerate}
+
+The output signals were acquired using an \textbf{OpenBCI Cyton} biosensing board. The signals were visualized and logged using the proprietary OpenBCI GUI to verify frequency accuracy and measure the peak-to-peak voltage attenuation introduced by the medium.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/transduction_setup.png}
+    \caption[Transduction Setup]{Setup for audio-to-voltage transduction experiment within the gelatine phantom.}
+    \label{fig:transduction_setup}
+\end{figure}
