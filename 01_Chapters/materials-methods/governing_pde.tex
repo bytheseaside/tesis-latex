@@ -11,7 +11,21 @@ Because the condition $L \ll \lambda$ is satisfied by several orders of magnitud
 The phantom is modeled as a piecewise homogeneous domain $\Omega = \Omega_{\text{gel}} \cup \Omega_{\text{shell}}$
 
 \begin{itemize}
-    \item \textbf{The inner medium ($\Omega_{\text{gel}}$):} The saline–gelatin mixture acts as the primary volume conductor. Consistent with electrophysiology literature, like Akor~\emph{et al.}~\cite{akor-2025}, the solidified mixture behaves as a linear Ohmic conductor. A conductivity range of $\sigma_{\text{gel}} \approx 0.3{-}0.4~\text{S/m}$, which matches human intracranial tissues is adopted. Experimental data confirms that for the EEG frequency band ($<100$ Hz), $\sigma_{\text{gel}}$ remains frequency-independent with negligible capacitive phase shifts~\cite{geddes-1967, Chandra2000}.
+    \item The inner medium ($\Omega_{\mathrm{gel}}$): The saline--gelatine mixture acts as the primary
+    volume conductor. In the numerical model, the electrical conductivity of the inner layer is
+    treated as a prescribed material property within the electroquasistatic framework, rather than
+    as a quantity inferred from a specific experimental realization.
+
+    The conductivity is specified such that the medium exhibits linear, isotropic, and Ohmic
+    behavior over the EEG frequency range. This assumption is physically supported by the
+    well-established tunability of gelatine-based media through ionic concentration, which enables
+    operation within the desired conductive regime.
+
+    Accordingly, a conductivity range of $\sigma_{\mathrm{gel}} \approx 0.3$--$0.4~\mathrm{S/m}$,
+    consistent with reported values for human intracranial tissues, is adopted
+    \cite{akor-2025}. Experimental studies further indicate that for frequencies below
+    $100~\mathrm{Hz}$, $\sigma_{\mathrm{gel}}$ remains effectively frequency-independent, with
+    negligible capacitive phase shifts \cite{geddes-1967,Chandra2000}.
     \item \textbf{The conductive shell  ($\Omega_{\text{shell}}$):}  The outer boundary consists of a 3D-printed conductive PLA shell. Manufacturer data \textbackslash{}cite\{cpla-datasheet\} and recent studies \textbackslash{}cite\{akor-2025, tilve-martinez-2024\} indicate that 3D-printed polymers exhibit orthotropic conductivity due to the layer-by-layer deposition process. While resistivities vary between the $X-Y$ plane ($19.2~\Omega\cdot\text{cm}$) and the $Z$-axis ($33.6~\Omega\cdot\text{cm}$), research suggests that anisotropy can be mitigated through optimized printing parameters such as extrusion temperature and path planning~\cite{paz-2020, nowka-2024}. \\
     For this model, a representative scalar value of $\sigma_{shell} = 4.1~\text{S/m}$ is defined. This value serves as a balanced estimate for a reasonably optimized print, though $\sigma_{\text{shell}}$ remains a user-definable parameter to allow for sensitivity analysis or material-specific characterization.
 \end{itemize}
