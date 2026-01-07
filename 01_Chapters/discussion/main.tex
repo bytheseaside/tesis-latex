@@ -1,7 +1,19 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
 
-This section is used to describe why you got the results that you did and how to interpret them.
+Funding constraints regarding the manufacturing of the conductive cranial shell led to an adaptation of the validation strategy, which originally aimed for a full physical integration of the software with the anatomical phantom head. Consequently, the system evaluation was conducted using a modular verification framework. Instead of a single final assembly test, each subsystem was isolated and tested independently to ensure strict compliance with the functional requirements:
+\begin{itemize}
+    \item The \textbf{Software Subsystem} was evaluated for latency and waveform spectral purity.
+    \item The \textbf{Hardware Transduction} was validated using gelatine cubes and controlled input signals.
+    \item The \textbf{Signal Acquisition Subsystem} was tested for signal integrity and noise levels using controlled input signals.
+    \item The \textbf{Closed-Loop System} was assessed by integrating the signal generation and a simplified form of the hardware module, comparing the output using the acquisition module to verify real-time performance.
+\end{itemize}
+
+The validation process utilized both laboratory instrumentation and the developed software subsystem to generate controlled input signals.
+
+To validate the behavior of the complete integrated system in the absence of the final physical assembly with the anatomical phantom head, the project utilizes
+the \textbf{Phantom Head Numerical Model} as the integration reference for a two-layer phantom head constructed following the methods described in 
+Section~\ref{sec:materials_and_methods}. This theoretical validation demonstrates that, given the proven performance of the individual components, the complete system functions according to the design specifications when the modules are combined.
 
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
