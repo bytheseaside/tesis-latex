@@ -24,11 +24,7 @@ In this formulation, the excitation vector $x$ does not represent all electrode 
 
 \subsubsection{Transfer Matrix Analysis}
 
-The phantom--head transfer matrix was analyzed to characterize the numerical properties of the forward mapping between electrode excitations and surface measurements. The rank of $F$, its singular value spectrum, and its condition number were computed to assess identifiability and numerical stability of the system.
-
-Column-wise similarity between electrode responses was evaluated using correlation- and coherence-based metrics in order to quantify linear dependencies and potential redundancy among excitation patterns. These analyses complement the singular value decomposition by providing pairwise measures of similarity between columns of the transfer matrix.
-
-In addition to global matrix diagnostics, probe-wise statistics were computed to characterize the distribution of responses across measurement locations. For each probe, summary statistics including the mean response magnitude, standard deviation, and coefficient of variation were evaluated over the set of electrode excitations. These quantities provide a measure of the relative sensitivity and variability of each measurement location within the transfer model.
+The phantom--head transfer matrix was analyzed to characterize the numerical properties of the forward mapping between electrode excitations and surface measurements.
 
 Several column-selection (electrode-reduction) strategies were evaluated as part of the transfer matrix analysis. The tested approaches included:
 \begin{itemize}
@@ -39,7 +35,7 @@ Several column-selection (electrode-reduction) strategies were evaluated as part
     \item residual- or reconstruction-error–based criteria.
 \end{itemize}
 
-For each strategy, reduced transfer matrices were constructed and then analyzed using the same numerical diagnostics as the full matrix. In addition, comparative analyses were performed to assess agreement and consistency across selection methods, including identification of electrodes consistently selected or discarded by multiple criteria.
+For each strategy, reduced transfer matrices were constructed and then analyzed using the same numerical diagnostics as the full matrix. Comparative analyses were performed to assess agreement and consistency across selection methods, including identification of electrodes consistently selected or discarded by multiple criteria.
 
 \subsubsection{Reconstruction Operator Definition}
 
@@ -55,15 +51,6 @@ The reconstructed excitation vector is obtained as
 \hat{x} = B y.
 \]
 
-\subsubsection{Resolution Matrix}
-
-To assess identifiability and cross-talk independently of specific test cases, the resolution matrix
-\[
-R = B A
-\]
-was computed for the reconstruction operators under consideration. The resolution matrix maps true excitation amplitudes to their reconstructed counterparts and provides a compact description of how accurately and independently individual excitation channels can be recovered.
-
-Quantitative diagnostics derived from $R$ included deviations of diagonal entries from unity, norms of off-diagonal contributions associated with cross-talk, and global measures quantifying the departure of $R$ from the identity matrix.
 
 \subsubsection{Reconstruction Validation Tests}
 
@@ -71,5 +58,5 @@ Reconstruction performance was evaluated using a set of complementary validation
 
 \begin{enumerate}
     \item \textbf{Noise and error sensitivity:} Robustness to perturbations was evaluated by introducing noise at the measurement level, $y_{\eta} = y + \eta$.
-    \item \textbf{FEM-consistent reconstruction:} The ability to recover excitation patterns from simulated measurements.
+    \item \textbf{FEM-consistent reconstruction:} The ability to recover excitation patterns from simulated (assumed truth) measurements was assessed.
 \end{enumerate}

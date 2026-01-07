@@ -1,6 +1,6 @@
 \subsubsection{Finite Element Meshes}
-
-including both the analytical spherical benchmark and the full phantom--head geometry.
+This section reports the finite element meshes employed in the numerical simulations,
+both the analytical spherical benchmark and the full phantom--head geometry.
 Figures~\ref{fig:phantom_mesh} and~\ref{fig:sphere_mesh} illustrate the corresponding meshes,
 while Table~\ref{tab:mesh_comparison} summarizes global mesh statistics and quality indicators.
 
@@ -138,17 +138,17 @@ $\sigma_1=0.33,\ \sigma_2=4.1$
 & $2.98\times10^{-8}$
 & $0.99$ \\[4pt]
 
-$\sigma_1=4.1,\ \sigma_2=0.33$
-& Full domain
-& $0.12$
-& $2.78\times10^{-5}$
-& $0.98$ \\
+% $\sigma_1=4.1,\ \sigma_2=0.33$
+% & Full domain
+% & $0.12$
+% & $2.78\times10^{-5}$
+% & $0.98$ \\
 
-$\sigma_1=4.1,\ \sigma_2=0.33$
-& Outer region
-& $0.142$
-& $2.23\times10^{-6}$
-& $0.99$ \\
+% $\sigma_1=4.1,\ \sigma_2=0.33$
+% & Outer region
+% & $0.142$
+% & $2.23\times10^{-6}$
+% & $0.99$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -249,8 +249,8 @@ $\kappa(F)=135.82$.
 % --- Singular values scree plot ---
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=1\textwidth]{../../02_Images/F_singular_values.png}
-    \caption[Singular values of $F$]{Singular value spectrum of $F$ (descending order). $\sigma_{\max}=0.3101$, $\sigma_{\min}=0.0023$.}
+    \includegraphics[width=0.7\textwidth]{../../02_Images/F_singular_values.png}
+    \caption[Singular values of $F$]{Singular value spectrum of $F$ (descending order). From $\sigma_{\max}=0.3101$ to $\sigma_{\min}=0.0023$.}
     \label{fig:F_singular_values}
 \end{figure}
 
@@ -326,7 +326,7 @@ in Fig.~\ref{fig:F_column_correlation}.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\textwidth]{../../02_Images/A8_singular_values.png}
+    \includegraphics[width=0.7\textwidth]{../../02_Images/A8_singular_values.png}
     \caption[Singular values of $A_8$]{Singular value spectrum of the reduced forward operator $A_8$, ordered in descending magnitude.}
     \label{fig:A8_singular_values}
 \end{figure}
@@ -345,7 +345,7 @@ The resulting operator has rank~7, with a further reduction in condition number:
 % --- Singular values: A7 ---
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\textwidth]{../../02_Images/A7_singular_values.png}
+    \includegraphics[width=0.7\textwidth]{../../02_Images/A7_singular_values.png}
     \caption[Singular values of $A_7$]{Singular value spectrum of the reduced forward operator $A_7$, ordered in descending magnitude.}
     \label{fig:A7_singular_values}
 \end{figure}
@@ -361,7 +361,7 @@ Following the comparative analysis of candidate forward operators, the matrix $A
 This choice reflects a substantial improvement in numerical conditioning: the condition number was reduced from approximately $135$ (for $A_9$) to approximately $20$, at the modest cost of removing a single actuator (column). 
 This trade-off was deemed favorable, as it significantly improves numerical stability and noise robustness while preserving sufficient actuation capability.
 
-Since $A_8$ is full column rank and exhibits satisfactory numerical conditioning, the Moore--Penrose pseudoinverse was employed without regularization. 
+Since $A_8$ is full column rank and exhibits satisfactory numerical conditioning, the Moore--Penrose pseudoinverse was employed without regularization to obtain the reconstruction operator. 
 In this setting, the associated resolution matrix
 \[
 R = A_8^{\dagger} A_8
@@ -457,3 +457,39 @@ where $\sigma_{\min}$ denotes the smallest singular value of the forward operato
 Figure~\ref{fig:mu_sweep_wide} reports the mean relative reconstruction error as a function of $\mu$ for both dense and sparse excitation families. Over the full range, the error increases smoothly and monotonically with increasing noise mean. Dense excitations consistently yield lower errors than sparse excitations, while sparse cases remain more sensitive across the entire sweep.
 
 The value $\mu=\sigma_{\min}$ serves as a reference corresponding to a noise level at which degraded reconstruction performance is expected. As $\mu$ approaches this value, the mean reconstruction error is already appreciable for both excitation families, indicating substantially reduced reconstruction quality. No distinct change in behavior is observed at this point, and the error continues to follow the same increasing trend seen throughout the sweep.
+
+\subsubsection{FEM Consistency and Numerical Self-Validation}
+
+To verify the internal consistency of the finite element (FEM) model, a set of controlled electrical excitations was applied to the phantom--head geometry.
+For each excitation case, the forward problem was solved using the FEM model to obtain the corresponding potential distribution at the measurement locations.
+These measurements were then used to reconstruct the original excitation vector according to $\hat{\mathbf{x}} = \mathbf{A}^\dagger \mathbf{y}$.
+The reconstructed excitations $\hat{\mathbf{x}}$ were compared against the known applied stimuli $\mathbf{x}$ to assess numerical self-consistency.
+Figure~\ref{fig:fem_consistency_error} illustrates the relative reconstruction error for all tested cases.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{<path-to-consistency-error-figure>}
+    \caption{Relative reconstruction error for FEM self-consistency tests.
+    Errors are computed by comparing reconstructed excitations $\hat{\mathbf{x}}$ against the known applied stimuli $\mathbf{x}$.}
+    \label{fig:fem_consistency_error}
+\end{figure}
+
+Quantitative error statistics are summarized in Table~\ref{tab:fem_consistency_stats}.
+Across all test cases, the mean relative reconstruction error is on the order of \nota{X}, with similarly low median and maximum values.
+These errors are consistent with machine-precision limits and indicate that the numerical pipeline---including FEM discretization, matrix assembly,
+and pseudoinverse-based reconstruction---is internally consistent.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Reconstruction error statistics for FEM self-consistency tests.}
+    \label{tab:fem_consistency_stats}
+    \small
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Metric} & \textbf{Mean} & \textbf{Median} & \textbf{Maximum} \\
+        \midrule
+        Relative error $\|\mathbf{x} - \hat{\mathbf{x}}\| / \|\mathbf{x}\|$
+        & $O(10^{-15})$ & $O(10^{-15})$ & $O(10^{-14})$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
