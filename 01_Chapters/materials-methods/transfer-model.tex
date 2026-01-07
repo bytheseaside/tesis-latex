@@ -70,15 +70,6 @@ Quantitative diagnostics derived from $R$ included deviations of diagonal entrie
 Reconstruction performance was evaluated using a set of complementary validation tests designed to probe different aspects of the inverse mapping. These tests were formulated to separately assess algebraic invertibility, consistency with the finite element model, and the ability to reproduce physically realizable surface potential patterns.
 
 \begin{enumerate}
-    \item \textbf{Matrix-only reconstruction (algebraic consistency):}  
-    Random excitation vectors $x_{\mathrm{true}}$ were generated and mapped to measurement space using the forward operator, $y = A x_{\mathrm{true}}$. The reconstructed excitation $\hat{x} = B y$ was then compared to $x_{\mathrm{true}}$. This test evaluates the intrinsic behavior of the inverse operator under idealized, noise-free conditions and isolates the effects of conditioning and cross-talk in excitation space.
-
-    \item \textbf{FEM-consistent reconstruction:}  
-    Random excitation vectors $x_{\mathrm{true}}$ were applied in the finite element solver to obtain measurement vectors $y_{\mathrm{FEM}}$. The reconstructed excitation $\hat{x} = B y_{\mathrm{FEM}}$ was compared to $x_{\mathrm{true}}$. This test assesses the consistency between the linear transfer model and the numerical forward solver, and captures the influence of discretization, sampling, and numerical approximation errors.
-
-    \item \textbf{Feasible target tracking (round-trip validation):}  
-    Physically realizable target patterns were defined as $y_{\mathrm{target}} = A x_{\mathrm{true}}$. The corresponding excitation $\hat{x} = B y_{\mathrm{target}}$ was computed and mapped forward to obtain $\hat{y} = A \hat{x}$. The comparison between $\hat{y}$ and $y_{\mathrm{target}}$ evaluates the ability of the inverse--forward pipeline to reproduce achievable surface potential patterns, independently of errors expressed in excitation space.
-
-    \item \textbf{Noise and error sensitivity:}  
-    Robustness to perturbations was evaluated by introducing noise at the measurement level, $y_{\eta} = y + \eta$. Both constant-amplitude and signal-dependent noise models were considered, informed by numerical error levels observed in the analytical benchmark. Reconstruction error was evaluated as a function of the noise level for the tests described above.
+    \item \textbf{Noise and error sensitivity:} Robustness to perturbations was evaluated by introducing noise at the measurement level, $y_{\eta} = y + \eta$.
+    \item \textbf{FEM-consistent reconstruction:} The ability to recover excitation patterns from simulated measurements.
 \end{enumerate}
