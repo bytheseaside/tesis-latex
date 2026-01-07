@@ -232,9 +232,9 @@ locations corresponding to the international 10--20 electrode system. For the ba
 stimulation set (tip at $+1~\mathrm{V}$, ring at $-1~\mathrm{V}$, sleeve at $0~\mathrm{V}$), the global
 minimum and maximum values over all responses were $15.963~\text{mV}$ and $54.122~\text{mV}$, respectively; these limits were used for consistent colormap scaling across all panels.
 
-\paragraph*{Transfer Matrix Diagnostics}
+\paragraph*{Forward Operator Diagnostics}
 
-The transfer matrix $F$ was evaluated for the complete set of nine electrode stimuli.
+The forward operator $F$ was evaluated for the complete set of nine electrode stimuli.
 The rank of $F$ was $\mathrm{rank}(F)=9$ and the condition number was
 $\kappa(F)=135.82$.
 
@@ -303,3 +303,54 @@ FPz & 22.343 & 4.704 & 0.211 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph*{Reduced Forward Operators}
+
+In addition to the full forward operator $A_9 = F$, reduced forward operators were
+constructed by selecting subsets of columns of $F$, corresponding to reduced sets
+of active electrodes. For each reduced dimension $k$, multiple column-selection
+strategies were evaluated, and the subset yielding the lowest condition number was
+retained as the representative operator $A_k$. Reduced operators were analyzed
+using the same numerical diagnostics as the full transfer matrix.
+
+\paragraph*{Reduced Operator $A_8$}
+
+For all evaluated reduction strategies, the same column of $F$ was excluded to form
+the reduced operator $A_8$. This column corresponds to the basis stimulus associated
+with electrode~6. The resulting operator has rank~8 and a condition number of
+$\kappa(A_8)=20.59$.
+
+For $A_8$, the mean column correlation was $-0.137$ (standard deviation $0.333$);
+specific inter--column correlation values can be read from the corresponding entries
+in Fig.~\ref{fig:F_column_correlation}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/A8_singular_values.png}
+    \caption[Singular values of $A_8$]{Singular value spectrum of the reduced forward operator $A_8$, ordered in descending magnitude.}
+    \label{fig:A8_singular_values}
+\end{figure}
+
+Probe-wise statistics were evaluated for $A_8$. The mean coefficient of variation
+across probes was $0.29$.
+
+\paragraph*{Reduced Operator $A_7$}
+
+Further reduction to $k=7$ resulted in consistent selections across all evaluated
+algorithms. In addition to electrode~6, electrode~1 was excluded to form the reduced
+operator $A_7$. 
+
+The resulting operator has rank~7, with a further reduction in condition number: $\kappa(A_7)=15.57$.
+
+% --- Singular values: A7 ---
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/A7_singular_values.png}
+    \caption[Singular values of $A_7$]{Singular value spectrum of the reduced forward operator $A_7$, ordered in descending magnitude.}
+    \label{fig:A7_singular_values}
+\end{figure}
+
+Probe-wise statistics for $A_7$ yielded a mean coefficient of variation of $0.28$ across
+measurement locations.
+
+Correlation among columns of $A_7$ produced a mean value of $-0.143$ (standard deviation $0.300$).
