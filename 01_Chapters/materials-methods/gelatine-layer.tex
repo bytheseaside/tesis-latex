@@ -1,52 +1,57 @@
-To validate the suitability of gelatine as a reliable material for the phantom design, a series of laboratory experiments were designed. These studies aim to characterize the electrical impedance of the material, assess the reproducibility of the manufacturing process, and validate the similarity of the physical phantom against the proposed simulation model.
+To validate the suitability of gelatine as a reliable material for the phantom design, the following laboratory experiments were designed. These studies aim to characterize the electrical impedance of the material, assess the reproducibility of the manufacturing process, and determine the optimal formulation for the gelatine layer.
 
-\subsubsection{Equipment and setup}
+\subsubsection{Impedance Analysis and Material Sensitivity}
+
+The primary objective of this study is to measure the complex impedance of different gelatine solutions across a defined frequency spectrum.
+
+\paragraph*{Prototype Fabrication}
+
+The prototypes were constructed using a hydrogel composed of unflavored gelatine and desionized water. To analyze the correlation between salinity and impedance, distinct batches were prepared with varying concentrations of sodium chloride (NaCl).
+
+The gelatine and salt were added to the desionized water at room temperature, keeping the gelatine at 30\% concentration and testing the NaCl at 0\%, 2.5\%, and 5\% concentrations. The solutions were heated to \SI{60}{\degreeCelsius}, thoroughly mixing to ensure homogeneity until the gelatine was fully dissolved, avoiding the formation of lumps and bubbles.
+
+The mixtures were cast into standardized molds (derived from isometric soap molds) to ensure constant geometric dimensions across all samples. The samples were stored in a refrigeration unit at \SI{2}{\degreeCelsius} for a minimum duration of 12 hours. Once solidified, the prototypes were removed from the refrigerator and prepared for electrical testing at room temperature.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/gelatine_ingredients.png}
+    \caption[Gelatine phantom prototype ingredients]{Ingredients used for gelatine phantom fabrication: unflavored gelatine powder, desionized water, and sodium chloride (NaCl). }
+    \label{fig:gelatine_ingredients}
+\end{figure}
+
+\paragraph*{Equipment and Setup}
 
 The experimental setup utilizes the following instrumentation to generate signals and capture the electrical response of the phantom:
 
 \begin{itemize}
-    \item Signal generator: To provide input signals (AC and DC) of varying frequencies and amplitudes.
+    \item Signal generator: To provide sinusoidal input signals of varying frequencies and amplitudes.
     \item Two-channel oscilloscope: To simultaneously monitor the input signal ($V_{in}$) and the output signal ($V_{out}$) propagated through the medium.
-    \item Custom electrodes: Insulated conductive wires with exposed tips will be inserted into the gelatine to serve as current injection and voltage recording points.
+    \item Custom electrodes: Insulated conductive wires with exposed tips inserted into the gelatine to serve as voltage injection or recording points as needed.
+    \item Reference resistor ($R_{ref}$): A known resistor placed in series with the gelatine prototype to facilitate measurement.
 \end{itemize}
 
-\subsubsection{Experiment I:\ Impedance Analysis and Material Sensitivity}
-
-The primary objective of this study is to measure the complex impedance of the gelatine solution across a defined frequency spectrum.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/lab_setup.jpg}
+    \caption[Laboratory setup]{Laboratory setup for impedance analysis. }
+    \label{fig:lab_setup}
+\end{figure}
 
 \paragraph*{Frequency Response}
 
-The impedance characterization will be performed by injecting a sinusoidal signal and comparing the input channel against the output channel across a mapped range of frequencies. The analysis will focus on two key parameters:
+A sinusoidal signal was injected into the gelatine cubes arranged in a series circuit with the reference resistor. By measuring the voltage drop across the phantom and the phase shift relative to the source signal, the complex impedance ($Z$) and phase angle ($\theta$) were calculated for each NaCl concentration across a range of frequencies. The following metrics will be extracted from the measurements:
 
 \begin{itemize}
     \item Attenuation: The ratio of signal amplitude drop as it traverses the medium ($V_{out} / V_{in}$).
     \item Phase shift: The temporal delay ($\Delta \phi$) between the input and output waveforms.
 \end{itemize}
 
-By plotting these variables as a function of frequency, we will determine the spectral behavior of the phantom material.
+By plotting these variables as a function of frequency, we determine the spectral behavior of the phantom material. Since the geometric shape factor remained constant, observed variations are attributed directly to the salt proportions.
 
 \paragraph*{Concentration and Reproducibility}
 
-To establish the reliability of the manufacturing process, the following variations will be tested:
+To establish the reliability of the manufacturing process, two separate batches of the identical recipe were measured under identical conditions. This allows us to quantify the deviation between samples and establish the reproducibility of the protocol.
 
-\begin{itemize}
-    \item Concentration sensitivity: Distinct mixtures with varying concentrations of gelatine will be analyzed to determine how variations in solute density affect electrical impedance.
-    \item Batch consistency: Two separate batches of the identical recipe will be measured under identical conditions. This will quantify the deviation between samples and establish the reproducibility of the protocol.
-\end{itemize}
+\subsubsection{Signal Localization}
 
-\subsubsection{Experiment II:\ Signal localization and Simulation Validation}
-
-This study aims to study the phantom's signal localization behavior, and compare it against the computational model based on the finite element method described in the upcoming Section~\ref{subsec:solver}.
-
-\paragraph*{Geometric Standarization}
-
-The gelatine will be molded into a known, controlled geometric shape. This exact geometry will be replicated in the simulation program to ensure that boundary conditions and electrode positions are mathematically comparable.
-
-\paragraph*{Spatial Potential Distribution}
-
-Two sources of signal injection will be placed at fixed coordinates within the phantom. Potential measurements will be taken at various surface locations of the phantom.
-
-\begin{itemize}
-    \item Signal types: The propagation will be tested using both Direct Current (DC) and Alternating Current (AC) stimuli.
-    \item Validation: The measured voltage potentials at specific coordinates on the physical phantom will be compared to the predicted values at the corresponding nodes in the software simulation.
-\end{itemize}
+Two sources of signal injection were placed at fixed coordinates within the phantom. Potential measurements were taken at various surface locations of the phantom. By analyzing the spatial distribution of the recorded potentials, we assess the system's ability to localize and differentiate between multiple simultaneous sources.
