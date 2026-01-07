@@ -15,9 +15,46 @@ To validate the behavior of the complete integrated system in the absence of the
 the \textbf{Phantom Head Numerical Model} as the integration reference for a two-layer phantom head constructed following the methods described in 
 Section~\ref{sec:materials_and_methods}. This theoretical validation demonstrates that, given the proven performance of the individual components, the complete system functions according to the design specifications when the modules are combined.
 
-\label{subsec:materials}
-\input{materials}
+\subsection{Materials: Electrical Behavior and Suitability for Phantom Construction}
 
+The phantom head design relies on a bilayer architecture composed of an external conductive
+shell and an internal conductive volume. These two layers are subject to fundamentally
+different material constraints. The outer shell is designed to be fabricated using a commercially available conductive
+polymer, selected to balance electrical performance, mechanical printability, and practical
+accessibility within an academic prototyping context. While custom composite formulations
+or fully bespoke materials could, in principle, be developed to achieve tighter control
+over electrical properties, such approaches would significantly increase fabrication
+complexity and cost. For this reason, a commercially available conductive PLA was adopted
+as a representative and reproducible choice, with electrical properties largely determined
+by the material specification and the additive manufacturing process itself. Accordingly,
+its characterization relies primarily on manufacturer data and existing literature rather
+than on experimental tunability.
+
+In contrast, the inner conductive layer is based on a saline--gelatine medium, which is
+readily available, inexpensive, and highly customizable through formulation parameters.
+For this reason, the experimental characterization efforts focused on the inner layer, with
+the goal of assessing its electrical behavior, tunability, and reproducibility in the
+context of phantom construction. Rather than aiming at a precise metrological determination
+of conductivity values, the experiments were designed to qualitatively evaluate how the
+electrical response of the material evolves with ionic concentration, and whether these
+properties can be reliably reproduced across fabrication batches.
+
+\subsubsection{Gelatine Layer}
+\paragraph*{Impedance Analysis and Material Sensitivity}
+
+The data reveals a pronounced inverse relationship between NaCl concentration and the magnitude of electrical impedance ($|Z|$) across the tested frequency spectrum. As the NaCl concentration increases, the impedance decreases, indicating an increase in conductivity. This trend is consistent with the expected behavior of ionic solutions, where higher salt content facilitates charge transport. We also observe a decrease in the magnitude of the impedance as the frequency increases. 
+
+However, the addition of NaCl and increase of conductivity introduces a complex trade-off regarding the phase response. While increasing the NaCl concentration to 5\% effectively lowers the resistive component, the data indicates that it simultaneously induces a more capacitive response compared to the 0\% (or low-concentration) baseline.
+
+Specifically, the phase angle ($\theta$) for the solution without NaCl remains closer to 0 degrees, indicating a predominantly resistive behavior. In contrast, the 5\% formulation, while lower than the 2.5\% solution, exhibits a larger phase shift. This increased capacitive reactance is attributable to interfacial polarization. The higher density of free ions facilitates the formation of a stronger electrical double-layer (EDL) at the electrode-gelatine interface, thereby increasing the effective capacitance of the system alongside its conductivity, especially at lower frequencies.
+
+These findings align with the results obtained by Owda \emph{et al.}~\cite{Owda2020} in their study of gelatine-based phantoms, where they also reported similar trends in impedance and phase behavior with varying salt concentrations.
+
+The reproducibility analysis between two batches of the 2.5\% NaCl gelatine samples demonstrated a high degree of consistency in both impedance magnitude and phase response. The negligible variance observed between batches indicates that the manufacturing process is reliable and produces uniform material properties, which is crucial for phantom applications requiring repeatable electrical characteristics.
+
+\paragraph*{Signal Localization}
+
+The spatial distribution of the measured voltages confirms the effective propagation and localization of the dipole signal within the conductive medium, as getting closer to each source results in a higher measured potential at the corresponding electrode frequency.
 
 \subsection{Numerical Phantom Validation and System-Level Implications}
 
@@ -67,16 +104,17 @@ extraction—can be applied directly to the physical phantom to regenerate an up
 In this sense, the robustness of the proposed approach lies not in fixed numerical values,
 but in the generality and repeatability of the modeling and reconstruction pipeline.
 
-The original system design targeted a low-cost and easily reproducible physical phantom,
-constructed from readily available materials and simple fabrication processes. While the
-numerical and experimental results presented in this work demonstrate the feasibility of
-this approach, the fabrication of the complete physical phantom head was not carried out
-within the scope of the project due to practical and funding constraints. Importantly, these
-constraints did not affect the architectural or methodological aspects of the system, which
-were developed with physical realization as a guiding objective. Based on the present
-results, the physical phantom can be fabricated following the specified material properties
-and geometric design without requiring further modifications to the modeling or control
-framework.
+The original system design targeted a physically realizable phantom head based on materials
+and fabrication techniques that are compatible with typical academic and laboratory
+resources. While the numerical and experimental results presented in this work demonstrate
+the feasibility of this approach, the fabrication of the complete physical phantom head was
+not carried out within the scope of the project due to practical and funding constraints.
+Importantly, these constraints do not undermine the validity of the proposed architecture,
+which was developed with physical realization and reproducibility as guiding objectives.
+
+Based on the present results, the physical phantom can be fabricated following the specified
+material properties and geometric design without requiring further modifications to the
+modeling or control framework, once the necessary fabrication resources are available.
 
 \textbf{TBD: Discussion of the desktop platform}
 
