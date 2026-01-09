@@ -1,30 +1,49 @@
 \documentclass[../../00_Main/Main.tex]{subfiles}
 \begin{document}
-The main goal of this work is the design and development of a \gls{phantom} 
-for the evaluation and calibration of \acrfull{eeg} signal acquisition systems.  
-To achieve this goal, the following specific objectives are proposed:
+% The main goal of this work is the design and development of a \gls{phantom} 
+% for the evaluation and calibration of \acrfull{eeg} signal acquisition systems.  
+% To achieve this goal, the following specific objectives are proposed:
+
+% \begin{enumerate}
+
+% \item Design a two-layered phantom head capable of accurately simulating the transmission of both brain-like signals
+% and standard test waveforms (e.g., sinusoids and square waves) through a physical medium. The internal layer will be
+% composed of a conductive gelatine, while the external layer will be made of conductive polymer. This phantom must incorporate
+% an internal signal generation system designed to maintain stable operation for a minimum test period of 
+% $X$~[days/hours].~\nota{Definir tiempo objetivo.}
+
+% \item Design, develop, and implement a desktop application platform for the operational integration and comprehensive management
+% of the proposed EEG signal phantom. This platform must provide a unified environment for:
+
+% \begin{enumerate}
+%     \item Controlling signal generation parameters (e.g., amplitude, frequency, and waveform), \nota{Definir rangos objetivo}
+%     \item Real-time visualization of acquired and generated data with low latency and jitter~\nota{Definir rangos aceptables}, and
+%     \item Structured data logging and export (CSV, EDF, etc.).
+% \end{enumerate}
+
+% \item Design and implement the necessary communication standards and data structures for interoperability with the OpenBCI platform,
+% enabling the reliable reception and processing of real-time EEG data.
+
+% \end{enumerate}
+
+The main goal of this work is the \textbf{design, characterization, and operational integration of a phantom head} for the evaluation and calibration of EEG signal acquisition systems.
+To achieve this goal, the following specific objectives are defined:
 
 \begin{enumerate}
+    \item \textbf{Design a two-layered phantom head} capable of simulating the transmission of both brain-like electrical signals and standard test waveforms (e.g., sinusoids and square waves) through a physical medium. The internal layer is based on a conductive gelatine, while the external layer provides mechanical support and is designed for fabrication using a 3D-printable material. The phantom is specified to operate within defined signal amplitude and frequency ranges (e.g., up to \nota{maximum voltage} and \nota{maximum frequency}), serving as a controlled reference for calibration and validation tasks.
 
-\item Design a two-layered phantom head capable of accurately simulating the transmission of both brain-like signals
-and standard test waveforms (e.g., sinusoids and square waves) through a physical medium. The internal layer will be
-composed of a conductive gelatine, while the external layer will be made of conductive polymer. This phantom must incorporate
-an internal signal generation system designed to maintain stable operation for a minimum test period of 
-$X$~[days/hours].~\nota{Definir tiempo objetivo.}
+    \item \textbf{Characterize the electrical response of the phantom head} in order to establish a relationship between internal actuator excitations and surface voltage measurements, enabling the software platform to compute the actuator signals required to produce prescribed electrical patterns at specified measurement locations.
 
-\item Design, develop, and implement a desktop application platform for the operational integration and comprehensive management
-of the proposed EEG signal phantom. This platform must provide a unified environment for:
+    \item \textbf{Design, develop, and implement a desktop application platform} for the operational integration and comprehensive management of the proposed EEG signal phantom. This platform must provide a unified environment for:
+    \begin{enumerate}
+        \item controlling signal generation parameters consistent with the phantom specifications,
+        \item real-time visualization of generated and acquired signals with low latency and jitter, within acceptable bounds of \nota{maximum latency} and \nota{maximum jitter}, and
+        \item structured data logging and export in standard formats (e.g., CSV, EDF).
+    \end{enumerate}
 
-\begin{enumerate}
-    \item Controlling signal generation parameters (e.g., amplitude, frequency, and waveform), \nota{Definir rangos objetivo}
-    \item Real-time visualization of acquired and generated data with low latency and jitter~\nota{Definir rangos aceptables}, and
-    \item Structured data logging and export (CSV, EDF, etc.).
+    \item \textbf{Design and implement the necessary communication standards and data structures} for interoperability with the OpenBCI platform, enabling the reliable reception and processing of real-time EEG data.
 \end{enumerate}
 
-\item Design and implement the necessary communication standards and data structures for interoperability with the OpenBCI platform,
-enabling the reliable reception and processing of real-time EEG data.
-
-\end{enumerate}
 
 
 \biblio~% Needed for referencing to working when compiling individual subfiles - Do not remove
