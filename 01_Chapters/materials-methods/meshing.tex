@@ -22,7 +22,6 @@ Standard optimization and smoothing were applied (\texttt{Mesh.Optimize = 1},
 \texttt{Mesh.Smoothing = 10}). Global element size bounds were set to 
 $h_{\min} = 0.3$~mm and $h_{\max} = 6.0$~mm.
 
-\paragraph*{Adaptive Refinement}
 A distance-based size field was defined to achieve graded refinement near the 
 electrodes. All electrode contact surfaces (tip, ring, and sleeve for each of 
 the nine electrodes) were collected as refinement targets. The field prescribed 
@@ -30,7 +29,6 @@ the nine electrodes) were collected as refinement targets. The field prescribed
 distances beyond 25~mm. Fine resolution was maintained within 3~mm of the 
 electrodes to capture steep potential gradients near the voltage sources.
 
-\paragraph*{Physical Tags}
 Volume entities were tagged to distinguish the interior conductive medium and 
 conductive shell, enabling spatially-varying conductivity assignment in the 
 solver. Surface entities were tagged for each electrode's three contact regions 
