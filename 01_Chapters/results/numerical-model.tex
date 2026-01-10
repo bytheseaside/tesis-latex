@@ -238,6 +238,10 @@ The forward operator $F$ was evaluated for the complete set of nine electrode st
 The rank of $F$ was $\mathrm{rank}(F)=9$ and the condition number was
 $\kappa(F)=135.82$.
 
+The mean inter-column correlation of $F$ was $-0.095$ (standard deviation $0.365$).
+Specific pairwise correlations between columns of $F$ are shown in Fig.~\ref{fig:F_column_correlation}
+
+
 % --- Correlation plot (columns) ---
 \begin{figure}[htbp]
     \centering
@@ -264,11 +268,11 @@ curvature variations as candidate optima, yielding parameter values in the range
 $1\times 10^{-5}$ to $1\times 10^{-2}$. Owing to the lack of convergence toward a
 single characteristic regularization parameter across these diagnostics, no unique
 regularization value was selected for subsequent analyses. Consequently, subsequent analyses involving $F$ were performed using the unregularized pseudoinverse.
-
-\paragraph*{Probe-wise Statistics}
 Probe-wise summary statistics were computed over the set of basis stimuli. For each
 probe, the Table~\ref{tab:probe_stats} shows the mean response magnitude, standard deviation, and coefficient of variation
 ($\text{CV} = \sigma/\mu$).
+
+For the ensemble of the 21 probes, the mean coefficient of variation (CV) was $0.279$.
 
 \begin{table}[htbp]
 \centering
@@ -304,7 +308,6 @@ FPz & 22.343 & 4.704 & 0.211 \\
 \end{tabular}
 \end{table}
 
-\paragraph*{Reduced Forward Operators}
 
 In addition to the full forward operator $A_9 = F$, reduced forward operators were
 constructed by selecting subsets of columns of $F$, corresponding to reduced sets
@@ -361,7 +364,8 @@ Following the comparative analysis of candidate forward operators, the matrix $A
 This choice reflects a substantial improvement in numerical conditioning: the condition number was reduced from approximately $135$ (for $A_9$) to approximately $20$, at the modest cost of removing a single actuator (column). 
 This trade-off was deemed favorable, as it significantly improves numerical stability and noise robustness while preserving sufficient actuation capability.
 
-Since $A_8$ is full column rank and exhibits satisfactory numerical conditioning, the Moore--Penrose pseudoinverse was employed without regularization to obtain the reconstruction operator. 
+Since $A_8$ is full column rank and exhibits satisfactory numerical conditioning, the Moore--Penrose pseudoinverse was\
+employed without regularization to obtain the reconstruction operator $A_8^{\dagger}$. 
 In this setting, the associated resolution matrix
 \[
 R = A_8^{\dagger} A_8
@@ -376,15 +380,15 @@ within numerical precision. As a result, the resolution matrix does not provide 
 
 
 \subsubsection{Effect of noise on reconstruction}
-To assess the sensitivity of the reconstruction pipeline with respect to measurement noise magnitude, a set of numerical experiments was conducted using randomly generated excitation vectors. For each test case, a known excitation vector~$x$ was mapped to measurement space through the linear forward operator~$A$, and additive noise was introduced according to
+To assess the sensitivity of the reconstruction pipeline with respect to measurement noise magnitude, a set of numerical experiments was conducted using randomly generated excitation vectors. For each test case, a known excitation vector~$x$ was mapped to measurement space through the linear forward operator~$A_8$, and additive noise was introduced according to
 \begin{equation}
-    y_{\text{noisy}} = A x + \mu + \sigma Z,
+    y_{\text{noisy}} = A_8 x + \mu + \sigma Z,
 \end{equation}
 where $\mu$ denotes a deterministic noise offset, $\sigma$ the noise standard deviation, and $Z$ a standard Gaussian random variable.
 
 The reconstructed excitation was obtained by applying the Moore--Penrose pseudoinverse of the forward operator to the noisy measurements,
 \[
-\hat{x} = A^{\dagger} y_{\text{noisy}}.
+\hat{x} = A_8^{\dagger} y_{\text{noisy}}.
 \]
 For each test case, the reconstruction quality was quantified using the relative error
 \[
@@ -421,21 +425,21 @@ A statistical summary of the reconstruction error distributions for both excitat
 & \textbf{95th perc.} 
 & \textbf{Max} \\
 \midrule
-Dense  
+Dense 
 & 250 
-& 0.003147 
-& 0.002956 
+& $3.15\times10^{-3}$ 
+& $2.96\times10^{-3}$ 
 & $9.61\times10^{-4}$ 
-& 0.004761 
-& 0.008738 \\
+& $4.76\times10^{-3}$ 
+& $8.74\times10^{-3}$ \\
 [3pt]
 Sparse 
 & 250 
-& 0.006790 
-& 0.007912 
-& 0.001164 
-& 0.007947 
-& 0.007965 \\
+& $6.79\times10^{-3}$ 
+& $7.91\times10^{-3}$ 
+& $1.16\times10^{-3}$ 
+& $7.95\times10^{-3}$ 
+& $7.97\times10^{-3}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
