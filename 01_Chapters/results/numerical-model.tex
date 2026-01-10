@@ -165,22 +165,27 @@ illustrates the absolute error field and its radial distribution, highlighting t
 \begin{figure}[htbp]
     \centering
 
-    % --- Top: narrow 3D sphere (context) ---
-    \begin{subfigure}[t]{0.48\textwidth}
+    % --- Three-column row: field | radius | radius zoom (interest zone) ---
+    \begin{subfigure}[t]{0.43\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/error_internal-spikes.png}
-        \caption{Absolute discretization error field in a central view of the spherical domain.}
+        \caption{Absolute discretization error field (central region view).}
         \label{fig:sphere-error-field}
     \end{subfigure}
-
-    \vspace{0.6em}
-
-    % --- Bottom: wide radial plot (primary quantitative result) ---
-    \begin{subfigure}[t]{\textwidth}
+    \vspace{0.01em}
+    \begin{subfigure}[t]{0.8\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/error-radius.png}
-        \caption{Radial distribution of the absolute discretization error for the same case.}
-        \label{fig:sphere-error-radial}
+        \caption{Radial distribution of the absolute discretization error.}
+        \label{fig:sphere-error-radius}
+    \end{subfigure}
+    \vspace{0.01em}
+
+    \begin{subfigure}[t]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/err_abs_zoom.png}
+        \caption{Radial distribution zoomed on $r \ge 79\text{mm}$.}
+        \label{fig:sphere-error-radius-zoom}
     \end{subfigure}
 
     \caption[Spatial localization of discretization error in the spherical benchmark]
@@ -189,10 +194,8 @@ illustrates the absolute error field and its radial distribution, highlighting t
 \end{figure}
 
 
-Taking both the distribution statistics and spatial localization into account, it is evident that the finite element discretization
-effectively captures the potential field across most of the spherical domain, with significant errors confined to localized regions
-near material interfaces. This insight informs mesh refinement strategies for future modeling efforts, emphasizing targeted improvements
-in areas prone to higher discretization errors.
+Considering both the error distribution statistics and the spatial localization shown in Figure~\ref{fig:sphere-error-localization}, the finite-element solution reproduces the prescribed potential field with high fidelity. As expected, larger discretization errors—on the order of $10^{-4}\mathrm{V}$—are observed in regions closer to the prescribed-voltage boundary and near material interfaces, where geometric and numerical gradients are most pronounced. In contrast, the error decays monotonically toward the exterior of the domain. Crucially, on the outer measurement surface—corresponding to the region of practical electrode placement—the absolute error remains below $5\times10^{-6}\mathrm{V}$, more than an order of magnitude smaller than typical interior values. This separation of error scales indicates that, while localized interior artifacts are present, they do not propagate to the measurement surface and therefore do not compromise the accuracy of surface-based observations.
+
 
 \subsubsection{Phantom--Head Response}
 
