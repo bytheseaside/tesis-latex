@@ -1,12 +1,9 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
-
-\nota{Ponemos esto antes de Materiales y Métodos porque define qué se quiere lograr con el proyecto? No sé si mergearlo con Objetivos sino}
-
 \subsection{Project Requirements}\label{subsec:project_reqs}
 The following high-level constraints guide the project development:
 \begin{itemize}
-    \item \textbf{Cost-Effectiveness:} The solution must provide a low-cost alternative to commercial EEG simulators, utilizing standard PC hardware and accessible components.
+    \item \textbf{Cost-Effectiveness:} The solution must provide a cost-effective alternative to commercial EEG simulators, utilizing standard PC hardware and accessible components.
     \item \textbf{Reproducibility:} The solution must give the user a way to reproduce the generated signals for calibration or analysis purposes.
     \item \textbf{Modularity:} The solution must allow for decoupling of the software generation source from the physical emulation hardware, allowing the software to be used with different head models or the hardware to be driven by different audio sources.
     \item \textbf{Electrical Safety \& Isolation:} The active circuits must operate within low-voltage limits to ensure safety when connected to acquisition boards.
@@ -26,7 +23,7 @@ The following high-level constraints guide the project development:
 
 \subsubsection{Hardware Design}
 \begin{itemize}
-    \item \textbf{FR-07 Signal Traduction Validation:} The solution must provide validation of the signal injection.
+    \item \textbf{FR-07 Signal Transduction Validation:} The solution must provide validation of the signal injection.
     \item \textbf{FR-08 Anatomical Model Design:} The solution must allow customization of the material composition and electrode placement for the phantom head.~\nota{Referir a esto en la sección de Materiales y Métodos donde se describe la gelatina y el modelo de cabeza diseñado}
     \item \textbf{FR-09 Active Calibration Design:} The solution must provide specification of an electronic circuit for manual gain control and impedance compensation.
 \end{itemize}
