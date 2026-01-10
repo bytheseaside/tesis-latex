@@ -1,4 +1,7 @@
-After deriving the governing equation and defining the discretization strategy employed for the phantom--head simulations, it is necessary to quantify the numerical error introduced by the finite element approximation. Since no analytical solution exists for the full phantom geometry, this assessment must be carried out on a simplified configuration for which a closed--form reference solution is available (derived analytically under symmetry assumptions, see \textbf{Appendix}~\ref{appendix:laplace-r}).
+After deriving the governing equation and defining the discretization strategy employed for the phantom--head simulations,
+it is necessary to quantify the numerical error introduced by the finite element approximation. Since no analytical solution
+exists for the full phantom geometry, this assessment must be carried out on a simplified configuration for which a closed--form
+reference solution is available (derived analytically, see \textbf{Appendix}~\ref{appendix:laplace-r}).
 
 
 The objective of this validation is not to assess the physical fidelity of the phantom model itself, but to characterize the numerical behavior of the solver and the expected level of discretization error under controlled conditions. In particular, this procedure aims to isolate discretization effects from geometric complexity, allowing the observed error to be attributed primarily to the finite element formulation, mesh resolution, and parameter choices.
@@ -9,15 +12,15 @@ To this end, a radially symmetric benchmark problem based on concentric spherica
 
 The validation geometry consists of two concentric spherical volumes. The inner boundary is defined at radius
 \[
-r_0 = 1~\mathrm{mm},
+r_0 = 2~\mathrm{mm},
 \]
 an internal material interface at
 \[
-r_1 = 70~\mathrm{mm},
+r_1 = 80~\mathrm{mm},
 \]
 and an outer boundary at
 \[
-r_2 = 73.2~\mathrm{mm}.
+r_2 = 83.2~\mathrm{mm}.
 \]
 
 The inner sphere does not represent a physical electrode geometry. Instead, it provides a compact Dirichlet boundary used to prescribe a known potential while preserving strict radial symmetry. Introducing a finite electrode geometry at this location would break symmetry and complicate the interpretation of discretization error, and was therefore deliberately avoided.

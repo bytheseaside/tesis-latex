@@ -1,13 +1,15 @@
-The numerical simulation of the phantom's electrical behavior is based on the interaction between the internal conductive medium and the 3D-printed shell. To transition from physical materials to a mathematical model, we verify that the phantom satisfies the four modeling assumptions established in the \textbf{Background} (Section~\ref{subsubsec:modeling_assumptions}).
+The numerical simulation of the phantom’s electrical behavior is based on the interaction between the internal conductive medium and the 3D-printed shell.
+The formulation of a mathematical model therefore requires verification that the phantom lies within the domain of validity of the electroquasistatic modeling
+framework introduced in Background~(Section~\ref{subsubsec:modeling_assumptions}).
 
-\subsubsection{Physical Context and Dimensional Analysis}
+\paragraph*{Physical Context and Dimensional Analysis}
 
 The phantom has the dimensions of a realistic adult head, with a characteristic length scale of $L \approx  18-22~\text{cm}$. As detailed in Appendix~\ref{appendix:wavelength},  the electromagnetic wavelength $\lambda$ for the signals of interest (up to 100 Hz) in this case is on the order of several kilometers. 
 
 Because the condition $L \ll \lambda$ is satisfied by several orders of magnitude, the system operates deep within the \textbf{Electroquasistatic Regime (Condition 1)}.
 
 
-\subsubsection{Conductivity and Material Properties}
+\paragraph*{Conductivity and Material Properties}
 The phantom is modeled as a piecewise homogeneous domain $\Omega = \Omega_{\text{gel}} \cup \Omega_{\text{shell}}$
 
 \begin{itemize}
@@ -22,17 +24,23 @@ The phantom is modeled as a piecewise homogeneous domain $\Omega = \Omega_{\text
     operation within the desired conductive regime.
 
     Accordingly, a conductivity range of $\sigma_{\mathrm{gel}} \approx 0.3$--$0.4~\mathrm{S/m}$,
-    consistent with reported values for human intracranial tissues, is adopted
-    \cite{akor-2025}. Experimental studies further indicate that for frequencies below
+    consistent with reported values for human intracranial tissues, is adopted~\cite{akor-2025}.
+    Experimental studies further indicate that for frequencies below
     $100~\mathrm{Hz}$, $\sigma_{\mathrm{gel}}$ remains effectively frequency-independent, with
-    negligible capacitive phase shifts \cite{geddes-1967,Chandra2000}.
-    \item \textbf{The conductive shell  ($\Omega_{\text{shell}}$):}  The outer boundary consists of a 3D-printed conductive PLA shell. Manufacturer data \textbackslash{}cite\{cpla-datasheet\} and recent studies \textbackslash{}cite\{akor-2025, tilve-martinez-2024\} indicate that 3D-printed polymers exhibit orthotropic conductivity due to the layer-by-layer deposition process. While resistivities vary between the $X-Y$ plane ($19.2~\Omega\cdot\text{cm}$) and the $Z$-axis ($33.6~\Omega\cdot\text{cm}$), research suggests that anisotropy can be mitigated through optimized printing parameters such as extrusion temperature and path planning~\cite{paz-2020, nowka-2024}. \\
-    For this model, a representative scalar value of $\sigma_{shell} = 4.1~\text{S/m}$ is defined. This value serves as a balanced estimate for a reasonably optimized print, though $\sigma_{\text{shell}}$ remains a user-definable parameter to allow for sensitivity analysis or material-specific characterization.
+    negligible capacitive phase shifts~\cite{geddes-1967,Chandra2000}.
+    \item \textbf{The conductive shell  ($\Omega_{\text{shell}}$):}  The outer boundary consists of a 3D-printed conductive PLA shell. Manufacturer data
+    \cite{cpla-datasheet} and recent studies~\cite{akor-2025, tilve-martinez-2024} indicate that 3D-printed polymers exhibit orthotropic conductivity
+    due to the layer-by-layer deposition process. While resistivities vary between the $X-Y$ plane ($19.2~\Omega\cdot\text{cm}$) and the $Z$-axis 
+    ($33.6~\Omega\cdot\text{cm}$), research suggests that anisotropy can be mitigated through optimized printing parameters such as extrusion
+     temperature and path planning~\cite{paz-2020, nowka-2024}. \\                  
+    For this model, a representative scalar value of $\sigma_{shell} = 4.1~\text{S/m}$ is defined.
+    This value serves as a balanced estimate for a reasonably optimized print, though $\sigma_{\text{shell}}$ remains a user-definable
+     parameter to allow for sensitivity analysis or material-specific characterization.
 \end{itemize}
 
 Given these properties, \textbf{ Condition 2 (Purely Resistive Media) }is satisfied, as the high conductivity $\sigma$ of both regions ensures that conduction currents dominate over displacement currents ($\sigma \gg \omega\epsilon$). Furthermore, the verified frequency-independence and Ohmic behavior confirm that \textbf{Condition 3 (Linear and Instantaneous Response) }holds.
 
-\subsubsection{Boundary Conditions and Interface.}
+\paragraph*{Boundary Conditions and Interface}
 To solve for the potential $u$, we must define how the phantom interacts with its environment:
 
 \begin{itemize}
@@ -46,8 +54,6 @@ To solve for the potential $u$, we must define how the phantom interacts with it
 
 The absence of internal current sinks and the perfectly insulated exterior boundary ensure that the divergence of the current density is zero throughout the volume, satisfying \textbf{Condition 4 (Conservation of Current)}.
 
-
-\subsubsection{PDE Formulation and Simulation Cases}
 Because the four conditions mentioned in the Background are satisfied by the physical parameters and the environment of our phantom, the electric potential $u(\mathbf{x}, t)$ can be described by the variable-coefficient Laplace equation:
 
 \begin{equation}
@@ -55,10 +61,11 @@ Because the four conditions mentioned in the Background are satisfied by the phy
 \label{eq:pde_final}
 \end{equation}
 
+For numerical solution, the weak form of Eq.~\eqref{eq:pde_final} was employed.
 The external shell surface was modeled with a homogeneous Neumann boundary 
 condition ($\sigma \partial u/\partial n = 0$) as mentioned previously, 
 representing the insulating air boundary. This equation was solved numerically 
-using the finite element method (FEniCSx) for multiple electrode configurations. 
+using the finite element method (usign FEniCSx) for multiple electrode configurations. 
 Base simulations employed symmetrical Jack stimulation with $V_{i,T} = -V_{i,R}$ 
 and $V_{i,S} = 0$ for all nine electrodes ($i = 1,\ldots,9$), representing typical 
 differential voltage injection. Additional cases with randomized electrode voltages 
