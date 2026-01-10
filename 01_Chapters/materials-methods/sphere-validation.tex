@@ -49,7 +49,7 @@ matching the conductivities assigned to the inner and outer regions of the phant
 
 Additional conductivity ratios were explored to verify qualitative consistency of the numerical behavior, but are not discussed in detail here.
 
-\subsubsection{Test Cases and Boundary Excitation}
+\subsubsection{Test Cases}
 
 All benchmark simulations were driven exclusively by boundary excitation, with no internal source terms. Two families of test cases were defined based on the boundary condition applied at the outer spherical surface.
 
@@ -65,7 +65,6 @@ At the outer boundary $r = r_2$, either a Dirichlet or a homogeneous Neumann con
     \item \textbf{Dirichlet--Neumann (DN):} Dirichlet condition at $r_0$ and homogeneous Neumann condition at $r_2$.
 \end{itemize}
 
-\subsubsection{Numerical Analysis and Error Metrics}
 
 The extent of the numerical analysis performed differs between the two families of test cases, reflecting the analytical structure of their corresponding solutions.
 
@@ -73,5 +72,7 @@ For the Dirichlet--Neumann (DN) family, the resulting solution is spatially cons
 Consequently, the numerical assessment for these cases was restricted to verification of the absolute error magnitude and its numerical consistency across the domain, with particular attention to the vicinity of the inner Dirichlet boundary at $r = r_0$. This level of analysis is sufficient to confirm correct solver behavior in this regime, as the resulting solution does not admit additional numerical features that would support further error analysis.
 
 
-For the Dirichlet--Dirichlet (DD) family, nontrivial radial potential gradients develop across the domain, including across the material interface at $r = r_1$. These configurations therefore expose multiple numerical features suitable for validation throughout the full computational volume, with particular attention to regions near the material interface. The numerical assessment for this family included evaluation of absolute and relative error with respect to the analytical solution, accuracy of the radial potential gradient, consistency of the numerical Laplacian, and statistical characterization of the error distribution, including measures such as mean, standard deviation, and selected percentiles.
+For the Dirichlet--Dirichlet (DD) family, nontrivial radial potential gradients develop across the domain, including across the material interface at $r = r_1$.
+These configurations therefore expose multiple numerical features suitable for validation throughout the full computational volume, with particular attention to
+regions near the material interface.
 
