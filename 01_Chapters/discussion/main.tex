@@ -37,20 +37,81 @@ of conductivity values, the experiments were designed to qualitatively evaluate 
 electrical response of the material evolves with ionic concentration, and whether these
 properties can be reliably reproduced across fabrication batches.
 
-\subsubsection{Gelatine Layer}
-\paragraph*{Impedance Analysis and Material Sensitivity}
+\paragraph*{Electrical Behavior and Experimental Behavior of the Gelatine Layer}
 
-The data reveals a pronounced inverse relationship between NaCl concentration and the magnitude of electrical impedance ($|Z|$) across the tested frequency spectrum. As the NaCl concentration increases, the impedance decreases, indicating an increase in conductivity. This trend is consistent with the expected behavior of ionic solutions, where higher salt content facilitates charge transport. We also observe a decrease in the magnitude of the impedance as the frequency increases. 
+The impedance measurements obtained for gelatine samples with varying NaCl concentrations
+exhibit, in general terms, the expected behavior of an electrolytic medium.
+The addition of salt increases the density of free ions within the matrix, leading to a
+reduction in the overall electrical impedance across the analyzed frequency range.
+This trend is illustrated in Figure~\ref{fig:gelatine_results}, particularly
+when comparing formulations with and without added NaCl.
 
-However, the addition of NaCl and increase of conductivity introduces a complex trade-off regarding the phase response. While increasing the NaCl concentration to 5\% effectively lowers the resistive component, the data indicates that it simultaneously induces a more capacitive response compared to the 0\% (or low-concentration) baseline.
+It should be noted that the NaCl concentrations evaluated in these experiments are
+significantly higher than those strictly required for the objectives addressed in the
+remainder of this work.
+This choice was motivated by two main factors.
+First, the selected concentrations provide reference points comparable to values commonly
+reported in the literature.
+Second, limitations of the available measurement equipment imposed practical constraints:
+at lower salt concentrations, the measured impedance approached the sensitivity limits of
+the setup, resulting in large relative errors.
+Under such conditions, maintaining measurement consistency and achieving a meaningful
+characterization of the material was not feasible.
 
-Specifically, the phase angle ($\theta$) for the solution without NaCl remains closer to 0 degrees, indicating a predominantly resistive behavior. In contrast, the 5\% formulation, while lower than the 2.5\% solution, exhibits a larger phase shift. This increased capacitive reactance is attributable to interfacial polarization. The higher density of free ions facilitates the formation of a stronger electrical double-layer (EDL) at the electrode-gelatine interface, thereby increasing the effective capacitance of the system alongside its conductivity, especially at lower frequencies.
+Temperature effects also played a non-negligible role in the observed results.
+Due to uncontrolled environmental conditions, temperature variations occurred during the
+measurement process, which may introduce additional variability between measurements.
+Since the electrical conductivity of aqueous gels is known to be temperature-dependent,
+this factor represents an additional source of uncertainty when interpreting absolute
+impedance values.
 
-These findings align with the results obtained by Owda \emph{et al.}~\cite{Owda2020} in their study of gelatine-based phantoms, where they also reported similar trends in impedance and phase behavior with varying salt concentrations.
+Furthermore, given the relatively small size of the samples and the experimental geometry,
+boundary condition effects are expected to influence the measurements.
+In particular, the formation of an electrical double layer (EDL) at the electrode--gel
+interface can significantly affect impedance measurements under the present conditions.
+At the tested salt concentrations, ambient temperatures, and short electrode separations,
+EDL-related phenomena introduce an effective interfacial capacitance, which may contribute
+to both the magnitude of the measured impedance and the observed phase angle.
+This capacitive behavior is consistent with the non-zero phase shifts observed in
+Figure~\ref{fig:gelatine_results}, especially at lower frequencies, where
+interfacial effects are known to be more pronounced.
 
-The reproducibility analysis between two batches of the 2.5\% NaCl gelatine samples demonstrated a high degree of consistency in both impedance magnitude and phase response. While a minor systematic offset was observed where Batch 2 consistently presented slightly higher impedance values, the preservation of the signal shape and the low average percentage error ($<10\%$) confirm that the fabrication methodology is reproducible and yields phantoms with consistent electrical properties.
+A noteworthy aspect of the results is the non-trivial relation of impedance magnitudes at
+certain frequencies, where the 2.5\% NaCl sample exhibits higher impedance values than the
+sample without added salt.
+This behavior is not straightforward from a physical standpoint and suggests the presence
+of uncontrolled factors during sample preparation.
+Possible explanations include contamination of the deionized water or the gelatine itself,
+which may not behave as an electrically neutral medium.
+In this context, future iterations could consider the use of ballistic gel, whose
+composition is typically more controlled and reproducible.
+However, this alternative would increase the cost of the phantom and must
+therefore be weighed against the system requirements.
 
-The spatial distribution of the measured voltages confirms the effective propagation and localization of the dipole signal within the conductive medium, as getting closer to each source results in a higher measured potential at the corresponding electrode frequency.
+Importantly, all samples were prepared using the same batch of base materials.
+As a result, any systematic contamination---whether originating from the water or the
+gelatine---would be shared across all formulations.
+Under these conditions, samples with identical compositions exhibited consistent impedance
+behavior across repeated measurements.
+This internal consistency supports the validity of the comparative analysis and indicates
+that, despite potential absolute offsets, the relative differences between formulations are
+robust.
+
+Moreover, when considered in terms of order of magnitude and disregarding the specific
+non-idealities discussed above, the measured impedance values and their frequency dependence
+show qualitative agreement with those reported by Owda~\emph{et al.}~\cite{Owda2020}.
+This similarity suggests that the dominant conduction mechanisms are correctly captured,
+even if precise quantitative agreement is limited by experimental constraints.
+
+Beyond the selection of a specific gelatine formulation, the experiments clearly demonstrate
+that the electrical properties of gelatine depend systematically on salt concentration.
+Consequently, for a desired target impedance or conductivity, it is feasible to design an
+appropriate formulation, provided that operating conditions---particularly temperature---are
+also taken into account.
+Under these considerations, and despite the limitations discussed, gelatine remains a
+plausible and adaptable material for the construction of the proposed phantom, offering
+sufficient flexibility to tailor its electrical properties to the system requirements.
+
 
 \subsection{Numerical Phantom Validation and System-Level Implications}
 
@@ -143,9 +204,6 @@ From a numerical standpoint, the reconstruction results obtained with the reduce
 
 Taken together, the numerical stability analysis, operator reduction, and reconstruction behavior demonstrate that the phantom-head system is not only mathematically well defined, but also practically usable. The alignment between numerical properties, hardware configuration, and software workflow highlights the coherence of the overall design and supports the feasibility of extending the platform toward more advanced control and calibration tasks in future work.
 
-\nota{@Luly queres leerte esto ultimo please? fijate si queres agregar algo mas o cambiar algo de lo que está}
-\nota{mi idea en principio era la opción inversa (la de dada una señal de eeg pregrabada que el usuario quiere medir en t4, ponele, calcular las señales que tengo que mandar a los electrodos internos para lograr eso). pero por tiempo creo que lo dejamos como mejora a futuro, no?}
-\nota{ integrar la funcionalidad de estimar lo que deberia medirse es mas facil creo}
 
 
 
