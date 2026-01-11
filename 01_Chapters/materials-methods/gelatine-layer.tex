@@ -3,7 +3,7 @@ These experiments are intended as a qualitative material assessment, aimed at ev
 tunability, batch-to-batch consistency, and behavioral regimes under varying salinity, rather
 than as a precise metrological determination of tissue-equivalent conductivity values.
 
-\subsubsection{Impedance Analysis and Material Sensitivity}
+\subsubsection{Impedance Analysis and Material Sensitivity}\label{sec:gelatine_impedance_sensitivity}
 
 The primary objective of this study is to measure the complex impedance of different gelatine solutions across a defined frequency spectrum.
 
@@ -55,8 +55,17 @@ By plotting these variables as a function of frequency, we determine the spectra
 
 To establish the reliability of the manufacturing process, two separate batches of the identical recipe were measured under identical conditions. This allows us to quantify the deviation between samples and establish the reproducibility of the protocol.
 
-\subsubsection{Signal Localization}
+\paragraph*{Signal Sensitivity}
 
-Two sources of signal injection were placed at fixed coordinates within the phantom.
-Potential measurements were taken at various surface locations of the phantom. By analyzing the spatial distribution of the recorded potentials,
-we assess the system's ability to localize and differentiate between multiple simultaneous sources.
+Two sources of signal injection were placed at fixed coordinates within the phantom as illustrated in Figure~\ref{fig:gelatine_prototype_1}.
+
+The sources consisted of sinusoidal signals at $100 Hz$ for Input 1 and $900 Hz$ for Input 2, both of them with amplitudes of $500 mV$ peak-to-peak.
+
+Potential measurements were taken at various surface locations of the phantom. By analyzing the recorded potentials, we assess the system's ability to differentiate between multiple simultaneous sources.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/gelatine_prototype_2.png}
+    \caption{Gelatine prototype for signal sensitivity.}
+    \label{fig:gelatine_prototype_2}
+\end{figure}
