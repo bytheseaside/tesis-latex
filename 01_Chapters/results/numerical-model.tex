@@ -189,7 +189,7 @@ illustrates the absolute error field and its radial distribution, highlighting t
     \end{subfigure}
 
     \caption[Spatial localization of discretization error in the spherical benchmark]
-    {Spatial localization of discretization error for a representative Dirichlet--Dirichlet spherical benchmark case with $\sigma_1=\sigma_2=1$.}
+    {Spatial localization of discretization error for a representative Dirichlet--Dirichlet spherical benchmark case with $\sigma_1=0.33$ and $\sigma_2=4.1$.}
     \label{fig:sphere-error-localization}
 \end{figure}
 
@@ -451,12 +451,12 @@ A wide-range sweep of the noise mean $\mu$ was performed to characterize reconst
 \[
 \mu \in [10^{-5},\,\sigma_{\min}],
 \]
-where $\sigma_{\min}$ denotes the smallest singular value of the forward operator $A$.
+where $\sigma_{\min}$ denotes the smallest singular value of the forward operator $A_8$.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{../../02_Images/A8_mu_sweep_general.png}
-    \caption[Mean relative reconstruction error versus noise mean for dense and sparse excitation families]{Mean relative reconstruction error as a function of the noise mean $\mu$ (log-spaced sweep) for dense and sparse excitation families, with fixed noise variance $\sigma = 10^{-6}$. The dashed vertical line marks $\mu=\sigma_{\min}$, where $\sigma_{\min}$ denotes the smallest singular value of the forward operator $A$.}
+    \caption[Mean relative reconstruction error versus noise mean for dense and sparse excitation families]{Mean relative reconstruction error as a function of the noise mean $\mu$ (log-spaced sweep) for dense and sparse excitation families, with fixed noise variance $\sigma = 10^{-6}$. The dashed vertical line marks $\mu=\sigma_{\min}$, where $\sigma_{\min}$ denotes the smallest singular value of the forward operator $A_8$.}
     \label{fig:mu_sweep_wide}
 \end{figure}
 

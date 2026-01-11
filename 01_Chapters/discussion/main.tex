@@ -11,9 +11,7 @@ Funding constraints regarding the manufacturing of the conductive cranial shell 
 
 The validation process utilized both laboratory instrumentation and the developed software subsystem to generate controlled input signals.
 
-To validate the behavior of the complete integrated system in the absence of the final physical assembly with the anatomical phantom head, the project utilizes
-the \textbf{Phantom Head Numerical Model} as the integration reference for a two-layer phantom head constructed following the methods described in 
-Section~\ref{sec:materials_and_methods}. This theoretical validation demonstrates that, given the proven performance of the individual components, the complete system functions according to the design specifications when the modules are combined.
+To validate the behavior of the complete integrated system in the absence of the final physical assembly with the anatomical phantom head, the project utilizes the \textbf{Phantom Head Numerical Model} as the integration reference for a two-layer phantom head constructed following the methods described in Section~\ref{sec:materials_and_methods}. This numerical model serves as a theoretical counterpart to the physical system, providing a first-order approximation of its expected behavior rather than an exact digital twin. Within this context, the theoretical validation demonstrates that, given the proven performance of the individual components, the combined system exhibits behavior consistent with the intended design and supports a preliminary assessment of the feasibility of the proposed architecture when the modules are integrated.
 
 \subsection{Materials: Electrical Behavior and Suitability for Phantom Construction}
 
@@ -58,63 +56,62 @@ The spatial distribution of the measured voltages confirms the effective propaga
 
 \subsection{Numerical Phantom Validation and System-Level Implications}
 
-The numerical modeling strategy adopted in this work was validated in a staged manner,
-progressing from analytically tractable benchmark problems to the full phantom head
-geometry. Initial validation was performed using simplified spherical domains for which
-closed-form or well-established reference solutions exist. These benchmarks primarily
-quantify discretization error and numerical consistency, allowing the finite element
-implementation to be verified independently of geometric complexity. Across all tested
-configurations, reconstruction errors were consistently low and the numerical behavior
-remained stable, providing confidence in the correctness of the governing equations,
-boundary condition implementation, and solution strategy.
+The Phantom Head Numerical Model was constructed to capture the dominant electrical behavior of a two-layer conductive phantom head while remaining consistent with the methodological scope and practical constraints of the project. The modeling choices reflect a deliberate balance between physical realism and controlled complexity, with the objective of supporting system-level validation rather than producing a fully resolved digital replica of the physical phantom.
 
-While these spherical benchmarks establish numerical accuracy, they do not capture the
-geometric complexity of a realistic head-shaped phantom. Unlike the sphere, the phantom
-head geometry exhibits nonuniform curvature, localized geometric features, and a lack of
-global symmetry, all of which can influence field distributions and numerical sensitivity.
-Additional modeling discrepancies may also arise from idealizations in the material
-representation, including the assumption of homogeneous layers and the omission of
-manufacturing-induced microstructures.
+Several aspects of the physical phantom were intentionally simplified or excluded from the numerical representation. In particular, the conductive cranial shell was modeled as a homogeneous and isotropic layer, despite the fact that an additively manufactured shell would exhibit anisotropy and microstructural variability arising from printing parameters such as infill pattern, infill density, layer orientation, extrusion temperature, and inter-layer bonding. These features introduce internal geometric and material heterogeneity that is not explicitly resolved in the numerical domain. Their omission is intentional, as their influence on the electrical behavior of the system is expected to be addressed experimentally through calibration rather than through further numerical refinement.
 
-In particular, more detailed physical modeling could be achieved by further mesh
-refinement or by explicitly representing features introduced by the additive manufacturing
-process, such as layer interfaces, anisotropic conduction paths, or internal air gaps in
-the printed conductive shell. Such refinements were not pursued in this work, as they fall
-outside the intended scope and would significantly increase computational and modeling
-complexity. The objective here is not to reproduce all physical non-idealities, but to
-establish a sufficiently accurate and tractable reference model for system-level analysis.
+Similarly, the conductive volume representing the internal medium was assumed to be homogeneous. In practice, its electrical properties may vary locally due to temperature gradients, aging effects, or small-scale imperfections introduced during preparation and solidification. For example, exposure to ambient heat or localized heating during operation could affect gelatine conductivity, while residual air inclusions or minor concentration gradients may arise during casting. Such effects are difficult to characterize a priori and are not meaningfully captured within a simplified finite element representation.
 
-Building on the validated formulation, the same numerical framework was applied to the full
-phantom head geometry. In the absence of a fully fabricated physical phantom, the simulated
-head was probed in a manner analogous to the experiments envisioned for the physical system.
-The resulting potential distributions and reconstruction outcomes were well behaved, with
-consistently low reconstruction errors and favorable stability properties.
+Electrode interfaces were also idealized in the numerical model. Electrodes were represented with perfectly defined geometries and ideal electrical contact with the surrounding medium. In a physical realization, electrode–surface contact impedance, surface roughness, connector tolerances, and minor geometric imperfections introduce additional variability. These effects are inherently electrode-specific and time-dependent, and are therefore more appropriately handled through experimental calibration than through explicit numerical modeling.
 
-Within the scope of this work, the numerical phantom therefore serves as a reference system
-for subsequent analyses, rather than as a validated substitute for an existing physical
-implementation. The phantom--head transfer operator derived from the numerical model is
-adopted as the internal ground truth against which reconstruction performance and system
-behavior are assessed.
+Finally, extreme mesh refinement was deliberately avoided. While increased resolution would reduce discretization error, it would not eliminate the aforementioned sources of physical variability and would significantly increase computational cost. Given that the numerical model is intended to provide a first-order approximation and feasibility assessment rather than exact prediction, the chosen level of refinement is sufficient to capture the relevant system behavior without introducing unnecessary detail.
 
-If the electrical properties of a future fabricated phantom closely match those assumed in
-the model, the resulting operator is expected to provide a close approximation of the
-physical system. If deviations arise, the methodology employed to construct the operator—
-encompassing geometry definition, material assignment, numerical simulation, and response
-extraction—can be applied directly to the physical phantom to regenerate an updated mapping.
-In this sense, the robustness of the proposed approach lies not in fixed numerical values,
-but in the generality and repeatability of the modeling and reconstruction pipeline.
+Within these assumptions, the numerical model provides a coherent and controlled representation of the phantom head that is suitable for evaluating forward responses, constructing transfer operators, and assessing reconstruction performance.
 
-The original system design targeted a physically realizable phantom head based on materials
-and fabrication techniques that are compatible with typical academic and laboratory
-resources. While the numerical and experimental results presented in this work demonstrate
-the feasibility of this approach, the fabrication of the complete physical phantom head was
-not carried out within the scope of the project due to practical and funding constraints.
-Importantly, these constraints do not undermine the validity of the proposed architecture,
-which was developed with physical realization and reproducibility as guiding objectives.
+\subsubsection{Mesh Quality Comparison}
+To assess whether the numerical discretization is consistent across geometries of different complexity, mesh quality metrics were evaluated for both the analytical spherical benchmark and the phantom-head model. The purpose of this comparison is not to claim identical mesh quality, but to verify that the meshing strategy behaves robustly when transitioning from an idealized geometry to a realistic head-shaped domain.
 
-Based on the present results, the physical phantom can be fabricated following the specified
-material properties and geometric design without requiring further modifications to the
-modeling or control framework, once the necessary fabrication resources are available.
+Global quality indicators, including SICN, SIGE, and gamma, exhibit comparable average values in both meshes. In all cases, the mean values remain within a range typically associated with stable finite element performance, indicating that the overall element quality is preserved despite the increased geometric complexity of the phantom-head model. This result confirms that the selected meshing parameters provide a consistent discretization baseline across both configurations.
+
+The primary differences between the two meshes are observed in the distribution extremes rather than in their central tendencies. In particular, the phantom-head mesh exhibits lower minimum gamma values than the spherical benchmark. These worst-case elements are spatially localized and can be traced to specific geometric features introduced during CAD construction, such as sharp transitions or small offsets required to merge external anatomical features into the base geometry. Resolving these narrow regions necessitates the presence of very small elements, which locally degrade element shape metrics.
+
+Importantly, these low-quality elements appear as isolated outliers and do not reflect a systematic degradation of mesh quality. Their limited spatial extent means they do not dominate the numerical behavior of the system or significantly influence global solution stability. In contrast, the bulk of the mesh retains quality metrics comparable to those of the spherical benchmark.
+
+As a consequence of this similarity in global mesh quality, it is reasonable to assume that the numerical error introduced purely by discretization is of the same order of magnitude across both geometries, independent of the availability of an analytical solution. This observation provides a consistent basis for interpreting subsequent numerical results, while the quantitative assessment of discretization error is addressed separately in the following sections.
+
+
+\subsubsection{Benchmarking Geometry: Discretization Error Analysis}
+
+The analytical spherical benchmark provides a controlled setting to analyze the discretization error introduced by the numerical formulation independently of geometric complexity. Since an analytical solution is available for this configuration, the benchmark allows a direct comparison between the numerical solution and the exact reference, making it possible to characterize both the magnitude and spatial structure of the numerical error.
+
+
+Table~\ref{tab:sphere-error-distributions} summarizes distribution statistics of the absolute discretization error computed over all sampled points for each conductivity configuration and spatial region. A first observation is that the mean error values appear relatively large when computed over the full domain, with values on the order of $10^{-1}$~V However, this interpretation is misleading if considered in isolation.
+
+In all cases, the median error is several orders of magnitude smaller than the mean, with values on the order of $10^{-5}$--$10^{-8}$~V. This large discrepancy between mean and median indicates a strongly skewed error distribution, dominated by a small number of localized high-error regions. The 95th percentile values further support this interpretation, showing that the bulk of the domain exhibits significantly lower error than suggested by the mean alone.
+
+When restricting the analysis to the outer region of the domain---which includes the external measurement surface together with a thin adjacent volume encompassing the material interface---the median error decreases even further, reaching values well below $10^{-6}$~V. This behavior is expected, as the material interface introduces localized discretization error due to conductivity transitions, while the error at the surface itself remains very low. Considering the combined region therefore provides a conservative but representative estimate of the numerical accuracy in the vicinity of practical measurements.
+
+\paragraph*{Spatial Localization of the Error}\\
+
+The spatial structure of the discretization error is illustrated in Figure~\ref{fig:sphere-error-field}, which shows the absolute error field in the central region of the sphere. High-error regions appear as isolated patches localized near internal interfaces and regions of strong field gradients. These locations are consistent with areas where the numerical solution is most sensitive to discretization.
+
+Away from these localized regions, the error rapidly decreases, resulting in a largely low-error background across the majority of the domain. This spatial localization explains the discrepancy between mean and median statistics and confirms that the discretization error is not uniformly distributed throughout the domain.
+
+Further insight is provided by the radial distributions shown in Figures~\ref{fig:sphere-error-radius} and~\ref{fig:sphere-error-radius-zoom}. Figure~\ref{fig:sphere-error-radius} shows the absolute discretization error as a function of radius across the entire domain. The error reaches its maximum near the inner radius, where it remains on the order of $10^{-4}$~V, and then decreases as the radius increases. 
+
+As the radius approaches the external boundary, the error drops by several orders of magnitude. This behavior is shown more clearly in Figure~\ref{fig:sphere-error-radius-zoom}, which focuses on the outer region ($r \geq 79\,\mathrm{mm}$), including the external surface and a narrow shell of the adjacent material. In this region, the absolute error remains on the order of $10^{-6}$~V or lower and continues to decrease toward the boundary. This confirms that, despite the presence of material interfaces, the numerical solution is particularly accurate in the region relevant for surface-level measurements.
+
+Taken together, these results show that the discretization error in the analytical benchmark is confined both spatially and statistically. Large error values are restricted to localized regions associated with strong gradients and material transitions, while the majority of the domain---and in particular the outer shell surrounding the measurement surface---exhibits substantially lower error.
+
+Although a nonzero discretization error is unavoidable even in this analytically ideal configuration, its magnitude and localization provide a practical reference for estimating the numerical uncertainty associated with surface-level measurements. The benchmark therefore establishes a consistent error scale inherent to the adopted methodology, which can be used to interpret numerical results obtained in more complex geometries.
+
+Taken together, these results show that the discretization error in the analytical benchmark is confined both spatially and statistically. Large error values are restricted to localized regions associated with strong gradients and material transitions, while the majority of the domain---and in particular the outer shell surrounding the measurement surface---exhibits substantially lower error.
+
+Although a nonzero discretization error is unavoidable even in this analytically ideal configuration, its magnitude and localization provide a practical reference for estimating the numerical uncertainty associated with surface-level measurements. The benchmark therefore establishes a consistent error scale inherent to the adopted methodology, which can be used to interpret numerical results obtained in more complex geometries.
+
+On this basis, surface-level measurements and digitally sampled potentials obtained from the phantom-head model can be considered reliable up to this estimated numerical uncertainty, providing a sound basis for the subsequent analysis.
+
+
 
 \textbf{TBD: Discussion of the desktop platform}
 
