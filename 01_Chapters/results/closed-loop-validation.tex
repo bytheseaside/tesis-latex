@@ -2,16 +2,36 @@ The desktop application (see Figures~\ref{fig:desktop-app-running-signal-generat
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../../02_Images/desktop-app-running-signal-generation.png}
+    \includegraphics[width=0.8\textwidth]{../../02_Images/desktop-app-running-signal-generation.png}
     \caption[Desktop application running signal generation]{Desktop application running signal generation screen.}
     \label{fig:desktop-app-running-signal-generation}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../../02_Images/desktop-app-standby-eeg-measured.png}
+    \includegraphics[width=0.8\textwidth]{../../02_Images/desktop-app-standby-eeg-measured.png}
     \caption[Desktop application standby EEG measured screen]{Desktop application standby EEG measured screen.}
     \label{fig:desktop-app-standby-eeg-measured}
 \end{figure}
 
-\nota{Falta screenshot de la app corriendo la medición EEG en tiempo real}
+The application communicates with the phantom head via a USB interface, sending commands to control the signal generation and receiving real-time EEG data for visualization and analysis. The software architecture is modular, allowing for easy updates and integration of additional features in the future.
+
+Using the developed closed-loop system, tests were conducted to validate the performance of the phantom head prototype and the desktop application. The system successfully generated predefined electrical patterns, which were accurately measured by the EEG acquisition system, demonstrating the effectiveness of the closed-loop approach (see Figures~\ref{fig:closed_loop} and~\ref{fig:closed_loop_2}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../02_Images/closed_loop.png}
+    \caption[Phantom prototype validation: Generation via software]{Generation of a predefined electrical pattern using the software.}
+    \label{fig:closed_loop}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../02_Images/closed_loop_2.png}
+    \caption[Phantom prototype validation: Measurement via software]{Measurement of a predefined electrical pattern using the software.}
+    \label{fig:closed_loop_2}
+\end{figure}
+
+The results indicate that the closed-loop system is capable of accurately generating and measuring electrical signals, validating the design and functionality of both the phantom head and the desktop application.
+
+Metrics such as latency and jitter were evaluated, obtaining 71.8~[ms] and 18.5~[ms] respectively, showing that the system meets the specified performance criteria outlined in the objectives, leaving room for further optimization in future iterations.
