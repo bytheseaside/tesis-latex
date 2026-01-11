@@ -196,22 +196,58 @@ To improve numerical robustness, reduced representations of the system were ther
 
 This numerical observation directly informed design decisions beyond the purely mathematical model. In particular, the choice to represent the system using an eight-electrode configuration aligns naturally with the physical constraints and implementation of the phantom hardware, as illustrated in Figure~\ref{fig:hardware_system}. Rather than treating the reduced operator as a numerical workaround, it becomes an integral part of the system architecture, linking simulation results to practical implementation.
 
-The stability of the forward operator also plays a central role in how the system is currently used through the software interface. In its present form, the application operates primarily in a forward-prediction mode. Given a user-defined set of input signals applied to the internal electrodes, the numerical model allows the expected surface potentials to be computed at specified measurement locations. These locations correspond to predefined probe positions on the phantom surface, selected by the user through the interface. This forward use case supports calibration and validation, enabling the user to compare measured signals against model-based expectations for a given stimulation pattern.
+The characterization of the forward operator developed in this work provides a practical
+interface between the phantom-head system and its numerical description.
+Beyond its role in model validation, this characterization enables the systematic design
+and interpretation of experimental configurations.
 
-More importantly, this framework establishes the foundation for future inverse operation. In the inverse scenario, the system would instead start from desired or measured surface potentials and compute the corresponding electrode excitations required to reproduce them. In this context, numerical stability becomes critical: an ill-conditioned inverse operator would amplify noise and modeling errors, leading to unreliable or unstable control signals. The improved conditioning of the reduced eight-electrode operator therefore represents a key enabler for this future extension, ensuring that inversion remains feasible within realistic noise and uncertainty levels.
+In a forward sense, the identified mapping between internal electrode excitations and
+surface potentials allows expected measurements to be estimated at predefined locations on
+the phantom surface corresponding to points of the international 10--20 electrode system.
 
-From a numerical standpoint, the reconstruction results obtained with the reduced operator further support this interpretation. Reconstruction errors remain bounded and consistent across tested scenarios, and no unstable regimes were observed. These results indicate that the reduced system operates within a numerically well-behaved regime, reinforcing the suitability of the chosen configuration for both simulation-based analysis and eventual closed-loop operation.
+For a given set of internal input signals, the forward model defines the surface potentials
+that should be observed at specific locations, providing a reference for calibration and
+for consistency checks between predicted and measured data.
 
-Taken together, the numerical stability analysis, operator reduction, and reconstruction behavior demonstrate that the phantom-head system is not only mathematically well defined, but also practically usable. The alignment between numerical properties, hardware configuration, and software workflow highlights the coherence of the overall design and supports the feasibility of extending the platform toward more advanced control and calibration tasks in future work.
+The same system characterization also enables an inverse, control-oriented use case.
+Starting from a desired signal value or waveform at one or more surface locations, the
+inverse operator can be used to determine the internal electrode excitations required to
+produce such a response.
+This allows experimental test cases to be specified directly in terms of surface-level
+behavior, with the corresponding actuator inputs obtained through the identified transfer
+model.
+
+In this sense, the numerical characterization of the phantom head is not limited to
+descriptive analysis.
+It defines a transferable relationship between internal actuation and surface observation
+that can be used for calibration, validation, and controlled experimentation.
+The reconstruction results obtained with the reduced eight-electrode operator indicate
+that this mapping remains well behaved across the tested scenarios, supporting its use as a
+reliable intermediary between desired surface signals and internal excitation patterns.
+
+This characterization could be directly integrated into the software platform by loading
+the forward operator \(A\) and, when required, its pseudoinverse \(A^{\dagger}\).
+Within such an interface, the columns of the operator would be explicitly associated with
+the eight internal actuation channels of the phantom, corresponding to the physical signal
+generation layout: rear left/right, center left/right, subwoofer left/right, front left/right,
+and side left/right channels.
+The rows of the operator would, in turn, be mapped to surface measurement locations,
+identified by their corresponding 10--20 electrode labels (e.g., Fp1, Oz, T6).
 
 
+In a forward-prediction mode, a measurement view could be linked to a selected surface
+location (for example, Oz), allowing the application to display the signal that should be
+measured there for a given set of actuator inputs.
 
+Conversely, an inverse mode could allow the user to specify a desired signal at a selected
+surface location---for instance, imposing a sinusoidal waveform at Oz---and automatically
+compute the corresponding actuator values required to reproduce that response.
+In this configuration, the application would act as an interface to the identified system
+model, translating between surface-level signal specifications and internal excitation
+parameters in a mathematically consistent manner.
 
-
-
-\textbf{TBD: Discussion of the desktop platform}
-
-\textbf{TBD: System-level discussion of component integration and interactions}
+The integration of this model-driven interaction into the software platform is therefore
+naturally identified as a direction for future development.
 
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
