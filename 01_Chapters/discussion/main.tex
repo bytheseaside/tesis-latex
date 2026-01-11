@@ -40,22 +40,24 @@ properties can be reliably reproduced across fabrication batches.
 \paragraph*{Electrical Behavior and Experimental Behavior of the Gelatine Layer}
 
 The impedance measurements obtained for gelatine samples with varying NaCl concentrations
-exhibit, in general terms, the expected behavior of an electrolytic medium.
+exhibit the expected behavior of an electrolytic medium.
 The addition of salt increases the density of free ions within the matrix, leading to a
 reduction in the overall electrical impedance across the analyzed frequency range.
-This trend is illustrated in Figure~\ref{fig:gelatine_results}, particularly
-when comparing formulations with and without added NaCl.
+This behavior is illustrated in Figure~\ref{fig:gelatine_results}, particularly when
+comparing formulations with and without added NaCl.
 
-It should be noted that the NaCl concentrations evaluated in these experiments are
-higher than those strictly required for the objectives addressed in this work.
-This choice was motivated by two main factors.
+The NaCl concentrations evaluated in these experiments are higher than those required for
+the specific objectives addressed in this work.
+This choice reflects two practical considerations.
 First, the selected concentrations provide reference points comparable to values commonly
 reported in the literature.
-Second, limitations of the available measurement equipment imposed practical constraints:
-at lower salt concentrations, the measured impedance approached the sensitivity limits of
-the setup, resulting in large relative errors.
-Under such conditions, maintaining measurement consistency and achieving a meaningful
-characterization of the material was not feasible.
+Second, the experimental setup imposed constraints on the preparation and control of
+low-concentration solutions.
+At lower concentrations, uncertainties associated with solution formulation and handling
+became more prominent, resulting in larger relative variability in the measured impedance
+values.
+Within this range, the higher concentrations enabled more consistent measurements and a
+clearer assessment of material trends.
 
 Temperature effects also played a non-negligible role in the observed results.
 Due to uncontrolled environmental conditions, temperature variations occurred during the
@@ -64,52 +66,55 @@ Since the electrical conductivity of aqueous gels is known to be temperature-dep
 this factor represents an additional source of uncertainty when interpreting absolute
 impedance values.
 
-Furthermore, given the relatively small size of the samples and the experimental geometry,
-boundary condition effects are expected to influence the measurements.
+In addition, the small sample size and experimental geometry introduce boundary-related
+effects.
 In particular, the formation of an electrical double layer (EDL) at the electrode--gel
-interface can significantly affect impedance measurements under the present conditions.
+interface affects impedance measurements under the present conditions.
 At the tested salt concentrations, ambient temperatures, and short electrode separations,
-EDL-related phenomena introduce an effective interfacial capacitance, which may contribute
-to both the magnitude of the measured impedance and the observed phase angle.
-This capacitive behavior is consistent with the non-zero phase shifts observed in
-Figure~\ref{fig:gelatine_results}, especially at lower frequencies, where
-interfacial effects are known to be more pronounced.
+EDL-related phenomena introduce an effective interfacial capacitance, contributing to both
+the measured impedance magnitude and the observed phase angle.
+This behavior is consistent with the non-zero phase shifts observed in
+Figure~\ref{fig:gelatine_results}, especially at low frequencies.
 
-A noteworthy aspect of the results is the non-trivial relation of impedance magnitudes at
-certain frequencies, where the 2.5\% NaCl sample exhibits higher impedance values than the
+An additional feature of the results is the non-monotonic relation of impedance magnitudes
+at certain frequencies, where the 2.5\% NaCl sample exhibits higher impedance values than the
 sample without added salt.
-This behavior is not straightforward from a physical standpoint and suggests the presence
-of uncontrolled factors during sample preparation.
-Possible explanations include contamination of the deionized water or the gelatine itself,
-which may not behave as an electrically neutral medium.
-In this context, future iterations could consider the use of ballistic gel, whose
+This behavior suggests the presence of secondary effects related to material composition.
+Possible contributors include residual ionic content in the gelatine or the deionized water
+used during sample preparation.
+Future iterations could consider alternative materials, such as ballistic gel, whose
 composition is typically more controlled and reproducible.
-However, this alternative would increase the cost of the phantom and must
-therefore be weighed against the system requirements.
+This option, however, would increase the overall cost of the phantom and must be evaluated
+in relation to system requirements.
 
-Importantly, all samples were prepared using the same batch of base materials.
-As a result, any systematic contamination---whether originating from the water or the
-gelatine---would be shared across all formulations.
+All samples were prepared using the same batch of base materials.
+As a result, any systematic offsets in material composition are shared across all
+formulations.
 Under these conditions, samples with identical compositions exhibited consistent impedance
 behavior across repeated measurements.
-This internal consistency supports the validity of the comparative analysis and indicates
-that, despite potential absolute offsets, the relative differences between formulations are
-robust.
+The relative deviation between independent realizations of the same formulation remained
+below 10\%, indicating a high degree of reproducibility.
+This level of consistency is particularly relevant for phantom applications, where stable
+and repeatable material properties are essential for experimental comparability.
 
-Moreover, when considered in terms of order of magnitude and disregarding the specific
-non-idealities discussed above, the measured impedance values and their frequency dependence
-show qualitative agreement with those reported by Owda~\emph{et al.}~\cite{Owda2020}.
-This similarity suggests that the dominant conduction mechanisms are correctly captured,
-even if precise quantitative agreement is limited by experimental constraints.
+Moreover, when considered in terms of order of magnitude, relative trends between
+formulations, and frequency dependence, the measured impedance values show qualitative
+agreement with those reported by Owda~\emph{et al.}~\cite{Owda2020}.
+This agreement indicates that the dominant conduction mechanisms governing the electrical
+behavior of gelatine are consistently captured.
 
-Beyond the selection of a specific gelatine formulation, the experiments clearly demonstrate
-that the electrical properties of gelatine depend systematically on salt concentration.
-Consequently, for a desired target impedance or conductivity, it is feasible to design an
-appropriate formulation, provided that operating conditions---particularly temperature---are
-also taken into account.
-Under these considerations, and despite the limitations discussed, gelatine remains a
-plausible and adaptable material for the construction of the proposed phantom, offering
-sufficient flexibility to tailor its electrical properties to the system requirements.
+Beyond the selection of a specific gelatine formulation, the experiments demonstrate that
+the electrical properties of gelatine depend systematically on salt concentration and can
+be reproduced consistently across independent realizations.
+For a desired target impedance or conductivity, an appropriate formulation can therefore
+be designed and reliably re-prepared, provided that operating conditions---particularly
+temperature---are taken into account.
+From a phantom design perspective, this combination of tunability and reproducibility is a
+key requirement, as it enables both controlled adjustment of material properties and
+repeatable experimental conditions.
+Within this framework, gelatine remains a plausible and adaptable material for the
+construction of the proposed phantom, offering sufficient flexibility and stability for
+systematic experimental use.
 
 
 \subsection{Numerical Phantom Validation and System-Level Implications}
@@ -158,10 +163,6 @@ Away from these localized regions, the error rapidly decreases, resulting in a l
 Further insight is provided by the radial distributions shown in Figures~\ref{fig:sphere-error-radius} and~\ref{fig:sphere-error-radius-zoom}. Figure~\ref{fig:sphere-error-radius} shows the absolute discretization error as a function of radius across the entire domain. The error reaches its maximum near the inner radius, where it remains on the order of $10^{-4}$~V, and then decreases as the radius increases. 
 
 As the radius approaches the external boundary, the error drops by several orders of magnitude. This behavior is shown more clearly in Figure~\ref{fig:sphere-error-radius-zoom}, which focuses on the outer region ($r \geq 79\,\mathrm{mm}$), including the external surface and a narrow shell of the adjacent material. In this region, the absolute error remains on the order of $10^{-6}$~V or lower and continues to decrease toward the boundary. This confirms that, despite the presence of material interfaces, the numerical solution is particularly accurate in the region relevant for surface-level measurements.
-
-Taken together, these results show that the discretization error in the analytical benchmark is confined both spatially and statistically. Large error values are restricted to localized regions associated with strong gradients and material transitions, while the majority of the domain---and in particular the outer shell surrounding the measurement surface---exhibits substantially lower error.
-
-Although a nonzero discretization error is unavoidable even in this analytically ideal configuration, its magnitude and localization provide a practical reference for estimating the numerical uncertainty associated with surface-level measurements. The benchmark therefore establishes a consistent error scale inherent to the adopted methodology, which can be used to interpret numerical results obtained in more complex geometries.
 
 Taken together, these results show that the discretization error in the analytical benchmark is confined both spatially and statistically. Large error values are restricted to localized regions associated with strong gradients and material transitions, while the majority of the domain---and in particular the outer shell surrounding the measurement surface---exhibits substantially lower error.
 
