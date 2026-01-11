@@ -9,11 +9,7 @@ The primary objective of this study is to measure the complex impedance of diffe
 
 \paragraph*{Prototype Fabrication}
 
-The prototypes were constructed using a hydrogel composed of unflavored gelatine and deionized water. To analyze the correlation between salinity and impedance, distinct batches were prepared with varying concentrations of sodium chloride (NaCl).
-
-The gelatine and salt were added to the deionized water at room temperature, keeping the gelatine at 30\% concentration and testing the NaCl at 0\%, 2.5\%, and 5\% concentrations. The solutions were heated to $60\,^\circ$C, thoroughly mixing to ensure homogeneity until the gelatine was fully dissolved, avoiding the formation of lumps and bubbles.
-
-The mixtures were cast into standardized molds (derived from isometric soap molds) to ensure constant geometric dimensions across all samples. The samples were stored in a refrigeration unit at $2^\circ$C for a minimum duration of 12 hours. Once solidified, the prototypes were removed from the refrigerator and prepared for electrical testing at room temperature.
+The prototypes were constructed using a hydrogel composed of unflavored gelatine and deionized water. To analyze the correlation between salinity and impedance, distinct batches were prepared with varying concentrations of sodium chloride (NaCl). Figure~\ref{fig:gelatine_ingredients} illustrates the ingredients used in the fabrication process.
 
 \begin{figure}[H]
     \centering
@@ -22,9 +18,20 @@ The mixtures were cast into standardized molds (derived from isometric soap mold
     \label{fig:gelatine_ingredients}
 \end{figure}
 
+The gelatine and salt were added to the deionized water at room temperature, keeping the gelatine at 30\% concentration and testing the NaCl at 0\%, 2.5\%, and 5\% concentrations. The solutions were heated to $60\,^\circ$C, thoroughly mixing to ensure homogeneity until the gelatine was fully dissolved, avoiding the formation of lumps and bubbles.
+
+The mixtures were cast into standardized molds (derived from isometric soap molds) to ensure constant geometric dimensions across all samples (Figure~\ref{fig:gelatine_prototype_1}). The samples were stored in a refrigeration unit at $2^\circ$C for a minimum duration of 12 hours. Once solidified, the prototypes were removed from the refrigerator and prepared for electrical testing at room temperature.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/gelatine_prototype_1.png}
+    \caption{Gelatine prototype for impedance analysis.}
+    \label{fig:gelatine_prototype_1}
+\end{figure}
+
 \paragraph*{Equipment and Setup}
 
-The experimental setup utilizes the following instrumentation to generate signals and capture the electrical response of the phantom:
+The experimental setup utilizes the following instrumentation (Figure~\ref{fig:voltage_divider_config}) to generate signals and capture the electrical response of the phantom:
 
 \begin{itemize}
     \item Signal generator: To provide sinusoidal input signals of varying frequencies and amplitudes.
@@ -33,12 +40,35 @@ The experimental setup utilizes the following instrumentation to generate signal
     \item Reference resistor ($R_{ref}$): A known resistor placed in series with the gelatine prototype to facilitate measurement.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../../02_Images/lab_setup.jpg}
     \caption[Laboratory setup]{Laboratory setup for impedance analysis. }
     \label{fig:lab_setup}
 \end{figure}
+
+The electrical impedance of the gelatin phantom, denoted as $Z$, was determined using a voltage divider configuration. The experimental circuit consists of the unknown impedance $Z$ placed in series with a known reference resistor $R$. An AC excitation voltage $V_1$ is applied to the series combination, and the resulting voltage drop across the reference resistor, $V_2$, is measured. The voltage divider configuration is shown in Figure~\ref{fig:voltage_divider_config}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/voltage_divider_config.png}
+    \caption[Voltage divider configuration]{Voltage divider configuration for impedance analysis. }
+    \label{fig:voltage_divider_config}
+\end{figure}
+
+According to the voltage divider rule, the relationship between the output voltage and the input voltage is given by:
+
+\begin{equation}\label{eq:voltage_divider}
+    V_2 = V_1 \cdot \frac{R}{R + Z}
+\end{equation}
+
+By rearranging Eq.~\eqref{eq:voltage_divider}, we can isolate the unknown impedance $Z$ as a function of the measured voltages and the known resistance:
+
+\begin{equation}
+    Z = R \cdot \left( \frac{V_1 - V_2}{V_2} \right)
+\end{equation}
+
+This equation allows for the calculation of the gelatin's complex impedance magnitude and phase by analyzing the amplitude and phase shift of the recorded signals $V_1$ and $V_2$.
 
 \paragraph*{Frequency Response}
 
