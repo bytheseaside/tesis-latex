@@ -117,6 +117,59 @@ construction of the proposed phantom, offering sufficient flexibility and stabil
 systematic experimental use.
 
 
+\paragraph*{Material Cost Estimate}
+Having established the feasibility of the selected materials for the proposed phantom
+design, an approximate cost estimate can be derived for a single realization.
+
+Costs are reported using typical purchase units and current market prices, and the resulting
+estimate is summarized in Table~\ref{tab:phantom_cost}.
+\begin{table}[h]
+\centering
+\caption{Estimated material costs for a single phantom realization.}
+\label{tab:phantom_cost}
+\begin{tabularx}{\textwidth}{X X X}
+\hline
+\textbf{Material} & \textbf{Estimated Cost} & \textbf{Comment} \\
+\hline
+Salt (1 box) & \$2 & Conductivity tuning; readily available \\
+Deionized water (5~L)
+& \(\sim\)\$11 & Solvent for gel preparation and conductivity control \\
+
+\href{https://www.mercadolibre.com.ar/gelatina-sin-sabor-x-1-kg-cocina-reposteria/up/MLAU144145680}
+{Gelatine (1 kg, flavorless)}
+& \$20 & Food-grade, unflavored \\
+
+\href{https://www.idealo.fr/prix/203614180/proto-pasta-pla-filament-1-75mm-500g-magnetic-iron.html}
+{Conductive PLA filament (1 spool)}
+& \(\sim\)\$50 & Upper shell half material \\
+
+\href{https://www.arianeplast.com/fr/pla-format-1-kg/104-plablanc4043d-pla-blanc-4043d-3d-filament-arianeplast-fabrique-en-france-1kg.html}
+{Non-conductive PLA filament (up to 2 spools)}
+& \(\sim\)\$36 & Structural components \\
+
+Silicone / gasket material & \$5 & Waterproofing of head sealing interface \\
+
+Electrical components & \$35 & --- \\
+
+\href{https://www.amazon.com/YEY-Loop-Back-Support-standalone-Software/dp/B0BQ6W9N9X}{External sound card (optional)}
+& \$24 & Only if no 7.1 sound card is available in the system and 8 channels are required \\
+\hline
+\end{tabularx}
+\end{table}
+
+
+This ends in an estimated total cost of approximately \$159-\$183 for a single phantom head.
+
+All costs correspond to raw material purchases only.
+No external fabrication services or specialized tooling are accounted for in this estimate,
+and access to an existing desktop 3D printer is assumed.
+Prices may vary depending on supplier and availability.
+
+Current commercial phantom systems typically involve substantially higher costs.
+Injection molding tooling costs are reported in the range of \$6,700 to \$27,000, with
+individual phantom units priced between \$400 and \$640~\cite{akor-2025}.
+
+
 \subsection{Numerical Phantom Validation and System-Level Implications}
 
 The Phantom Head Numerical Model was constructed to capture the dominant electrical behavior of a two-layer conductive phantom head while remaining consistent with the methodological scope and practical constraints of the project. The modeling choices reflect a deliberate balance between physical realism and controlled complexity, with the objective of supporting system-level validation rather than producing a fully resolved digital replica of the physical phantom.
