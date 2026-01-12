@@ -77,16 +77,7 @@
 \bibliographystyle{IEEEtran} % citation and reference list style
 \def\biblio{\clearpage\bibliographystyle{IEEEtran}\bibliography{00_Main/References.bib}} % defines the \biblio command used for referencing in subfiles - DO NOT CHANGE
 
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks=false,
-  pdfborder={0 0 1},
-  linkbordercolor={0.6 0.6 0.6},
-  urlbordercolor ={0.6 0.6 0.6},
-  citebordercolor={0.6 0.6 0.6}
-}
-
-
+\usepackage[colorlinks=false]{hyperref}
 % ----- Header and footer -----
 \pagestyle{fancy}
 \fancyhead[RO,LE]{\thepage} % page number on right for odd pages and left for even pages in the header
