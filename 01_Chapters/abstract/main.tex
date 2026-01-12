@@ -1,16 +1,19 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
 \begin{abstract}
-The development and calibration of Brain-Computer Interfaces (BCI) and electroencephalography (EEG) analysis algorithms require reliable, ground-truth signal sources. Commercial EEG simulators are often expensive or closed-source, limiting their accessibility for academic research. This thesis presents the design, implementation, and modular validation of a cost-effective, hybrid EEG phantom head capable of generating reproducible synthetic brain signals.
+The development and calibration of Brain–Computer Interfaces (BCI) and electroencephalography (EEG) analysis algorithms require reliable, ground-truth signal sources. Commercial EEG simulators are often expensive or closed-source, limiting their accessibility for academic research. This thesis presents the design, modular testing and validation of a cost-effective, EEG phantom-head platform intended for reproducible signal generation and controlled experimental evaluation.
 
-The proposed system comprises two integrated components: a physical head model and a dedicated software control platform. The physical model is designed as a bilayer structure consisting of a conductive PLA cranial shell and a saline gelatine volume, with TRS audio jacks placed as dipoles on the inner surface. Experimental characterization of the inner medium demonstrated that the electrical impedance of the gelatine is both tunable via ionic concentration and reproducible. A Finite Element Method (FEM) numerical model was developed to validate the electromagnetic behavior of this architecture, confirming the feasibility of mapping internal excitations to measurable surface potentials and establishing the stability of an 8-channel scheme. An electronic signal conditioning module was designed to amplify and drive the audio signals into the phantom head, ensuring safe and accurate transduction.
+The proposed system combines a physical phantom-head concept with a numerical modeling framework and a dedicated software control platform. Although the target system was conceived as a fully physical phantom head, funding constraints restricted its physical realization. Consequently, a model-based validation strategy was adopted, in which individual system components were evaluated independently to assess the feasibility of the complete system.
 
-Parallel to the hardware design, a cross-platform desktop application was developed using an asynchronous architecture (React, Electron, and Python). The software provides deterministic 8-channel signal generation with real-time visualization and integration with OpenBCI acquisition hardware.
+The physical phantom concept is based on a bilayer structure comprising a conductive cranial shell and a saline-gelatine volume hosting internal excitation electrodes. Experimental characterization of the conductive medium demonstrated that its electrical impedance is tunable via ionic concentration and reproducible across realizations, supporting its suitability for transmitting EEG-like signals.
 
-Due to manufacturing constraints, the system evaluation was conducted through a modular verification framework. The results confirm the quality of the generated signals, the validity of the numerical forward operator, and the robust reproducibility of the phantom materials. Collectively, these findings validate the proposed architecture as a viable, open, and modular instrument for EEG simulation.
+A Finite Element Method (FEM) model was developed to validate the electromagnetic behavior of the proposed architecture. The simulations confirmed the feasibility of mapping internal excitations to measurable surface potentials and supported the selection of a stable eight-channel actuation scheme, providing a quantitative description of the system’s forward and inverse behavior.
 
+In parallel, a cross-platform desktop application was developed to provide deterministic multi-channel signal generation, real-time visualization, and integration with OpenBCI acquisition hardware. The software enables reproducible experimental workflows and supports closed-loop operation between signal generation and measurement at the hardware level.
+
+Collectively, the experimental, numerical, and software results validate the proposed architecture as a viable, open, and modular tool for EEG simulation, calibration, and methodological research, while establishing a clear foundation for future full-system physical integration.
 \end{abstract}
 
 \par\vspace*{\fill} % Moves keywords to the bottom of the page
-\textbf{\textit{Keywords --}} phantom head, EEG simulator, brain-computer interface, finite element method, signal processing software
+\textbf{\textit{Keywords --}} phantom head, EEG simulator, brain-computer interface, finite element method, FEM, signal processing software
 \end{document}
