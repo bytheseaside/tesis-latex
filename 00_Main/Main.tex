@@ -23,6 +23,7 @@
 \usepackage{booktabs} % Required for professional lines (\toprule, \midrule, \bottomrule)
 \usepackage{appendix}
 \usepackage{chngcntr} % needed for correct table numbering
+\usepackage[hidelinks]{hyperref}
 \counterwithin{table}{section} % numbering of tables 
 \counterwithin{figure}{section} % numbering of figures
 \numberwithin{equation}{section} % numbering of equations
@@ -77,7 +78,7 @@
 \bibliographystyle{IEEEtran} % citation and reference list style
 \def\biblio{\clearpage\bibliographystyle{IEEEtran}\bibliography{00_Main/References.bib}} % defines the \biblio command used for referencing in subfiles - DO NOT CHANGE
 
-\usepackage[colorlinks=false]{hyperref}
+
 % ----- Header and footer -----
 \pagestyle{fancy}
 \fancyhead[RO,LE]{\thepage} % page number on right for odd pages and left for even pages in the header
