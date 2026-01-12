@@ -23,7 +23,6 @@
 \usepackage{booktabs} % Required for professional lines (\toprule, \midrule, \bottomrule)
 \usepackage{appendix}
 \usepackage{chngcntr} % needed for correct table numbering
-\usepackage[hidelinks]{hyperref}
 \counterwithin{table}{section} % numbering of tables 
 \counterwithin{figure}{section} % numbering of figures
 \numberwithin{equation}{section} % numbering of equations
@@ -77,6 +76,15 @@
 \usepackage{natbib}
 \bibliographystyle{IEEEtran} % citation and reference list style
 \def\biblio{\clearpage\bibliographystyle{IEEEtran}\bibliography{00_Main/References.bib}} % defines the \biblio command used for referencing in subfiles - DO NOT CHANGE
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 1},
+  linkbordercolor={0.6 0.6 0.6},
+  urlbordercolor ={0.6 0.6 0.6},
+  citebordercolor={0.6 0.6 0.6}
+}
 
 
 % ----- Header and footer -----

@@ -127,9 +127,9 @@ estimate is summarized in Table~\ref{tab:phantom_cost}.
 \centering
 \caption{Estimated material costs for a single phantom realization.}
 \label{tab:phantom_cost}
-\begin{tabularx}{\textwidth}{X c X}
+\begin{tabularx}{\textwidth}{X S X}
 \hline
-\textbf{Material} & \textbf{Estimated Cost} & \textbf{Comment} \\
+\textbf{Material} & \textbf{Estimated Cost} & \textbf{Note} \\
 \hline
 Salt (1 box) & \$2 & Conductivity tuning; readily available \\
 Deionized water (5~L)
@@ -141,12 +141,11 @@ Deionized water (5~L)
 
 \href{https://www.idealo.fr/prix/203614180/proto-pasta-pla-filament-1-75mm-500g-magnetic-iron.html}
 {Conductive PLA filament (1 spool)}
-& \(\sim\)\$50 & Upper shell half material \\
+& \$50 & Upper shell half material \\
 
 \href{https://www.arianeplast.com/fr/pla-format-1-kg/104-plablanc4043d-pla-blanc-4043d-3d-filament-arianeplast-fabrique-en-france-1kg.html}
 {Non-conductive PLA filament (up to 2 spools)}
-& \(\sim\)\$36 & Structural components \\
-
+& \$36 & Structural components \\
 Silicone / gasket material & \$5 & Waterproofing of head sealing interface \\
 
 Electrical components & \$35 & --- \\
@@ -157,14 +156,11 @@ Electrical components & \$35 & --- \\
 \end{tabularx}
 \end{table}
 
+The reported values correspond to the items required to build the system. The estimate therefore excludes realization-dependent fabrication and assembly costs, including equipment access and use (e.g., 3D printer acquisition or amortization, maintenance, print-time and energy consumption), printing losses (failed prints and reprints), and specialized tooling. Likewise, outsourced fabrication services (e.g., third-party printing) and procurement logistics (shipping and potential import fees) are not included.
+Overall, the estimated total cost is approximately \$159 for the baseline build, increasing to approximately \$183 only if an external multichannel sound card is required.
 
-This ends in an estimated total cost of approximately \$159--\$183 for a single phantom head.
 
-All costs correspond to raw material purchases (consumables) only. The reported values therefore represent a bill-of-materials estimate and exclude realization-dependent costs associated with fabrication and assembly. In particular, equipment access and use (e.g., 3D printer acquisition or amortization, maintenance, print-time and energy consumption), printing losses (failed prints and reprints), and specialized tooling are not included. Likewise, outsourced fabrication services (e.g., third-party printing) and procurement logistics (shipping and potential import fees) are excluded.
-
-Current commercial phantom systems typically involve substantially higher costs.
-Injection molding tooling costs are reported in the range of \$6,700 to \$27,000, with
-individual phantom units priced between \$400 and \$640~\cite{akor-2025}.
+Current commercial phantom systems typically involve substantially higher costs. Injection molding tooling costs are reported in the range of \$6,700 to \$27,000, with individual phantom units priced between \$400 and \$640~\cite{akor-2025}.
 
 
 \subsection{Numerical Phantom Validation and System-Level Implications}
