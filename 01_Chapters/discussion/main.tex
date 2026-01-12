@@ -127,7 +127,7 @@ estimate is summarized in Table~\ref{tab:phantom_cost}.
 \centering
 \caption{Estimated material costs for a single phantom realization.}
 \label{tab:phantom_cost}
-\begin{tabularx}{\textwidth}{X X X}
+\begin{tabularx}{\textwidth}{X c X}
 \hline
 \textbf{Material} & \textbf{Estimated Cost} & \textbf{Comment} \\
 \hline
@@ -339,9 +339,13 @@ Several areas have been identified for future development to enhance the system'
 
 \textbf{Extended hardware support:} While currently optimized for OpenBCI, the architecture is designed to be extensible. Future integration with the Lab Streaming Layer (LSL) protocol would significantly broaden hardware compatibility, allowing the software to interface with a wider range of EEG devices and synchronization triggers.
 
-\subsection{Complete Phantom Head System}
+\subsection{Phantom Head System}
 
-\nota{WIP}
+The phantom head system was evaluated through a combination of modular
+experimental validation and numerical integration. Each subsystem, whether digital
+or experimental, was characterized independently to verify its intended behavior.
+Together, these results establish the feasibility of the proposed architecture and
+provide a sound basis for future physical realization.
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
