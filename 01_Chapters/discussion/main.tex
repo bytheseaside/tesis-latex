@@ -280,6 +280,8 @@ Several areas have been identified for future development to enhance the system'
 
 \textbf{Scalability and robustness:} To address the memory constraints mentioned above, future iterations should implement paginated disk buffering. Additionally, error handling should be enhanced, particularly regarding audio subsystem failures. A more granular exception-handling strategy is necessary when hardware peripherals fail.
 
+\textbf{Integration with forward model:} The numerical phantom head model developed in this work provides a systematic mapping between internal electrode signals and surface potentials. Future software versions should integrate this model, allowing users to specify desired surface signals and automatically compute the corresponding internal values using the forward and inverse operators, or visualize expected surface responses for given internal inputs.
+
 \textbf{Advanced signal analysis:} The current visualization is limited to the time domain. Future expansions should include frequency-domain analysis tools, such as real-time Fast Fourier Transform (FFT) and Power Spectral Density (PSD) plots, to provide immediate feedback on signal spectral content.
 
 \textbf{Extended hardware support:} While currently optimized for OpenBCI, the architecture is designed to be extensible. Future integration with the Lab Streaming Layer (LSL) protocol would significantly broaden hardware compatibility, allowing the software to interface with a wider range of EEG devices and synchronization triggers.
