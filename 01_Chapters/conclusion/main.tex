@@ -1,6 +1,59 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
-Conclusion, TAKE HOME MESSAGE.  What have we learn with this work.  Here you go back to the objective and contributions stated in the introduction and here you confirm if you achieve them or not.
+
+This work presented the design and modular implementation and validation of a comprehensive EEG phantom head. While financial and manufacturing constraints caused a shift from a full physical integration to a component-based verification strategy, the results demonstrate that the proposed architecture satisfies the fundamental requirements for a cost-effective, reproducible, and adaptable research tool.
+
+The investigation into material properties confirmed that saline gelatine serves as a viable material for the intracranial volume. The experimental characterization demonstrated that the material's electrical impedance is both tunable through salt concentration and reproducible across batches with a deviation below 10\%. Although temperature dependence introduces a variable that requires control during operation, the material provides a practical and accessible solution for academic prototyping and testing.
+
+The numerical validation established the theoretical feasibility of the two-layer phantom design. The FEM analysis confirmed that internal signal injection results in measurable surface potentials, with significant attenuation, which characterizes the scale of the necessary amplification via the proposed electronic module. Furthermore, the stability analysis of the forward operator informed the critical design decision to reduce the actuation scheme from nine to eight electrodes, optimizing the system's numerical robustness without compromising spatial resolution.
+
+The development of the software platform resulted in a desktop application capable of deterministic signal generation and real-time data acquisition. The adoption of a modern asynchronous architecture ensured good performance and seamless integration with OpenBCI hardware, successfully closing the loop between signal generation and acquisition.
+
+Table~\ref{tab:project-requirements-summary} summarizes the fulfillment of the initial project requirements against the developed solutions.
+
+\begin{table}[htbp]
+\centering
+\caption{Project requirements resolution summary}
+\label{tab:project-requirements-summary}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{0.35\linewidth} p{0.55\linewidth}}
+\hline
+\textbf{Requirement} & \textbf{Resolution} \\
+\hline
+\multicolumn{2}{l}{\textit{High-Level Constraints}} \\
+\hline
+Cost-Effectiveness & Utilizes standard PC audio, PLA, and low-cost gelatine. \\
+Reproducibility & Gelatine fabrication protocol defined (<10\% deviation); JSON session export ensures digital reproducibility. \\
+Modularity & Architecture decouples the software signal generator from the physical phantom hardware. \\
+Electrical Safety & System operates within standard audio line-level voltages. Electrical isolation provided by acquisition hardware. \\
+\hline
+\multicolumn{2}{l}{\textit{Functional Requirements}} \\
+\hline
+FR-01 Waveform Synthesis & Real-time synthesis of Delta, Theta, Alpha, and Beta rhythms implemented. \\
+FR-02 Parametric Control & Asynchronous engine allows instantaneous frequency/amplitude adjustment without phase discontinuity. \\
+FR-03 Stereo Routing & Independent Left/Right channel mapping implemented for all output modules. \\
+FR-04 Clinical Data Playback & Architecture supports arbitrary waveform streaming; currently optimized for synthetic signal generation. \\
+FR-05 Closed-Loop Validation & Verified integration with OpenBCI Cyton via BrainFlow library. \\
+FR-06 Session Export & Full serialization implemented (JSON metadata + CSV data + WAV audio). \\
+FR-07 Transduction Validation & Signal injection validated via discrete component testing and gelatine samples. \\
+FR-08 Anatomical Model & Tunable two-layer design (PLA Shell + Gelatine Volume) defined and numerically validated. \\
+FR-09 Active Calibration & Gain control and impedance compensation specifications defined in the proposed electronic module. \\
+\hline
+\multicolumn{2}{l}{\textit{Non-Functional Requirements}} \\
+\hline
+NFR-01 Real-Time Latency & WebSocket architecture achieves low latency for control and visualization. \\
+NFR-02 Compatibility & Electron wrapper ensures deployment support for Windows, Linux, and macOS. \\
+NFR-03 Concurrency & Audio generation runs in a dedicated thread/process, decoupled from UI rendering. \\
+NFR-04 Usability & React-based GUI provides independent channel controls and live status visualization, with color-coded channel mapping. \\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+The modular validation performed in this project lays the groundwork for the physical assembly of the complete phantom head. Future work should focus on the manufacturing of the conductive cranial shell and the integration of the identified forward model into the software. By embedding the numerical transfer operator directly into the application, the system will evolve from a signal generator into a calibrated simulation tool, capable of translating desired surface topologies into specific internal actuation patterns. This advancement will complete the transition of the platform from a validated prototype to a fully operational instrument for EEG research and calibration.
+
+\nota{????}
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
