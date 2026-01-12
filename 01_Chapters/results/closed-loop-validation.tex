@@ -14,9 +14,16 @@ The desktop application (see Figures~\ref{fig:desktop-app-running-signal-generat
     \label{fig:desktop-app-standby-eeg-measured}
 \end{figure}
 
-The application communicates with the phantom head via a USB interface, sending commands to control the signal generation and receiving real-time EEG data for visualization and analysis. The software architecture is modular, allowing for easy updates and integration of additional features in the future.
+The application communicates with the phantom head via the soundcard output and the USB interface, sending commands to control the signal generation and receiving real-time EEG data for visualization, respectively. The software architecture is modular, allowing for easy updates and integration of additional features in the future.
 
-Using the developed closed-loop system, tests were conducted to validate the performance of the phantom head prototype and the desktop application. The system successfully generated predefined electrical patterns, which were accurately measured by the EEG acquisition system, demonstrating the effectiveness of the closed-loop approach (see Figures~\ref{fig:closed_loop} and~\ref{fig:closed_loop_2}).
+The integration with the OpenBCI Cyton board is based on the \texttt{BrainFlow 5.13.3} library. The implementation includes a filtering chain designed to isolate the EEG band of interest:
+\begin{itemize}
+    \item \textbf{DC Offset Removal:} Real-time detrending.
+    \item \textbf{Bandpass Filtering:} Zero-phase Butterworth filters applied to the standard EEG range.
+    \item \textbf{Noise Rejection:} Dual notch filters centered at $50\,\text{Hz}$ to mitigate power line interference.
+\end{itemize}
+
+Using this developed closed-loop system, tests were conducted to validate the performance of the phantom head prototype and the desktop application. The system successfully generated predefined electrical patterns, which were accurately measured by the EEG acquisition system, demonstrating the effectiveness of the closed-loop approach (see Figures~\ref{fig:closed_loop} and~\ref{fig:closed_loop_2}).
 
 \begin{figure}[H]
     \centering
