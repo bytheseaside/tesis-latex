@@ -249,6 +249,44 @@ parameters in a mathematically consistent manner.
 The integration of this model-driven interaction into the software platform is therefore
 naturally identified as a direction for future development.
 
+\subsection{Desktop Application}
+
+The system was assessed based on its ability to generate synthetic electrophysiological signals, acquire real-time data from hardware interfaces, and manage session persistence.
+
+\subsubsection{System Architecture and Performance}
+
+The core signal generation engine has a robust deterministic behavior, essential for phantom testing. By utilizing a \texttt{gevent}-based asynchronous architecture, the system achieves a consistent sampling rate of $1\,\text{kHz}$ ($1\,\text{ms}$ intervals). A critical component of this implementation is the maintenance of phase continuity; the use of phase accumulators prevents signal discontinuities during dynamic parameter adjustment (e.g., changing frequency or amplitude in real-time).
+
+The integration of modern web technologies (React and TypeScript) with a Python Flask backend provides a responsive user interface without compromising computational performance. The frontend visualization, utilizing buffered canvas rendering, maintains frame rates between 30 and 60 FPS even when rendering all 8 channels simultaneously.
+
+\subsubsection{Signal Processing and Data Acquisition}
+
+The platform supports two distinct operational modes: synthetic generation and hardware acquisition.
+
+\paragraph*{Signal Fidelity and Export}
+The recording subsystem ensures high data integrity. Sessions are serialized into a multi-format ZIP bundle containing raw CSV data, JSON metadata, and WAV audio reconstruction. The export pipeline preserves the $44.1\,\text{kHz}$ audio fidelity and ensures that all parameter changes are logged synchronously with the signal data. This allows for accurate post analysis and session replay.
+
+\subsubsection{Hardware Constraints and Design Trade-offs}
+
+\paragraph*{Audio Output Configuration}
+While the software internally generates 8 independent channels with proper phase alignment, the physical output is constrained by standard consumer hardware, which typically supports only stereo (2-channel) DACs. The current implementation relies on an operating system-level abstraction to mix these signals. For full 8-channel phantom stimulation, if the users does not have a 7.1 sound card, the system requires an external multi-channel sound card. This is a hardware dependency rather than a software limitation, but it impacts the utility for users without specialized audio equipment.
+
+\paragraph*{Memory Management}
+The current session management strategy stores active recording data in volatile memory (RAM). While this reduces I/O latency during recording, it imposes a scalability limit. For an 8-channel system, the memory footprint grows linearly with time. Extended sessions (e.g., exceeding one hour) may risk memory exhaustion. A streaming-to-disk architecture would be required to support indefinite recording durations.
+
+\subsubsection{Future Work}
+
+Several areas have been identified for future development to enhance the system's robustness and analytical capabilities.
+
+\textbf{Scalability and robustness:} To address the memory constraints mentioned above, future iterations should implement paginated disk buffering. Additionally, error handling should be enhanced, particularly regarding audio subsystem failures. A more granular exception-handling strategy is necessary when hardware peripherals fail.
+
+\textbf{Advanced signal analysis:} The current visualization is limited to the time domain. Future expansions should include frequency-domain analysis tools, such as real-time Fast Fourier Transform (FFT) and Power Spectral Density (PSD) plots, to provide immediate feedback on signal spectral content.
+
+\textbf{Extended hardware support:} While currently optimized for OpenBCI, the architecture is designed to be extensible. Future integration with the Lab Streaming Layer (LSL) protocol would significantly broaden hardware compatibility, allowing the software to interface with a wider range of EEG devices and synchronization triggers.
+
+\subsection{Complete Phantom Head System}
+
+\nota{WIP}
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
