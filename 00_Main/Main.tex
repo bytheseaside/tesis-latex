@@ -73,6 +73,10 @@
 \usepackage{hhline}
 
 
+% ----- Glossary -----
+\usepackage[acronym,toc]{glossaries}
+\makeglossaries
+
 % ----- Sources -----
 \usepackage{natbib}
 \bibliographystyle{IEEEtran} % citation and reference list style
@@ -186,6 +190,13 @@
 % \section{Acknowledgements}
 %     \subfile{01_Chapters/Acknowledgements}
 % \clearpage
+
+% ----- Glossary entries -----
+\subfile{../01_Chapters/glossary/main}
+
+% ----- Print Glossary -----
+\newpage
+\printglossary[type=\acronymtype, title=List of Abbreviations]
 
 \newpage
 \renewcommand\refname{References} % name for the reference list

@@ -2,15 +2,15 @@
 \begin{document}
 
 \subsection{Conceptual Design}
-The proposed solution is a hybrid electro-acoustic emulation system. It integrates a digital signal processing platform with a physical analog transduction architecture to simulate electrophysiological activity in a phantom head mimicking EEG signals.
+The proposed solution is a hybrid electro-acoustic emulation system. It integrates a digital signal processing platform with a physical analog transduction architecture to simulate electrophysiological activity in a phantom head mimicking \gls{eeg} signals.
 
 \subsubsection{Software and Hardware Subsystems}
 The system is conceptualized as two distinct but synchronized subsystems:
 
 \begin{enumerate}
-    \item \textbf{The Digital Control Unit (Software):} A desktop application responsible for the deterministic synthesis of waveforms and real-time visualization of acquired data for contrast. This subsystem acts as the signal generator controller, utilizing the host computer's audio sound card as a high-fidelity DAC source to output precise voltage fluctuations at set frequencies. The software has also included functionality to parse and playback clinical EEG data from EDF files, allowing for realistic simulation scenarios.
+    \item \textbf{The Digital Control Unit (Software):} A desktop application responsible for the deterministic synthesis of waveforms and real-time visualization of acquired data for contrast. This subsystem acts as the signal generator controller, utilizing the host computer's audio sound card as a high-fidelity \gls{dac} source to output precise voltage fluctuations at set frequencies. The software has also included functionality to parse and playback clinical \gls{eeg} data from EDF files, allowing for realistic simulation scenarios.
     
-    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first split into two mono channels (left and right), each routed to an independent signal amplifier circuit containing a non-inverting op-amp and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an EEG acquisition system and fed back into the software for analysis.
+    \item \textbf{The Analog Transduction Unit (Hardware):} A physical interface designed to convert the line-level audio output from the PC into microvolt-scale potentials compatible with medical acquisition equipment. The audio output from the PC sound card is first split into two mono channels (left and right), each routed to an independent signal amplifier circuit containing a non-inverting \gls{opamp} and potentiometer to control the gain of the signal. The resulting signals are then injected into the phantom head model, composed of a conductive volume filled with gelatine where the audio jacks are placed as dipoles. Electrodes positioned on the surface of the phantom head capture the resulting potential differences, which can then be acquired by an \gls{eeg} acquisition system and fed back into the software for analysis.
 \end{enumerate}
 
 \subsubsection{High-Level Block Diagram}
@@ -25,14 +25,14 @@ Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the pr
 
 \subsubsection{System Data Flow}
 \begin{enumerate}
-    \item \textbf{User Configuration:} The user defines the desired EEG parameters via the dashboard interface.
+    \item \textbf{User Configuration:} The user defines the desired \gls{eeg} parameters via the dashboard interface.
     \item \textbf{Digital Synthesis:} The Python backend generates a discrete-time signal array.
-    \item \textbf{D/A Conversion:} The PC's audio DAC reconstructs the continuous analog signal.
+    \item \textbf{D/A Conversion:} The PC's audio \gls{dac} reconstructs the continuous analog signal.
     \item \textbf{Channel Splitting:} Each audio output is split into two mono signals, obtaining the channels left and right.
-    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting op-amp and potentiometer for amplification.
+    \item \textbf{Signal Conditioning:} Each channel is processed with a non-inverting \gls{opamp} and potentiometer for amplification.
     \item \textbf{Dipole Construction:} The channels are routed to the phantom head model as dipoles using audio jack terminals.
     \item \textbf{Volume Conduction:} The signal is injected into the phantom head, establishing an electric field distribution.
-    \item \textbf{Acquisition:} The EEG electrodes detect the potential difference on the phantom's surface, closing the loop.
+    \item \textbf{Acquisition:} The \gls{eeg} electrodes detect the potential difference on the phantom's surface, closing the loop.
 \end{enumerate}
 
 
@@ -165,7 +165,7 @@ Applying this last changes resulted in the final UI design, with separate views 
 \subsubsection{Channel Splitting}
 The audio signal from the PC sound card is split into two mono signals, one for each channel. This is done using a 3.5mm TRS splitter, which takes the stereo output from the sound card and splits it into two separate mono outputs (left and right channels). Each channel is then routed to its respective signal amplifier circuit.
 
-The preferred hardware for this application is the PCI 7.1 sound card (Figure~\ref{fig:7_1_channel_pci_card}), which provides multiple output channels and high-quality audio performance, ensuring accurate signal reproduction for EEG simulation. If the user doesn't have one, an external USB sound card with similar specifications can be used as an alternative (Figure~\ref{fig:7_1_channel_usb_card}).
+The preferred hardware for this application is the PCI 7.1 sound card (Figure~\ref{fig:7_1_channel_pci_card}), which provides multiple output channels and high-quality audio performance, ensuring accurate signal reproduction for \gls{eeg} simulation. If the user doesn't have one, an external USB sound card with similar specifications can be used as an alternative (Figure~\ref{fig:7_1_channel_usb_card}).
 
 
 \begin{figure}[h]
@@ -189,9 +189,9 @@ The preferred hardware for this application is the PCI 7.1 sound card (Figure~\r
 \subsubsection{Signal Amplifier Circuit Design}
 The signal amplifier circuit (Figure~\ref{fig:splitter_amplifier_circuit}) is composed of:
 \begin{itemize}
-    \item Non-inverting operational amplifier: A non-inverting operational amplifier (op-amp) is used to amplify the signal. This configuration provides high input impedance and low output impedance, making it suitable for driving the phantom head model.
-    \item Resistor: One resistor is used to set the gain of the op-amp when combined with the potentiometer. 
-    \item Potentiometer: A potentiometer is included to allow for manual adjustment of the gain. This enables the user to fine-tune the amplitude of the output signal to match the desired microvolt levels for EEG simulation. The gain is determined by the ratio of the potentiometer and the resistor.
+    \item Non-inverting operational amplifier: A non-inverting operational amplifier (\gls{opamp}) is used to amplify the signal. This configuration provides high input impedance and low output impedance, making it suitable for driving the phantom head model.
+    \item Resistor: One resistor is used to set the gain of the \gls{opamp} when combined with the potentiometer. 
+    \item Potentiometer: A potentiometer is included to allow for manual adjustment of the gain. This enables the user to fine-tune the amplitude of the output signal to match the desired microvolt levels for \gls{eeg} simulation. The gain is determined by the ratio of the potentiometer and the resistor.
     % \item Capacitors: Capacitors are used to filter out noise.
 \end{itemize}
 

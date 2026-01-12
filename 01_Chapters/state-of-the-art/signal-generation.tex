@@ -9,13 +9,13 @@ As phantom head design and composition where already covered in Section~\ref{sub
 
 Phantom heads are designed to mimic the frequency spectrum of human brain activity, which is characterized by a wide range of frequency bands as described in Table~\ref{tab:eeg_frequency_bands}.
 
-The amplitude of the EEG under physiological conditions ranges from 15 to 150 \( \mu\text{V} \)~\cite{Naydenov2022}. However, the internal generators (electrodes) must drive significantly higher voltages to account for the attenuation caused by volume conduction through the phantom material~\cite{LEAHY1998159}. The electronics must provide a wide dynamic range, capable of generating signals that result in low surface potentials to reduce noise~\cite{Morsalin2020}.
+The amplitude of the \gls{eeg} under physiological conditions ranges from 15 to 150 \( \mu\text{V} \)~\cite{Naydenov2022}. However, the internal generators (electrodes) must drive significantly higher voltages to account for the attenuation caused by volume conduction through the phantom material~\cite{LEAHY1998159}. The electronics must provide a wide dynamic range, capable of generating signals that result in low surface potentials to reduce noise~\cite{Morsalin2020}.
 
 \paragraph*{Electrode Driver}
 
 The electrode driver acts as the interface between the digital simulation software (usually on a PC) and the physical phantom, generating complex, arbitrary waveforms used to mimic neural activity~\cite{LEAHY1998159}.
 
-Controlling the driver means knowing the exact location, orientation, amplitude, and timing of the source: the ``ground truth'' data~\cite{LEAHY1998159}. This known signal is crucial for validating the performance of EEG electrodes and acquisition systems, as it allows for objective comparisons between the generated signal and the recorded data.~\cite{Audette2020}
+Controlling the driver means knowing the exact location, orientation, amplitude, and timing of the source: the ``ground truth'' data~\cite{LEAHY1998159}. This known signal is crucial for validating the performance of \gls{eeg} electrodes and acquisition systems, as it allows for objective comparisons between the generated signal and the recorded data.~\cite{Audette2020}
 
 \paragraph*{Electrode Construction}
 The driver controls the known electrical signals that are injected into physical electrodes embedded in the phantom head. These electrodes can be constructed in various ways depending on the design requirements of the phantom:
@@ -39,5 +39,5 @@ The choice of architecture dictates the fidelity, bandwidth, and flexibility of 
 
 \begin{itemize}
     \item Computer audio interface: frequently used for this task due to their high resolution (typically 24-bit), excellent signal-to-noise ratio (>100 dB), and low cost~\cite{Collier2012}. The downside is that they tether the phantom to a computer, introducing ground loops and mains noise unless USB isolators are used~\cite{LEAHY1998159}.
-    \item Microcontroller-based architecture: for portable, battery-powered phantoms. A usual choice is the Teensy 3.2 that features a built-in 12-bit digital-to-analog converter (DAC)~\cite{PJRC_Teensy}. While having lower resolution than audio interfaces, 12 bits provides sufficient dynamic range for many verification tasks, especially when the signal is generated at a higher amplitude and then attenuated analogically~\cite{LEAHY1998159}.
+    \item Microcontroller-based architecture: for portable, battery-powered phantoms. A usual choice is the Teensy 3.2 that features a built-in 12-bit digital-to-analog converter (\gls{dac})~\cite{PJRC_Teensy}. While having lower resolution than audio interfaces, 12 bits provides sufficient dynamic range for many verification tasks, especially when the signal is generated at a higher amplitude and then attenuated analogically~\cite{LEAHY1998159}.
 \end{itemize}

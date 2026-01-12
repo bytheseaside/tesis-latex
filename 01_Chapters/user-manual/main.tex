@@ -1,5 +1,5 @@
 \subsection{Overview}
-The Phantom Head Desktop App is a hybrid signal processing platform designed to simulate, acquire, and visualize electrophysiological data. The software operates in two primary modes: \textit{Generated Mode} for synthesizing EEG-like waveforms for phantom testing, and \textit{Measured Mode} for acquiring live biopotentials via OpenBCI hardware.
+The Phantom Head Desktop App is a hybrid signal processing platform designed to simulate, acquire, and visualize electrophysiological data. The software operates in two primary modes: \textit{Generated Mode} for synthesizing \gls{eeg}-like waveforms for phantom testing, and \textit{Measured Mode} for acquiring live biopotentials via OpenBCI hardware.
 
 This manual outlines the interface architecture, operational procedures, and data management protocols.
 
@@ -43,9 +43,9 @@ Located at the bottom of the window, this toolbar contains signal generation con
 The software functions in two mutually exclusive modes, toggled via the \textit{View} selector.
 
 \subsubsection{Generation Mode (Simulation)}
-This mode synthesizes artificial EEG signals for hardware verification and educational demonstration. It allows for the independent manipulation of frequency, amplitude, and waveform topology for all 8 channels.
+This mode synthesizes artificial \gls{eeg} signals for hardware verification and educational demonstration. It allows for the independent manipulation of frequency, amplitude, and waveform topology for all 8 channels.
 \begin{itemize}
-    \item \textbf{Waveform Selection:} Select the desired topology (e.g., Alpha) from the module dropdown. The system automatically snaps the frequency range to the standard EEG band that corresponds to the selected waveform.
+    \item \textbf{Waveform Selection:} Select the desired topology (e.g., Alpha) from the module dropdown. The system automatically snaps the frequency range to the standard \gls{eeg} band that corresponds to the selected waveform.
     \item \textbf{Amplitude Modulation:} Adjust the signal strength (0{-}100) to control the voltage output to the phantom head via the volume of the audio soundcard.
     \item \textbf{Audio Feedback:} Real-time sound of signals is provided via stereo output (Left/Right channel mixing).
     \item \textbf{Import option:} Import an EDF file and select a channel from the dropdown menu to generate it.

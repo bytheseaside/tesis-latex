@@ -10,7 +10,7 @@ The phantom--head model comprises $N_e = 9$ internal electrodes, each capable of
 
 For each basis stimulus, the electrode under consideration was driven using a fixed potential configuration (\textit{tip} at $+1~\mathrm{V}$, \textit{ring} at $-1~\mathrm{V}$, \textit{sleeve} at $0~\mathrm{V}$), while all other electrode surfaces were explicitly assigned a Dirichlet potential of $0~\mathrm{V}$. All remaining boundaries followed the material and interface definitions of the phantom model. This procedure yields a well-defined and reproducible set of input excitations.
 
-The outputs of the system were defined as the electric potentials evaluated at $N_m = 21$ measurement locations on the outer surface of the phantom, corresponding to the electrode positions of the international 10--20 EEG system.
+The outputs of the system were defined as the electric potentials evaluated at $N_m = 21$ measurement locations on the outer surface of the phantom, corresponding to the electrode positions of the international 10--20 \gls{eeg} system.
 
 For each basis excitation, a forward finite element simulation was performed and the resulting surface potentials were sampled at the measurement locations. The phantom--head transfer matrix $F \in \mathbb{R}^{N_m \times N_e}$ was then assembled by stacking the measured responses column-wise, such that the $i$-th column of $F$ represents the surface response to the $i$-th electrode excitation.
 

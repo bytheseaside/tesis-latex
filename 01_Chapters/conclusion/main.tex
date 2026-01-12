@@ -1,11 +1,11 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
 
-This work presented the design, implementation, and modular validation of a comprehensive EEG phantom-head platform. While financial constraints necessitated a shift from full physical integration to a model-based verification strategy, the results demonstrate that the proposed architecture satisfies the fundamental requirements for a cost-effective, reproducible, and adaptable research tool.
+This work presented the design, implementation, and modular validation of a comprehensive \gls{eeg} phantom-head platform. While financial constraints necessitated a shift from full physical integration to a model-based verification strategy, the results demonstrate that the proposed architecture satisfies the fundamental requirements for a cost-effective, reproducible, and adaptable research tool.
 
 The proposed solution relies on a modular architecture where the phantom head numerical model, hardware and software platform are treated as interconnected but independently verifiable components.
 
-The phantom design adopts an anthropomorphic geometry constructed from accessible materials. Experimental characterization confirmed that the gelatine-based conductive medium yields reproducible impedance behavior suitable for transmitting EEG-like signals. The combination of these material properties with the anatomical geometry allows for the effective propagation of spatially distributed surface potentials, enabling meaningful interaction between internal excitation and surface-level measurement.
+The phantom design adopts an anthropomorphic geometry constructed from accessible materials. Experimental characterization confirmed that the gelatine-based conductive medium yields reproducible impedance behavior suitable for transmitting \gls{eeg}-like signals. The combination of these material properties with the anatomical geometry allows for the effective propagation of spatially distributed surface potentials, enabling meaningful interaction between internal excitation and surface-level measurement.
 
 Rather than serving merely as a post-hoc analysis, the numerical characterization functions as an integral part of the system architecture, explicitly linking simulation results to practical implementation. From informing hardware design choices, to providing the theoretical foundation for future calibration workflows.
 
@@ -46,7 +46,7 @@ FR-09 Active Calibration & Gain control and impedance compensation specification
 NFR-01 Real-Time Latency & WebSocket architecture achieves low latency for control and visualization. \\
 NFR-02 Compatibility & Electron wrapper ensures deployment support for Windows, Linux, and macOS. \\
 NFR-03 Concurrency & Audio generation runs in a dedicated thread/process, decoupled from UI rendering. \\
-NFR-04 Usability & React-based GUI provides independent channel controls and live status visualization, with color-coded channel mapping. \\
+NFR-04 Usability & React-based \gls{gui} provides independent channel controls and live status visualization, with color-coded channel mapping. \\
 \hline
 \end{tabular}
 \end{table}

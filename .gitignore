@@ -19,6 +19,16 @@
 *.snm
 *.vrb
 
+# glossaries
+*.glo
+*.gls
+*.glsdefs
+*.ist
+*.acn
+*.acr
+*.alg
+*.glg
+
 # latexmk and other temp files
 *.dvi
 *.ps
