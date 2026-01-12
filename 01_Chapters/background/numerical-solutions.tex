@@ -162,12 +162,12 @@ Regions exhibiting steep spatial gradients in the solution require finer mesh re
 
 Beyond element size, the \textit{shape} of finite elements directly affects the accuracy and stability of numerical solutions. Distorted, elongated, or poorly proportioned elements degrade the quality of basis function interpolation, amplify truncation errors, and can lead to ill-conditioned system matrices~\cite{shewchuk-2002}. To quantify element geometry, several dimensionless quality metrics have been developed. These metrics typically range from 0 (degenerate element) to 1 (ideal element), with values closer to 1 indicating better-shaped elements.
 
-\paragraph*{SICN (Signed Inverse Condition Number)}
+\paragraph*{Signed Inverse Condition Number}
 
 The signed inverse condition number (SICN), also referred to as the normalized Jacobian, measures how close an element is to its ideal (equilateral) reference shape.
 where $J$ is the Jacobian matrix mapping the reference element to the physical element, $\det(J)$ is its determinant, and $J_i$ are the column vectors of $J$~\cite{gmsh,knupp}. The determinant $\det(J)$ encodes the signed volume of the element, while the denominator penalizes elongation and skewness. Values of SICN near 1 indicate a well-proportioned element; values near 0 indicate severe distortion; negative values indicate inverted (invalid) elements. SICN is particularly sensitive to aspect ratio and is widely used in adaptive meshing workflows~\cite{knupp}.
 
-\paragraph*{SIGE (Signed Inverse Gradient Error)}
+\paragraph*{Signed Inverse Gradient Error}
 
 The signed inverse gradient error (SIGE), also known as the mean ratio or shape quality metric, evaluates how uniformly the element approximates the gradient of the solution. This metric compares the element's actual volume to what it would be if it were regular (equilateral) with the same edge lengths. SIGE penalizes elements with highly disparate edge lengths—such as flat or needle-like tetrahedra—which produce inaccurate gradient approximations. Like SICN, SIGE ranges from 0 to 1, with higher values indicating better elements~\cite{gmsh, pebay-2003}.
 
