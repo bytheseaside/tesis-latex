@@ -1,15 +1,17 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
 
-This work presented the design and modular implementation and validation of a comprehensive EEG phantom head. While financial and manufacturing constraints caused a shift from a full physical integration to a component-based verification strategy, the results demonstrate that the proposed architecture satisfies the fundamental requirements for a cost-effective, reproducible, and adaptable research tool.
+This work presented the design, implementation, and modular validation of a comprehensive EEG phantom-head platform. While financial constraints necessitated a shift from full physical integration to a model-based verification strategy, the results demonstrate that the proposed architecture satisfies the fundamental requirements for a cost-effective, reproducible, and adaptable research tool.
 
-The investigation into material properties confirmed that saline gelatine serves as a viable material for the intracranial volume. The experimental characterization demonstrated that the material's electrical impedance is both tunable through salt concentration and reproducible across batches with a deviation below 10\%. Although temperature dependence introduces a variable that requires control during operation, the material provides a practical and accessible solution for academic prototyping and testing.
+The proposed solution relies on a modular architecture where the phantom head numerical model, hardware and software platform are treated as interconnected but independently verifiable components.
 
-The numerical validation established the theoretical feasibility of the two-layer phantom design. The FEM analysis confirmed that internal signal injection results in measurable surface potentials, with significant attenuation, which characterizes the scale of the necessary amplification via the proposed electronic module. Furthermore, the stability analysis of the forward operator informed the critical design decision to reduce the actuation scheme from nine to eight electrodes, optimizing the system's numerical robustness without compromising spatial resolution.
+The phantom design adopts an anthropomorphic geometry constructed from accessible materials. Experimental characterization confirmed that the gelatine-based conductive medium yields reproducible impedance behavior suitable for transmitting EEG-like signals. The combination of these material properties with the anatomical geometry allows for the effective propagation of spatially distributed surface potentials, enabling meaningful interaction between internal excitation and surface-level measurement.
 
-The development of the software platform resulted in a desktop application capable of deterministic signal generation and real-time data acquisition. The adoption of a modern asynchronous architecture ensured good performance and seamless integration with OpenBCI hardware, successfully closing the loop between signal generation and acquisition.
+Rather than serving merely as a post-hoc analysis, the numerical characterization functions as an integral part of the system architecture, explicitly linking simulation results to practical implementation. From informing hardware design choices, to providing the theoretical foundation for future calibration workflows.
 
-Table~\ref{tab:project-requirements-summary} summarizes the fulfillment of the initial project requirements against the developed solutions.
+The development of the software environment resulted in a desktop application capable of deterministic signal generation and real-time data acquisition. The adoption of a modern asynchronous architecture ensures responsive performance and seamless integration with OpenBCI hardware, successfully closing the loop between signal generation and acquisition.
+
+To assess the success of the project, the final system characteristics were evaluated against the initial design requirements. Table~\ref{tab:project-requirements-summary} summarizes this verification:
 
 \begin{table}[htbp]
 \centering
@@ -22,8 +24,8 @@ Table~\ref{tab:project-requirements-summary} summarizes the fulfillment of the i
 \hline
 \multicolumn{2}{l}{\textit{High-Level Constraints}} \\
 \hline
-Cost-Effectiveness & Utilizes standard PC audio, PLA, and low-cost gelatine. \\
-Reproducibility & Gelatine fabrication protocol defined (<10\% deviation); JSON session export ensures digital reproducibility. \\
+Cost-Effectiveness & Utilizes standard PC audio, and low cost materials. \\
+Reproducibility & Physical: Gelatine fabrication protocol defined (<10\% deviation); Digital: JSON session export ensures digital reproducibility. \\
 Modularity & Architecture decouples the software signal generator from the physical phantom hardware. \\
 Electrical Safety & System operates within standard audio line-level voltages. Electrical isolation provided by acquisition hardware. \\
 \hline
@@ -36,7 +38,7 @@ FR-04 Clinical Data Playback & Architecture supports arbitrary waveform streamin
 FR-05 Closed-Loop Validation & Verified integration with OpenBCI Cyton via BrainFlow library. \\
 FR-06 Session Export & Full serialization implemented (JSON metadata + CSV data + WAV audio). \\
 FR-07 Transduction Validation & Signal injection validated via discrete component testing and gelatine samples. \\
-FR-08 Anatomical Model & Tunable two-layer design (PLA Shell + Gelatine Volume) defined and numerically validated. \\
+FR-08 Anatomical Model & Anthropomorphic model defined. \\
 FR-09 Active Calibration & Gain control and impedance compensation specifications defined in the proposed electronic module. \\
 \hline
 \multicolumn{2}{l}{\textit{Non-Functional Requirements}} \\
@@ -49,11 +51,8 @@ NFR-04 Usability & React-based GUI provides independent channel controls and liv
 \end{tabular}
 \end{table}
 
-\newpage
 
-The modular validation performed in this project lays the groundwork for the physical assembly of the complete phantom head. Future work should focus on the manufacturing of the conductive cranial shell and the integration of the identified forward model into the software. By embedding the numerical transfer operator directly into the application, the system will evolve from a signal generator into a calibrated simulation tool, capable of translating desired surface topologies into specific internal actuation patterns. This advancement will complete the transition of the platform from a validated prototype to a fully operational instrument for EEG research and calibration.
-
-\nota{????}
+Finally, the validation of the individual subsystems confirms that the hardware and software components operate as intended, while the numerical analysis validates the theoretical and physical feasibility of the design. This component-level verification—backed by a model that confirms the system definition is physically sound—\textbf{supports the expectation that the full physical realization will be successful and meet the design specifications.}
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
