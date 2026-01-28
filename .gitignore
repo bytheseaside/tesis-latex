@@ -64,4 +64,4 @@ Thumbs.db
 .vscode/
 .history/
 *.code-workspace
-# 00_Main/*.pdf
+00_Main/*.pdf
