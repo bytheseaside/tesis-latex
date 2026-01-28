@@ -1,18 +1,28 @@
 The study of complex physical systems commonly distinguishes between \textit{forward}
-and \textit{inverse} problems. A forward problem follows the deductive application of
+and \textit{inverse} problems. As a brief refresher, a forward problem consists of applying
 governing physical laws—such as those of electromagnetism, mechanics, or physiology—to
-a known set of inputs or system parameters in order to predict observable outcomes
-\cite{mueller-2012}. Forward problems are typically well posed, admitting solutions that
-are unique and stable with respect to perturbations in the input data \cite{burger}.
+a known set of inputs or system parameters in order to predict observable outcomes~\cite{mueller-2012}. 
+Forward problems are typically well posed, admitting solutions that
+are unique and stable with respect to perturbations in the input data~\cite{burger}.
 
-In electroencephalography, a forward formulation commonly consists of computing scalp
-potentials at specified locations given a prescribed distribution of internal sources.
-In phantom-based systems, the forward problem instead consists of predicting surface
-voltage measurements resulting from known actuator excitations applied within the
-phantom.
+Inverse problems address the complementary task: given a set of observations, the objective
+is to reconstruct the causes, parameters, or internal states that may have produced those
+measurements~\cite{mueller-2012}. While the term \textit{inverse problem} suggests a direct
+mathematical reversal of the corresponding forward formulation, this relationship is not
+guaranteed in general~\cite{burger}. In practice, inverse formulations often fail to satisfy
+one or more of the classical criteria for well-posedness.
 
+When modeling physical systems, these formulations are commonly interpreted in a
+descriptive sense, where the emphasis lies on representing or explaining the behavior of
+the system itself.
 
-Inverse problems, by contrast, proceed inductively: given a set of observations, the objective is to reconstruct the underlying causes or internal states responsible for those measurements~\cite{mueller-2012}. While the term \textit{inverse problem} suggests a direct mathematical reversal of a corresponding forward problem, this relationship is not guaranteed in general~\cite{burger}. In particular, inverse formulations frequently violate one or more of the classical criteria for well-posedness.
+In a control-oriented setting, such as the one considered in the present work, the role of
+forward and inverse problems is subtly different. The forward problem describes the
+mapping between a set of accessible input parameters and the resulting system outputs,
+thereby characterizing the system’s input–output behavior. The inverse problem, in turn,
+seeks to determine which input configuration produces a specified output response. The
+objective is not to recover the true physical origin of the observations, but to identify
+admissible system inputs that reproduce or approximate a desired measurement pattern.
 
 According to Hadamard, a mathematical problem is well-posed if a solution exists, is unique, and depends continuously on the input data~\cite{burger}. In system reconstruction contexts, the stability condition is often the most critical and the most frequently violated. When stability is lacking, even minute errors arising from measurement noise, discretization, or numerical round-off can be severely amplified during inversion, yielding reconstructions that are physically meaningless~\cite{burger}.
 
@@ -33,16 +43,16 @@ Instead, two non-ideal regimes dominate:
 
 This work focuses on the overdetermined regime, in which the system matrix $A$ is non-square and therefore not invertible. In such cases, reconstruction must be reformulated in terms of a \textit{generalized solution} satisfying an auxiliary optimality criterion~\cite{mueller-2012}.
 
-\subsubsection{The Moore--Penrose pseudoinverse}
-As a robust generalization of the matrix inverse, the Moore--Penrose pseudoinverse $A^\dagger$ provides a unique solution for any matrix A, regardless of its dimensions or rank.
-The matrix $G \in \mathbf{R}^{n \times m}$ is said to be the Moore--Penrose pseudoinverse of $A$ if and only if it satisfies the following four algebraic conditions:
-\begin{enumerate}
-    \item $A\space G \space A = A$, maps the column vectors of $A$ back to themselves;
-    \item $G\space  A\space G = G$, establishing $G$ as a weak inverse of $A$;
-    \item $(A\space G)^* = A\space G$, implying that $AG$ is Hermitian;
-    \item $(G\space A)^* = G\space A$, implying that $GA$ is Hermitian.
-\end{enumerate}
-Here, $(\cdot)^*$ denotes the conjugate transpose. When considering real matrices, $(\cdot)^* = (\cdot)^T$, which implies the matrix is symmetric. While multiple generalized inverses may satisfy the first condition alone, the additional Hermitian constraints enforce orthogonality properties that guarantee the uniqueness of the Moore--Penrose pseudoinverse~\cite{penrose-1955}.
+% \subsubsection{The Moore--Penrose pseudoinverse}
+% As a robust generalization of the matrix inverse, the Moore--Penrose pseudoinverse $A^\dagger$ provides a unique solution for any matrix A, regardless of its dimensions or rank.
+% The matrix $G \in \mathbf{R}^{n \times m}$ is said to be the Moore--Penrose pseudoinverse of $A$ if and only if it satisfies the following four algebraic conditions:
+% \begin{enumerate}
+%     \item $A\space G \space A = A$, maps the column vectors of $A$ back to themselves;
+%     \item $G\space  A\space G = G$, establishing $G$ as a weak inverse of $A$;
+%     \item $(A\space G)^* = A\space G$, implying that $AG$ is Hermitian;
+%     \item $(G\space A)^* = G\space A$, implying that $GA$ is Hermitian.
+% \end{enumerate}
+% Here, $(\cdot)^*$ denotes the conjugate transpose. When considering real matrices, $(\cdot)^* = (\cdot)^T$, which implies the matrix is symmetric. While multiple generalized inverses may satisfy the first condition alone, the additional Hermitian constraints enforce orthogonality properties that guarantee the uniqueness of the Moore--Penrose pseudoinverse~\cite{penrose-1955}.
 
 \subsubsection{Solutions in Overdetermined Systems}
 
@@ -52,22 +62,39 @@ y = Ax, \qquad A \in \mathbb{R}^{m \times n},
 \]
 is generally overdetermined and does not admit an exact solution for arbitrary measurement vectors $y$. In such cases, reconstruction must be interpreted in an approximate sense.
 
-The Moore--Penrose pseudoinverse provides a principled mechanism for defining an optimal solution by reformulating the problem as a least-squares minimization:
+% The Moore--Penrose pseudoinverse provides a principled mechanism for defining an optimal solution by reformulating the problem as a least-squares minimization:
+% \[
+% x^\star = \arg\min_{x \in \mathbb{R}^n} \|Ax - y\|_2^2.
+% \]
+% The unique minimizer of this problem is given by
+% \[
+% x^\star = A^{\dagger} y.
+% \]
+
+% For full column-rank matrices, where $\operatorname{rank}(A) = n$, the pseudoinverse admits the explicit form
+% \[
+% A^{\dagger} = (A^{T}A)^{-1}A^{T},
+% \]
+% which corresponds to the classical normal-equations solution. Geometrically, this operation projects the observation vector $y$ orthogonally onto the column space of $A$, yielding the actuator configuration whose forward response best approximates the measurements in an energy-optimal sense~\cite{bindel-2012}.
+A common approach is to define the solution as the parameter vector that minimizes the discrepancy between the predicted and observed outputs in a least-squares sense~\cite{mueller-2012, burger}. This leads to the optimization problem
 \[
 x^\star = \arg\min_{x \in \mathbb{R}^n} \|Ax - y\|_2^2.
 \]
-The unique minimizer of this problem is given by
-\[
-x^\star = A^{\dagger} y.
-\]
 
-For full column-rank matrices, where $\operatorname{rank}(A) = n$, the pseudoinverse admits the explicit form
+The minimizer of this problem can be expressed using the Moore--Penrose pseudoinverse of the system matrix, denoted $A^\dagger$, yielding
+\[
+x^\star = A^\dagger y.
+\]
+The Moore--Penrose pseudoinverse defines a generalized inverse applicable to arbitrary matrices, including non-square and rank-deficient cases. It is uniquely characterized by a set of algebraic conditions—known as the Moore--Penrose conditions—which enforce consistency with the original system and orthogonality properties of the associated projection operators, thereby guaranteeing uniqueness~\cite{penrose-1955}. In the present context, it serves as the operator that maps observations to the least-squares optimal reconstruction.
+
+For matrices with full column rank, where $\operatorname{rank}(A) = n$, the pseudoinverse admits the explicit form
 \[
 A^{\dagger} = (A^{T}A)^{-1}A^{T},
 \]
-which corresponds to the classical normal-equations solution. Geometrically, this operation projects the observation vector $y$ orthogonally onto the column space of $A$, yielding the actuator configuration whose forward response best approximates the measurements in an energy-optimal sense~\cite{bindel-2012}.
+which corresponds to the classical normal-equations solution~\cite{bindel-2012}.
 
-In physical systems, this interpretation is particularly relevant: the pseudoinverse does not attempt to reproduce all observations exactly, but instead identifies the actuator inputs that minimize the global mismatch between predicted and measured outputs. The resulting residual reflects components of the observations that lie outside the span of the system’s controllable subspace.
+
+% In physical systems, this interpretation is particularly relevant: the pseudoinverse does not attempt to reproduce all observations exactly, but instead identifies the actuator inputs that minimize the global mismatch between predicted and measured outputs. The resulting residual reflects components of the observations that lie outside the span of the system’s controllable subspace.
 
 \subsubsection{Regularization and Numerical Stability}
 
