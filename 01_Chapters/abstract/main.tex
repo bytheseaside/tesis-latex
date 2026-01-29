@@ -1,18 +1,19 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
 \begin{abstract}
-The development and calibration of Brain–Computer Interfaces (\gls{bci}) and electroencephalography (\gls{eeg}) analysis algorithms require reliable, ground-truth signal sources. Commercial \gls{eeg} simulators are often expensive or closed-source, limiting their accessibility for academic research. This thesis presents the design, modular implementation and validation of a cost-effective, \gls{eeg} phantom-head platform intended for reproducible signal generation and controlled experimental evaluation.
+The development and calibration of brain--computer interfaces (\gls{bci}) and electroencephalography (\gls{eeg}) analysis algorithms require controlled and reproducible reference systems. In the absence of a known ground truth in human measurements, phantom heads provide a practical means to study signal transmission, measurement behavior, and signal-processing methods under well-defined conditions. This thesis presents the definition and characterization of a low-cost \gls{eeg} phantom-head system, together with numerical and software tools for controlled signal generation and analysis.
 
-The proposed system combines a physical phantom-head concept with a numerical modeling framework and a dedicated software control platform. Although the target system was conceived as a fully physical phantom head, funding constraints restricted its physical realization. Consequently, a model-based validation strategy was adopted, and individual system components were evaluated independently to assess the feasibility of the complete system.
+The work introduces a parametric computer-aided design (\gls{cad}) model of an \gls{eeg} phantom head suited for low-cost fabrication. The model defines the head geometry, internal structure, and electrode placement, providing a consistent physical reference that can be used for numerical simulations and experimental configuration.
 
-The physical phantom concept is based on a bilayer structure comprising a conductive cranial shell and a saline-gelatine volume hosting internal excitation electrodes. Experimental characterization of the conductive medium demonstrated that its electrical impedance is tunable via ionic concentration and reproducible across realizations and supported its suitability for transmitting \gls{eeg}-like signals.
+A saline--gelatine mixture is investigated as a conductive filling material for the phantom head. The electrical properties of this medium are experimentally characterized, demonstrating that its impedance can be tuned through ionic concentration and reproduced across preparations. These results support the feasibility of the mixture as a controllable conductive medium for \gls{eeg} phantom applications.
 
-A Finite Element Method (\gls{fem}) model was developed to validate the electromagnetic behavior of the proposed architecture. The simulations confirmed the feasibility of mapping internal excitations to measurable surface potentials and supported the selection of a stable eight-channel actuation scheme, providing a quantitative description of the system’s forward and inverse behavior.
+Based on the defined geometry and material properties, a finite element method (\gls{fem}) pipeline is implemented to model volumetric electrical conduction within the phantom head. The simulations establish quantitative forward and inverse relationships between internal actuation and surface voltage measurements, providing a mathematical basis for analyzing signal propagation and informing the selection of actuation signals for approximating desired surface patterns.
 
-In parallel, a cross-platform desktop application was developed to provide deterministic multi-channel signal generation, real-time visualization, and integration with OpenBCI acquisition hardware. The software enables reproducible experimental workflows and supports closed-loop operation between signal generation and measurement at the hardware level.
+A cross-platform desktop application is developed to generate multi-channel test signals, visualize generated data, and log and export experimental data. Dedicated hardware is used to inject the generated signals from the software platform into the phantom head in a controlled and reproducible manner. The software supports integration with OpenBCI for experimental use.
 
-Collectively, the experimental, numerical, and software results validate the proposed architecture as a viable, open, and modular tool for \gls{eeg} simulation, calibration, and methodological research, while establishing a clear foundation for future full-system physical integration.
+Together, the \gls{cad} model, conductive material characterization, signal-generation hardware, software platform, and numerical modeling pipeline provide a coherent basis for controlled \gls{eeg} signal simulation and methodological evaluation.
 \end{abstract}
 
-\textbf{\textit{Keywords --}} phantom head, EEG simulator, brain-computer interface, finite element method, FEM, signal processing software
+\textbf{\textit{Keywords --}} phantom head, EEG simulation, brain--computer interface, finite element method, volumetric conduction, signal generation software
+
 \end{document}
