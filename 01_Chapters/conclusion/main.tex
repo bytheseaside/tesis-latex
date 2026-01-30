@@ -1,57 +1,15 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
 
-This work presented the design, implementation, and modular validation of a comprehensive \gls{eeg} phantom-head platform. While financial constraints necessitated a shift from full physical integration to a model-based verification strategy, the results demonstrate that the proposed architecture satisfies the fundamental requirements for a cost-effective, reproducible, and adaptable research tool.
-
-The proposed solution relies on a modular architecture where the phantom head numerical model, hardware and software platform are treated as interconnected but independently verifiable components.
+This work presented the design, implementation, and validation of a comprehensive \gls{eeg} phantom-head system based on a modular architecture where hardware, software, and numerical modeling components function as interconnected yet independently verifiable subsystems. The development strategy prioritized practical feasibility by conducting experimental validation using homogeneous gelatine-based prototypes, while establishing the theoretical foundation for a bilayer phantom architecture through numerical modeling and \gls{cad} design.
 
 The phantom design adopts an anthropomorphic geometry constructed from accessible materials. Experimental characterization confirmed that the gelatine-based conductive medium yields reproducible impedance behavior suitable for transmitting \gls{eeg}-like signals. The combination of these material properties with the anatomical geometry allows for the effective propagation of spatially distributed surface potentials, enabling meaningful interaction between internal excitation and surface-level measurement.
 
 Rather than serving merely as a post-hoc analysis, the numerical characterization functions as an integral part of the system architecture, explicitly linking simulation results to practical implementation. From informing hardware design choices, to providing the theoretical foundation for future calibration workflows.
 
-The development of the software environment resulted in a desktop application capable of deterministic signal generation and real-time data acquisition. The adoption of a modern asynchronous architecture ensures responsive performance and seamless integration with OpenBCI hardware, successfully closing the loop between signal generation and acquisition.
+The development of the software environment resulted in a deterministic signal generation engine operating at a consistent 1~kHz sampling rate with maintained phase continuity during dynamic parameter adjustments. The implementation successfully synthesizes all physiologically relevant \gls{eeg} frequency bands (Delta, Theta, Alpha, and Beta) with independent parametric control over frequency and amplitude. Through integration with OpenBCI hardware via the BrainFlow library, the system achieves closed-loop validation with measured latency of 71.8~ms and jitter of 18.5~ms, demonstrating real-time performance suitable for experimental applications. Session reproducibility is ensured through comprehensive data export functionality that serializes waveform parameters, temporal metadata, and raw measurement data in standard formats.
 
-To assess the success of the project, the final system characteristics were evaluated against the initial design requirements. Table~\ref{tab:project-requirements-summary} summarizes this verification:
-
-\begin{table}[htbp]
-\centering
-\caption{Project requirements resolution summary}
-\label{tab:project-requirements-summary}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{0.35\linewidth} p{0.55\linewidth}}
-\hline
-\textbf{Requirement} & \textbf{Resolution} \\
-\hline
-\multicolumn{2}{l}{\textit{High-Level Constraints}} \\
-\hline
-Cost-Effectiveness & Utilizes standard PC audio, and low cost materials. \\
-Reproducibility & Physical: Gelatine fabrication protocol defined (<10\% deviation); Digital: JSON session export ensures digital reproducibility. \\
-Modularity & Architecture decouples the software signal generator from the physical phantom hardware. \\
-Electrical Safety & System operates within standard audio line-level voltages. Electrical isolation provided by acquisition hardware. \\
-\hline
-\multicolumn{2}{l}{\textit{Functional Requirements}} \\
-\hline
-FR-01 Waveform Synthesis & Real-time synthesis of Delta, Theta, Alpha, and Beta rhythms implemented. \\
-FR-02 Parametric Control & Asynchronous engine allows instantaneous frequency/amplitude adjustment without phase discontinuity. \\
-FR-03 Stereo Routing & Independent Left/Right channel mapping implemented for all output modules. \\
-FR-04 Clinical Data Playback & Architecture supports arbitrary waveform streaming; currently optimized for synthetic signal generation. \\
-FR-05 Closed-Loop Validation & Verified integration with OpenBCI Cyton via BrainFlow library. \\
-FR-06 Session Export & Full serialization implemented (JSON metadata + CSV data + WAV audio). \\
-FR-07 Transduction Validation & Signal injection validated via discrete component testing and gelatine samples. \\
-FR-08 Anatomical Model & Anthropomorphic model defined. \\
-FR-09 Active Calibration & Gain control and impedance compensation specifications defined in the proposed electronic module. \\
-\hline
-\multicolumn{2}{l}{\textit{Non-Functional Requirements}} \\
-\hline
-NFR-01 Real-Time Latency & WebSocket architecture achieves low latency for control and visualization. \\
-NFR-02 Compatibility & Electron wrapper ensures deployment support for Windows, Linux, and macOS. \\
-NFR-03 Concurrency & Audio generation runs in a dedicated thread/process, decoupled from UI rendering. \\
-NFR-04 Usability & React-based \gls{gui} provides independent channel controls and live status visualization, with color-coded channel mapping. \\
-\hline
-\end{tabular}
-\end{table}
-
-\newpage
+Validation of the audio-to-voltage transduction approach confirmed successful signal injection into gelatine phantoms, with measurable surface potentials demonstrating the feasibility of using standard audio hardware for \gls{eeg} simulation. Testing with the Open EEG Phantom homogeneous model identified signal attenuation characteristics inherent to full-scale geometries, revealing the need for intermediate amplification stages. A dedicated amplification circuit was designed to boost audio-generated signals to appropriate voltage levels while maintaining signal fidelity and electrical isolation requirements; however, the physical implementation and validation of this circuit remain as future work. The current implementation establishes baseline performance metrics and validates core functionality using simplified homogeneous configurations, providing empirical evidence that supports the transition to more complex implementations.
 
 Finally, the validation of the individual subsystems confirms that the hardware and software components operate as intended, while the numerical analysis validates the theoretical and physical feasibility of the design. This component-level verification—backed by a model that confirms the system definition is physically sound—\textbf{supports the expectation that the full physical realization will be successful and meet the design specifications.}
 
