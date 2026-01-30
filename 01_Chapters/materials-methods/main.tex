@@ -1,8 +1,9 @@
 \documentclass[../../00_Main/Main.tex]{subfiles}
 \begin{document}
-Based on the research presented in the state-of-the-art review, bilayer phantom head designs emerged as the most suitable approach for realistic \gls{eeg} signal simulation. These designs typically incorporate two primary layers: an external structural layer that defines the overall geometry and provides mechanical stability for electrode placement, and an internal conductive layer that enables the propagation of electrical signals from internal excitation points toward the outer surface. Accordingly, a \gls{cad} model was developed with this bilayer architecture in mind, featuring a rigid external shell designed to accommodate geometric features for mechanical alignment and routing of electrical connections, along with an internal volume intended to be filled with a conductive electrolyte.
+Based on the research presented in the state-of-the-art review, a bilayer phantom head design was selected. These designs typically incorporate two primary layers: an external structural layer that defines the overall geometry and provides mechanical stability for electrode placement, and an internal conductive layer that enables the propagation of electrical signals from internal excitation points toward the outer surface. Accordingly, a \gls{cad} model was developed with this bilayer architecture in mind, featuring a rigid external shell designed to accommodate geometric features for mechanical alignment and routing of electrical connections, along with an internal volume intended to be filled with a conductive electrolyte.
 
-However, as a stepping stone in the development process, the entire project was first tested and validated using a simplified homogeneous model consisting solely of a gelatine-based conductive medium. This approach allowed for initial characterization of signal propagation, validation of the numerical models, and optimization of the signal generation hardware before introducing the additional complexity of a bilayer structure. The following sections describe the materials and methods employed in this development process, addressing both the conductive medium characterization and the structural design framework that supports future implementation of the complete bilayer system.
+However, as a stepping stone in the development process, the entire project was first tested and validated using a simplified homogeneous model consisting solely of a gelatine-based conductive medium. This approach allowed the characterization of signal propagation and optimization of the signal generation hardware before introducing the additional complexity of a bilayer structure. The following sections describe the materials and methods employed in this development process, addressing both the conductive medium characterization and the structural design framework that supports the future implementation of the complete bilayer system.
+
 \subsection{Characterization of the Gelatine-based Layer}
 \label{subsec:gelatine_layer}
 \input{gelatine-layer}
@@ -10,6 +11,10 @@ However, as a stepping stone in the development process, the entire project was 
 \subsection{Sound-to-Voltage Method for Signal Generation}
 \label{subsec:hardware_transduction}
 \input{hardware_transduction}
+
+\subsection{Homogeneous Open EEG Model}
+\label{subsec:open_eeg_phantom}
+\input{open_eeg_phantom}
 
 \subsection{3D Modeling of the Structural Layer}
 \label{subsec:phantom_head_modeling}
