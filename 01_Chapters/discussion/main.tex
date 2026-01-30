@@ -1,7 +1,7 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
 
-Funding constraints regarding the manufacturing of the conductive cranial shell led to an adaptation of the validation strategy, which originally aimed for a full physical integration of the software with the anatomical phantom head. Consequently, the system evaluation was conducted using a modular verification framework. Instead of a single final assembly test, each subsystem was isolated and tested independently to ensure strict compliance with the functional requirements:
+The system evaluation was conducted using a modular verification framework:
 \begin{itemize}
     \item The \textbf{Software Subsystem} was evaluated for latency and waveform spectral purity.
     \item The \textbf{Hardware Transduction} was validated using gelatine cubes and controlled input signals.
@@ -11,31 +11,17 @@ Funding constraints regarding the manufacturing of the conductive cranial shell 
 
 The validation process utilized both laboratory instrumentation and the developed software subsystem to generate controlled input signals.
 
-The project utilizes the \textbf{Phantom Head Numerical Model} as the integration reference for a two-layer phantom head constructed following the methods described in Section~\ref{sec:materials_and_methods}. This numerical model serves as a theoretical counterpart to the physical system, providing a reliable first-order approximation of its expected behavior. Within this context, the theoretical validation demonstrates that, given the proven performance of the individual components, the combined system exhibits behavior consistent with the intended design and supports a preliminary assessment of the feasibility of the proposed architecture when the modules are integrated.
+Throughout the experimental validation phase, homogeneous gelatine-based prototypes were used as the primary physical test platform. This approach was adopted as a practical stepping stone before implementing the complete bilayer architecture in the future, allowing for systematic characterization of the conductive medium, validation of signal transduction methods, and assessment of the closed-loop system performance under controlled conditions. The use of homogeneous prototypes simplified the fabrication process and reduced sources of variability during initial testing, while still providing a physically realistic conductive medium for signal propagation experiments. Results obtained from these homogeneous configurations inform the interpretation of the system's practical behavior and establish baseline performance metrics for the integrated platform.
+
+The project utilizes the \textbf{Phantom Head Numerical Model} as the integration reference for a two-layer phantom head constructed following the methods described in Section~\ref{sec:materials_and_methods}. This numerical model serves as a theoretical counterpart to the physical system, providing a reliable first-order approximation of its expected behavior. Within this context, the theoretical validation demonstrates that, given the proven performance of the individual components, the combined system exhibits behavior consistent with the intended design and supports a preliminary assessment of the feasibility of the proposed architecture when the modules are integrated in a bilayer phantom.
 
 \subsection{Materials: Electrical Behavior and Suitability for Phantom Construction}
 
-The phantom head design relies on a bilayer architecture composed of an external conductive
-shell and an internal conductive volume. These two layers are subject to fundamentally
-different material constraints. The outer shell is designed to be fabricated using a commercially available conductive
-polymer, selected to balance electrical performance, mechanical printability, and practical
-accessibility within an academic prototyping context. While custom composite formulations
-or fully bespoke materials could, in principle, be developed to achieve tighter control
-over electrical properties, such approaches would significantly increase fabrication
-complexity and cost. For this reason, a commercially available conductive PLA was adopted
-as a representative and reproducible choice, with electrical properties largely determined
-by the material specification and the additive manufacturing process itself. Accordingly,
-its characterization relies primarily on manufacturer data and existing literature rather
-than on experimental tunability.
+Based on the state-of-the-art review, a bilayer phantom architecture was identified as the most promising approach for future implementations, featuring an external conductive shell and an internal conductive volume. While this bilayer design informed the \gls{cad} modeling and system architecture described in the Materials and Methods section, the experimental validation conducted in this work focused on homogeneous gelatine-based prototypes as a practical starting point. The material characterization strategy reflects this approach, prioritizing experimental assessment of the conductive medium that forms the basis of both homogeneous and bilayer configurations.
 
-In contrast, the inner conductive layer is based on a saline--gelatine medium, which is
-readily available, inexpensive, and highly customizable through formulation parameters.
-For this reason, the experimental characterization efforts focused on the inner layer, with
-the goal of assessing its electrical behavior, tunability, and reproducibility in the
-context of phantom construction. Rather than aiming at a precise metrological determination
-of conductivity values, the experiments were designed to qualitatively evaluate how the
-electrical response of the material evolves with ionic concentration, and whether these
-properties can be reliably reproduced across fabrication batches.
+The conductive medium selected for characterization is a saline--gelatine formulation, which is readily available, inexpensive, and highly customizable through formulation parameters. This material serves as the primary conductive layer in homogeneous prototypes and would constitute the internal volume in a future bilayer implementation. For this reason, the experimental characterization efforts focused on assessing its electrical behavior, tunability, and reproducibility in the context of phantom construction. Rather than aiming at a precise metrological determination of conductivity values, the experiments were designed to qualitatively evaluate how the electrical response of the material evolves with ionic concentration, and whether these properties can be reliably reproduced across fabrication batches.
+
+For completeness, the bilayer design concept envisions an outer shell fabricated using commercially available conductive polymer, selected to balance electrical performance, mechanical printability, and practical accessibility within an academic prototyping context. While custom composite formulations could, in principle, be developed to achieve tighter control over electrical properties, such approaches would significantly increase fabrication complexity and cost. For this reason, a commercially available conductive PLA was identified as a representative and reproducible choice for future work, with electrical properties largely determined by the material specification and the additive manufacturing process itself. Accordingly, its characterization in this work relies primarily on manufacturer data and existing literature rather than on direct experimental validation.
 
 \paragraph*{Electrical Behavior and Experimental Behavior of the Gelatine Layer}
 
