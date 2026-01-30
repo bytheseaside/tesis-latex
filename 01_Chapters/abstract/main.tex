@@ -7,12 +7,16 @@ The work introduces a parametric computer-aided design (\gls{cad}) model of an \
 
 A saline--gelatine mixture is investigated as a conductive filling material for the phantom head. The electrical properties of this medium are experimentally characterized, demonstrating that its impedance can be tuned through ionic concentration and reproduced across preparations. These results support the feasibility of the mixture as a controllable conductive medium for \gls{eeg} phantom applications.
 
-Based on the defined geometry and material properties, a finite element method (\gls{fem}) pipeline is implemented to model volumetric electrical conduction within the phantom head. The simulations establish quantitative forward and inverse relationships between internal actuation and surface voltage measurements, providing a mathematical basis for analyzing signal propagation and informing the selection of actuation signals for approximating desired surface patterns.
-
 A cross-platform desktop application is developed to generate multi-channel test signals, visualize generated data, and log and export experimental data. Dedicated hardware is used to inject the generated signals from the software platform into the phantom head in a controlled and reproducible manner. The software supports integration with OpenBCI for experimental use.
+
+Experimental validation was conducted using homogeneous gelatine-based prototypes, including the assembly and testing of a full-scale Open EEG Phantom model. Signal injection experiments confirmed successful propagation of controlled waveform patterns through the conductive medium, with measurable surface potentials validating the effectiveness of the audio-based transduction approach and the suitability of the selected materials for phantom construction.
+
+Based on the defined geometry and material properties, a finite element method (\gls{fem}) pipeline is implemented to model volumetric electrical conduction within the phantom head. The simulations establish quantitative forward and inverse relationships between internal actuation and surface voltage measurements, providing a mathematical basis for analyzing signal propagation and informing the selection of actuation signals for approximating desired surface patterns.
 
 Together, the \gls{cad} model, conductive material characterization, signal-generation hardware, software platform, and numerical modeling pipeline provide a coherent basis for controlled \gls{eeg} signal simulation and methodological evaluation.
 \end{abstract}
+
+\par\vspace*{\fill}
 
 \textbf{\textit{Keywords --}} phantom head, EEG simulation, brain--computer interface, finite element method, volumetric conduction, signal generation software
 
