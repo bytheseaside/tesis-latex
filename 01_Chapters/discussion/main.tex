@@ -102,6 +102,7 @@ Within this framework, gelatine remains a plausible and adaptable material for t
 construction of the proposed phantom, offering sufficient flexibility and stability for
 systematic experimental use.
 
+Validation experiments conducted with the Open EEG Phantom confirmed that the gelatine-based conductive medium supports effective signal propagation within a full-scale anthropomorphic geometry. The successful measurement of software-controlled waveform patterns at the phantom surface demonstrates that electrical signals originating from internal excitation points are reliably transmitted through the homogeneous gelatine volume to surface electrodes. These results validate the material's suitability for \gls{eeg} phantom applications and establish the homogeneous configuration as a functional baseline for subsequent implementation of the bilayer architecture.
 
 \paragraph*{Material Cost Estimate}
 Having established the feasibility of the selected materials for the proposed phantom
@@ -322,7 +323,7 @@ Several areas have been identified for future development to enhance the softwar
 
 For the physical phantom system, the following improvements are proposed:
 
-\textbf{Hardware signal amplification:} The experimental validation using the Open EEG Phantom homogeneous model revealed that signal attenuation in full-scale phantom geometries results in significantly lower amplitudes compared to the smaller cube prototypes. This observation identified the need for an intermediate hardware amplification stage between the software output and the phantom injection points. Future work should focus on implementing the designed amplification circuit to boost the audio-generated signals to appropriate voltage levels before injection into the conductive medium, ensuring sufficient signal strength for reliable acquisition at surface electrodes while maintaining signal fidelity and isolation requirements.
+\textbf{Hardware signal amplification:} For calibration purposes, integrating the designed amplification module between the phantom output and the acquisition system would enhance signal quality in extended time periods, countering the effects of material degradation over the days. This would mitigate the effects of attenuation and improve the signal-to-noise ratio, particularly for low-amplitude test signals.
 
 \textbf{Bilayer phantom fabrication and physical validation:} While the \gls{cad} model and numerical characterization of a bilayer phantom architecture have been completed, providing a theoretical framework and predicted system behavior, the physical fabrication and experimental validation of this design remain as future work. Fabricating the bilayer phantom with its external conductive shell and internal gelatine volume would enable direct experimental comparison with the numerical predictions, assessment of manufacturing tolerances and their impact on electrical behavior, and validation of the forward operator under realistic operating conditions.
 
