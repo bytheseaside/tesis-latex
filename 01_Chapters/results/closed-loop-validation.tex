@@ -1,5 +1,3 @@
-\subsubsection{Homogeneous Prototype Closed-Loop Validation}
-
 The desktop application (see Figures~\ref{fig:desktop-app-running-signal-generation} and~\ref{fig:desktop-app-standby-eeg-measured}) was developed using the Electron framework, which allows for cross-platform compatibility and seamless integration with the underlying hardware. The application provides a user-friendly interface for configuring stimulation parameters, monitoring real-time data, and visualizing results.
 
 \begin{figure}[H]
@@ -45,8 +43,36 @@ The results indicate that the closed-loop system is capable of accurately genera
 
 Metrics such as latency and jitter were evaluated, obtaining 71.8~ms and 18.5~ms respectively, showing that the system meets the specified performance criteria outlined in the objectives, leaving room for further optimization in future iterations.
 
-\subsubsection{Homogeneous Phantom Head Model Limitations}
+\subsection{Homogeneous Open EEG Phantom Head}
 
-During the testing phase with the homogeneous Open EEG Phantom model, the measured signals exhibited significantly lower amplitudes compared to those obtained from the cube prototypes described above. This reduced signal strength resulted in poor signal-to-noise ratios when attempting to acquire data with standard \gls{eeg} equipment. The observed attenuation suggested that the larger geometry and increased distance between injection points and measurement electrodes contributed to substantial signal degradation throughout the propagation path.
+The Open EEG Phantom head model was successfully assembled, as shown in Figure~\ref{fig:gelatine_phantom_result}.
 
-This finding highlighted a critical limitation of the direct software-to-phantom signal injection approach and motivated the need for a hardware amplification system. Specifically, it became evident that an intermediate transduction stage would be required to amplify the output signals from the software platform before injection into the phantom medium, ensuring sufficient signal strength for reliable acquisition at the surface electrodes.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../02_Images/gelatine_phantom_result.jpeg}
+    \caption{Open EEG Phantom prototype}
+    \label{fig:gelatine_phantom_result}
+\end{figure}
+
+The same closed-loop system described in the previous section was employed to validate the performance of the homogeneous phantom head. The system successfully generated and measured predefined electrical patterns, confirming the effectiveness of the phantom design and the desktop application. The setup is as shown in Figure~\ref{fig:setup_openeeg}, while the generation and measurement results are shown in Figures~\ref{fig:generation_head} and~\ref{fig:measurements_head} respectively. The OpenBCI GUI was used for visualization in the frequency domain.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../02_Images/setup_openeeg.png}
+    \caption[Open EEG Phantom validation: Setup]{Open EEG Phantom setup.}
+    \label{fig:setup_openeeg}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../02_Images/generation_head.png}
+    \caption[Open EEG Phantom validation: Generation]{Open EEG Phantom validation: Generation of predefined electrical patterns using the software.}
+    \label{fig:generation_head}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../02_Images/measurements_head.png}
+    \caption[Open EEG Phantom validation: Measurement]{Open EEG Phantom validation: Measurement using OpenBCI GUI for multiple view options.}
+    \label{fig:measurements_head}
+\end{figure}
