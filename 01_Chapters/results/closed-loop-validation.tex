@@ -42,3 +42,9 @@ Using this developed closed-loop system, tests were conducted to validate the pe
 The results indicate that the closed-loop system is capable of accurately generating and measuring electrical signals, validating the design and functionality of both the phantom head and the desktop application.
 
 Metrics such as latency and jitter were evaluated, obtaining 71.8~ms and 18.5~ms respectively, showing that the system meets the specified performance criteria outlined in the objectives, leaving room for further optimization in future iterations.
+
+\subsubsection{Homogeneous Phantom Head Model Limitations}
+
+During the testing phase with the homogeneous Open EEG Phantom model, the measured signals exhibited significantly lower amplitudes compared to those obtained from the cube prototypes described above. This reduced signal strength resulted in poor signal-to-noise ratios when attempting to acquire data with standard \gls{eeg} equipment. The observed attenuation suggested that the larger geometry and increased distance between injection points and measurement electrodes contributed to substantial signal degradation throughout the propagation path.
+
+This finding highlighted a critical limitation of the direct software-to-phantom signal injection approach and motivated the need for a hardware amplification system. Specifically, it became evident that an intermediate transduction stage would be required to amplify the output signals from the software platform before injection into the phantom medium, ensuring sufficient signal strength for reliable acquisition at the surface electrodes.
