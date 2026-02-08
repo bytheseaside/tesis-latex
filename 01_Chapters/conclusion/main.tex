@@ -5,13 +5,35 @@ This work presented the design, implementation, and validation of a comprehensiv
 
 The phantom design adopts an anthropomorphic geometry constructed from accessible materials. Experimental characterization confirmed that the gelatine-based conductive medium yields reproducible impedance behavior suitable for transmitting \gls{eeg}-like signals. The combination of these material properties with the anatomical geometry allows for the effective propagation of spatially distributed surface potentials, enabling meaningful interaction between internal excitation and surface-level measurement.
 
-Rather than serving merely as a post-hoc analysis, the numerical characterization functions as an integral part of the system architecture, explicitly linking simulation results to practical implementation. From informing hardware design choices, to providing the theoretical foundation for future calibration workflows.
+Rather than serving merely as a post-hoc analysis, the numerical characterization functions as an integral part of the system architecture, explicitly linking simulation results to practical implementation. It informed key design choices (e.g., channel configuration and expected signal attenuation) and provides a structured framework for future calibration workflows through forward and inverse mappings between internal excitation and surface measurements.
 
 The development of the software environment resulted in a deterministic signal generation engine operating at a consistent 1~kHz sampling rate with maintained phase continuity during dynamic parameter adjustments. The implementation successfully synthesizes all physiologically relevant \gls{eeg} frequency bands (Delta, Theta, Alpha, and Beta) with independent parametric control over frequency and amplitude. Through integration with OpenBCI hardware via the BrainFlow library, the system achieves closed-loop validation with measured latency of 71.8~ms and jitter of 18.5~ms, demonstrating real-time performance suitable for experimental applications. Session reproducibility is ensured through comprehensive data export functionality that serializes waveform parameters, temporal metadata, and raw measurement data in standard formats.
 
 Validation of the audio-to-voltage transduction approach confirmed successful signal injection into gelatine phantoms, with measurable surface potentials demonstrating the feasibility of using standard audio hardware for \gls{eeg} simulation. Testing with the Open EEG Phantom homogeneous model successfully validated the signal transduction methodology, with measured surface potentials confirming effective signal propagation through the full-scale geometry. A dedicated amplification circuit was designed to enhance signal levels and extend operational capabilities while maintaining signal fidelity and electrical isolation requirements; however, the physical implementation and validation of this circuit remain as future work. The current implementation establishes baseline performance metrics and validates core functionality using simplified homogeneous configurations, providing empirical evidence that supports the transition to more complex implementations.
 
-Finally, the validation of the individual subsystems confirms that the hardware and software components operate as intended, while the numerical analysis validates the theoretical and physical feasibility of the design. This component-level verification—backed by a model that confirms the system definition is physically sound—\textbf{supports the expectation that the full physical realization will be successful and meet the design specifications.}
+The validation of individual subsystems confirms that the hardware and software components operate as intended, while the numerical analysis validates the theoretical feasibility of the bilayer design. The homogeneous prototype provided experimental confirmation of the signal transduction methodology and material performance at full scale.
+
+
+\subsection{Future Work}
+Future work is naturally divided into software extensions and physical-system upgrades.
+
+For the software platform, the following improvements are proposed:
+
+\textbf{Scalability and robustness:} To address the memory constraints already mentioned, future iterations should implement paginated disk buffering. Additionally, error handling should be enhanced, particularly regarding audio subsystem failures. A more granular exception-handling strategy is necessary when hardware peripherals fail.
+
+The numerical characterization developed in this work defines a conditioned mapping between internal actuation channels and surface-level measurements through a forward operator and its associated inverse. Future versions of the application should integrate these operators to support model-driven workflows that abstract low-level actuation details while remaining consistent with the physically realizable system response.
+
+Users could either explore predicted surface potentials for selected internal excitations, or specify desired signal values at one or more surface locations and compute the corresponding internal actuation signals. In both cases, the forward operator can be used to visualize the expected surface response, making deviations between requested and achievable signals explicit and providing transparent feedback on system limitations.
+
+\textbf{Advanced signal analysis:} The current visualization is limited to the time domain. Future expansions should include frequency-domain analysis tools, such as real-time Fast Fourier Transform (FFT) and Power Spectral Density (PSD) plots, to provide immediate feedback on signal spectral content.
+
+\textbf{Extended hardware support:} While currently optimized for OpenBCI, the architecture is designed to be extensible. Future integration with the Lab Streaming Layer (LSL) protocol would significantly broaden hardware compatibility, allowing the software to interface with a wider range of \gls{eeg} devices and synchronization triggers.
+
+For the physical phantom system, the following improvements are proposed:
+
+\textbf{Hardware signal amplification:} For calibration purposes, integrating the designed amplification module between the phantom output and the acquisition system would enhance signal quality in extended time periods, countering the effects of material degradation over the days. This would mitigate the effects of attenuation and improve the signal-to-noise ratio, particularly for low-amplitude test signals.
+
+\textbf{Bilayer phantom fabrication and physical validation:} While the \gls{cad} model and numerical characterization of a bilayer phantom architecture have been completed, providing a theoretical framework and predicted system behavior, the physical fabrication and experimental validation of this design remain as future work. Fabricating the bilayer phantom with its external conductive shell and internal gelatine volume would enable direct experimental comparison with the numerical predictions, assessment of manufacturing tolerances and their impact on electrical behavior, and validation of the forward operator under realistic operating conditions.
 
 \biblio % Needed for referencing to working when compiling individual subfiles - Do not remove
 \end{document}
