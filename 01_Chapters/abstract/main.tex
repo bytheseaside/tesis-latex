@@ -1,22 +1,22 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
-% \begin{abstract}
-\section*{Abstract}
-The development and calibration of brain–computer interfaces (\gls{bci}) and electroencephalography (\gls{eeg}) analysis algorithms require controlled and reproducible reference systems. In the absence of a known ground truth in human measurements, phantom heads provide a practical means to study signal transmission, measurement behavior, and signal-processing methods under well-defined conditions. This thesis presents the design and characterization of a low-cost \gls{eeg} phantom-head system, together with numerical and software tools for controlled signal generation and analysis.
+\begin{abstract}
+% \section*{Abstract}
+\nota{ tengo que terminarlo todavia no está 100/100 listo}
+The development and calibration of brain–computer interfaces (\gls{bci}) and electroencephalography (\gls{eeg}) analysis algorithms require controlled and reproducible reference systems. In the absence of a known ground truth in human measurements, phantom heads provide a practical means to do so under well-defined conditions. This thesis presents the design and characterization of a low-cost \gls{eeg} phantom-head system, together with numerical and software tools for controlled signal generation and analysis.
 
-The proposed system is structured around three main components: a parametric phantom-head design, an experimental signal-generation and acquisition platform, and a numerical modeling framework. First, a parametric computer-aided design (\gls{cad}) model of an anthropomorphic \gls{eeg} phantom head is introduced, defining the external geometry, internal conductive volume, and electrode placement in a manner suitable for low-cost fabrication and reproducible experimental configuration.
+First, a parametric computer-aided design (\gls{cad}) model of an anthropomorphic \gls{eeg} phantom head is introduced, defining the external geometry, internal conductive volume, and electrode placement in a manner suitable for low-cost fabrication and reproducible experimental configuration.
 
-Second, a saline–gelatine mixture is investigated as the conductive medium of the phantom. Its electrical properties are experimentally characterized, showing that impedance can be systematically tuned through ionic concentration and reproduced across independent preparations. These results demonstrate that the selected material provides a stable and controllable conductive medium suitable for \gls{eeg} phantom applications. Experimental validation was conducted using homogeneous gelatine-based prototypes, including a full-scale Open EEG Phantom model. Controlled waveform injection experiments confirmed effective signal propagation through the conductive medium, with measurable surface potentials validating both the selected materials and the audio-based signal transduction approach.
+Second, a saline–gelatine mixture is investigated as the conductive medium of the phantom. Its electrical properties are experimentally characterized, showing that impedance can be systematically tuned through ionic concentration and reproduced across independent preparations. These results demonstrate that the selected material provides a stable and controllable conductive medium suitable for \gls{eeg} phantom applications. 
+% Experimental validation was conducted using homogeneous gelatine-based prototypes, including a full-scale Open EEG Phantom model. Controlled waveform injection experiments confirmed effective signal propagation through the conductive medium, with measurable surface potentials validating both the selected materials and the audio-based signal transduction approach.
 
 Third, a cross-platform desktop application is developed to generate multi-channel test signals, visualize generated and acquired data, and log experimental sessions in standard formats. The software integrates with OpenBCI hardware to enable closed-loop experimental validation and reproducible data acquisition.
 
-Finally, based on the defined geometry and material properties, a finite element method (\gls{fem}) pipeline is implemented to model volumetric electrical conduction within the phantom head. The numerical framework establishes forward and inverse relationships between internal actuation and surface voltage measurements, providing a mathematical basis for analyzing signal propagation and supporting model-driven experimental workflows.
+Finally, based on the defined geometry and material properties, a finite element method (\gls{fem}) pipeline is implemented to model volumetric electrical conduction within the phantom head. The numerical work establishes forward and inverse relationships between internal actuation and surface voltage measurements in the previously defined phantom geometry.
 
 Together, the phantom design, material characterization, software platform, and numerical modeling framework form a coherent and accessible system for controlled \gls{eeg} signal simulation and methodological evaluation.
 
-\nota{tenemos que acortarlo mas para que entre en 1 sola carilla... mas tarde sigo iterando sobre esto }
-
-% \end{abstract}
+\end{abstract}
 
 \par\vspace*{\fill}
 
