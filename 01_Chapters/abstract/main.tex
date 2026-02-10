@@ -1,21 +1,24 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
+\newgeometry{left=2.4cm,right=2.4cm,top=2.54cm,bottom=2.54cm}
+
 \begin{abstract}
-Electroencephalography (\gls{eeg}) system validation faces a fundamental challenge: the absence of ground truth when measuring human subjects. Physical head phantoms provide controlled testing environments with known signals, yet existing commercial solutions are typically reported in the \$400--640 range per unit and are often proprietary, limiting accessibility in research and educational contexts.
+Electroencephalography (\gls{eeg}) system validation faces a fundamental challenge: the absence of ground truth when measuring human subjects. Physical head phantoms provide controlled testing environments with known signals; however, existing commercial solutions are typically reported in the \$400--640 range per unit and are often proprietary, limiting accessibility in research and educational contexts.
 
-This work presents an integrated phantom-head system combining parametric CAD modeling, experimentally characterized conductive materials, a comprehensive software platform, and numerical modeling of the system response. The phantom adopts a bilayer architecture consisting of a 3D-printed conductive PLA outer shell and a gelatine-based electrolyte filling, selected for availability and cost-effectiveness, with tunable electrical properties achieved through adjustable ionic concentration. Material costs for a complete phantom realization are approximately \$160, substantially below commercial alternatives.
+This work presents a practical and accessible tool for systematic \gls{eeg} hardware validation, algorithm development, and research, with all design files, software, and numerical models documented for community adoption.
 
-A parametric CAD model defines the phantom geometry, including an anthropomorphic shell and an internal network of wire guides for controlled signal injection. The conductive filling medium was experimentally characterized, demonstrating reproducible impedance behavior with inter-batch variability below 8\%, confirming suitability for controlled \gls{eeg} signal transmission.
+A bilayer phantom head is defined through a parametric CAD model, comprising an anthropomorphic shell fabricated from 3D-printed conductive PLA and an internal network of wire guides to ensure reproducible and controlled signal injection. The gelatine-based electrolyte filling medium, selected for availability and cost-effectiveness, was experimentally characterized. Tunable electrical properties are achieved through adjustable ionic concentration, demonstrating reproducible impedance behavior with inter-batch variability below 8\% and confirming suitability for controlled \gls{eeg} signal transmission. Material costs for a complete phantom realization are approximately \$160, substantially below commercial alternatives.
 
-The desktop application provides deterministic multi-channel signal synthesis across physiologically relevant \gls{eeg} frequency bands, real-time waveform visualization, and integration with OpenBCI acquisition hardware. The software supports both native signal generation and EDF file import, offers dual operational modes for generation and measurement, and enables session recording with export to standard formats.
+The desktop application provides a user-friendly interface for deterministic multi-channel signal synthesis across physiologically relevant \gls{eeg} frequency bands, real-time waveform visualization, and integration with OpenBCI acquisition hardware. The software supports both native signal generation and EDF file import, offers dual operational modes for generation and measurement, and enables session recording with export to standard formats.
 
-The electrical behavior of the phantom head was characterized through finite element modeling, establishing a bidirectional transfer model between eight internal actuation points and surface measurement locations corresponding to the international 10--20 system. This characterization enables prediction of surface potentials for given excitation patterns and regularized inverse computation of required inputs to achieve desired measurement profiles. Benchmark validation confirmed numerical accuracy suitable for experimental planning and calibration workflows.
+The electrical behavior of the phantom head was characterized through finite element modeling and conditioned to obtain a bidirectional transfer model between eight internal actuation points and surface measurement locations corresponding to the international 10--20 system. This characterization enables prediction of surface potentials for given excitation patterns, as well as conditioned inverse computation of the required inputs to achieve desired measurement profiles. Benchmark validation confirmed numerical accuracy suitable for experimental planning and calibration workflows.
 
-The resulting platform provides a practical and accessible tool for systematic \gls{eeg} hardware validation, algorithm development, and research, with all design files, software, and numerical models documented for community adoption.
+\vspace{.6em}
+\textbf{\textit{Keywords --}} \gls{eeg}, phantom head, system validation, \gls{fem}, signal generation software
+
 \end{abstract}
 
+\restoregeometry
+% \par\vspace*{\fill}
 
-\par\vspace*{\fill}
-
-\textbf{\textit{Keywords --}} \gls{eeg} phantom, \gls{eeg} system validation, finite element method, \gls{eeg} signal generation software
 \end{document}
