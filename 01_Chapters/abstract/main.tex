@@ -1,6 +1,6 @@
 \documentclass[../00_Main.tex]{subfiles}
 \begin{document}
-\newgeometry{left=2.4cm,right=2.4cm,top=2.54cm,bottom=2.54cm}
+\newgeometry{left=2.1cm,right=2.1cm,top=2.4cm,bottom=2.0cm}
 
 \begin{abstract}
 Electroencephalography (\gls{eeg}) system validation faces a fundamental challenge: the absence of ground truth when measuring human subjects. Physical head phantoms provide controlled testing environments with known signals; however, existing commercial solutions are typically reported in the \$400--640 range per unit and are often proprietary, limiting accessibility in research and educational contexts.
@@ -12,6 +12,8 @@ A bilayer phantom head is defined through a parametric CAD model, comprising an 
 The electrical behavior of the phantom head was characterized through finite element modeling and conditioned to obtain a bidirectional transfer model between eight internal actuation points and surface measurement locations corresponding to the international 10--20 system. This characterization enables prediction of surface potentials for given excitation patterns, as well as conditioned inverse computation of the required inputs to achieve desired measurement profiles. Benchmark validation confirmed numerical accuracy suitable for experimental planning and calibration workflows.
 
 The desktop application provides a user-friendly interface for deterministic multi-channel signal synthesis across physiologically relevant \gls{eeg} frequency bands, real-time waveform visualization, and integration with OpenBCI acquisition hardware. The software supports both native signal generation and EDF file import, offers dual operational modes for generation and measurement, and enables session recording with export to standard formats.
+
+In combination, the proposed phantom head, numerical transfer characterization, and software interface provide a controlled and reproducible environment for systematic \gls{eeg} system evaluation.
 
 \vspace{.6em}
 \textbf{\textit{Keywords --}} \gls{eeg}, phantom head, system validation, \gls{fem}, signal generation software
