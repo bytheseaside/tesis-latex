@@ -49,8 +49,20 @@ The Open EEG Phantom head model was successfully assembled, as shown in Figure~\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../../02_Images/gelatine_phantom_result.jpeg}
-    \caption{Open EEG Phantom prototype}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=8cm]{../../02_Images/gelatine_phantom_result.jpeg}
+        \caption{Before unmolding}%
+        \label{fig:gelatine_phantom_result}
+    \end{subfigure}
+    % \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=8cm]{../../02_Images/gelatine_phantom_result_2.jpg}
+        \caption{After unmolding}%
+        \label{fig:gelatine_phantom_result_2}
+    \end{subfigure}
+    \caption{Open EEG Phantom prototype realization.}
     \label{fig:gelatine_phantom_result}
 \end{figure}
 
@@ -72,7 +84,31 @@ The same closed-loop system described in the previous section was employed to va
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../02_Images/measurements_head.png}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/measurements_head_t.png}
+        \caption{Time series}
+        \label{fig:measurements_head_t}
+    \end{subfigure}
+    \hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \begin{subfigure}[t]{\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../../02_Images/measurements_head_f.png}
+            \caption{Frequency spectrum}
+            \label{fig:measurements_head_f}
+        \end{subfigure}
+        
+        \vspace{1em}
+        
+        \begin{subfigure}[t]{\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../../02_Images/measurements_head_h.png}
+            \caption{Head plot}
+            \label{fig:measurements_head_h}
+        \end{subfigure}
+    \end{minipage}
+    
     \caption[Open EEG Phantom validation: Measurement]{Open EEG Phantom validation: Measurement using OpenBCI GUI for multiple view options.}
     \label{fig:measurements_head}
 \end{figure}
