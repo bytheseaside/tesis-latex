@@ -3,10 +3,6 @@ These experiments are intended as a qualitative material assessment, aimed at ev
 tunability, batch-to-batch consistency, and behavioral regimes under varying salinity, rather
 than as a precise metrological determination of tissue-equivalent conductivity values.
 
-\subsubsection{Impedance Analysis and Material Sensitivity}\label{sec:gelatine_impedance_sensitivity}
-
-The primary objective of this study is to measure the complex impedance of different gelatine solutions across a defined frequency spectrum.
-
 \paragraph*{Prototype Fabrication}
 
 The prototypes were constructed using a hydrogel composed of unflavored gelatine and deionized water. To analyze the correlation between salinity and impedance, distinct batches were prepared with varying concentrations of sodium chloride (NaCl). Figure~\ref{fig:gelatine_ingredients} illustrates the ingredients used in the fabrication process.
@@ -20,18 +16,11 @@ The prototypes were constructed using a hydrogel composed of unflavored gelatine
 
 The gelatine and salt were added to the deionized water at room temperature, keeping the gelatine at 30\% concentration and testing the NaCl at 0\%, 2.5\%, and 5\% concentrations. The solutions were heated to $60\,^\circ$C, thoroughly mixing to ensure homogeneity until the gelatine was fully dissolved, avoiding the formation of lumps and bubbles.
 
-The mixtures were cast into standardized molds (derived from isometric soap molds) to ensure constant geometric dimensions across all samples (Figure~\ref{fig:gelatine_prototype_1}). The samples were stored in a refrigeration unit at $2^\circ$C for a minimum duration of 12 hours. Once solidified, the prototypes were removed from the refrigerator and prepared for electrical testing at room temperature.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../../02_Images/gelatine_prototype_1.png}
-    \caption{Gelatine prototype for impedance analysis.}
-    \label{fig:gelatine_prototype_1}
-\end{figure}
+The mixtures were cast into standardized molds (derived from isometric soap molds) to ensure constant geometric dimensions across all samples. The samples were stored in a refrigeration unit at $2^\circ$C for a minimum duration of 12 hours. Once solidified, the prototypes were removed from the refrigerator and prepared for electrical testing at room temperature.
 
 \paragraph*{Equipment and Setup}
 
-The experimental setup utilizes the following instrumentation (Figure~\ref{fig:voltage_divider_config}) to generate signals and capture the electrical response of the phantom:
+The experimental setup utilizes the following instrumentation (Figure~\ref{fig:voltage_divider_config}) to generate signals and capture the electrical response of the phantom prototypes:
 
 \begin{itemize}
     \item Signal generator: To provide sinusoidal input signals of varying frequencies and amplitudes.
@@ -47,7 +36,18 @@ The experimental setup utilizes the following instrumentation (Figure~\ref{fig:v
     \label{fig:lab_setup}
 \end{figure}
 
-The electrical impedance of the gelatin phantom, denoted as $Z$, was determined using a voltage divider configuration. The experimental circuit consists of the unknown impedance $Z$ placed in series with a known reference resistor $R$. An AC excitation voltage $V_1$ is applied to the series combination, and the resulting voltage drop across the reference resistor, $V_2$, is measured. The voltage divider configuration is shown in Figure~\ref{fig:voltage_divider_config}.
+\subsubsection{Experiment 1: Impedance Analysis}\label{sec:gelatine_impedance_sensitivity}
+
+The primary objective of this study is to measure the complex impedance of different gelatine solutions across a defined frequency spectrum, using the same geometry for all samples (Figure~\ref{fig:gelatine_prototype_1}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../02_Images/gelatine_prototype_1.png}
+    \caption[Gelatine prototype for impedance analysis]{Gelatine prototype for impedance analysis.}
+    \label{fig:gelatine_prototype_1}
+\end{figure}
+
+The electrical impedance of the gelatine phantom, denoted as $Z$, was determined using a voltage divider configuration. The experimental circuit consists of the unknown impedance $Z$ placed in series with a known reference resistor $R$. An AC excitation voltage $V_1$ is applied to the series combination, and the resulting voltage drop across the reference resistor, $V_2$, is measured. The voltage divider configuration is shown in Figure~\ref{fig:voltage_divider_config}.
 
 \begin{figure}[H]
     \centering
@@ -68,7 +68,7 @@ By rearranging Eq.~\eqref{eq:voltage_divider}, we can isolate the unknown impeda
     Z = R \cdot \left( \frac{V_1 - V_2}{V_2} \right)
 \end{equation}
 
-This equation allows for the calculation of the gelatin's complex impedance magnitude and phase by analyzing the amplitude and phase shift of the recorded signals $V_1$ and $V_2$.
+This equation allows for the calculation of the gelatine's complex impedance magnitude and phase by analyzing the amplitude and phase shift of the recorded signals $V_1$ and $V_2$.
 
 \paragraph*{Frequency Response}
 
@@ -81,13 +81,13 @@ A sinusoidal signal was injected into the gelatine cubes arranged in a series ci
 
 By plotting the impedance as a function of frequency, we determine the spectral behavior of the phantom material. Since the geometric shape factor remained constant, observed variations are attributed directly to the salt proportions.
 
-\paragraph*{Concentration and Reproducibility}
+\subsubsection{Experiment 2: Reproducibility and Batch Consistency}
 
-To establish the reliability of the manufacturing process, two separate batches of the identical recipe were measured under identical conditions. This allows us to quantify the deviation between samples and establish the reproducibility of the protocol.
+To establish the reliability of the manufacturing process, two separate batches of an identical recipe were measured under identical conditions. This allows us to quantify the deviation between samples and establish the reproducibility of the protocol.
 
-\paragraph*{Signal Sensitivity}
+\subsubsection{Experiment 3: Signal Sensitivity}
 
-Two sources of signal injection were placed at fixed coordinates within the phantom as illustrated in Figure~\ref{fig:gelatine_prototype_1}.
+Two sources of signal injection were placed at fixed coordinates within the phantom as illustrated in Figure~\ref{fig:gelatine_prototype_2}.
 
 The sources consisted of sinusoidal signals at $100~\text{Hz}$ for Input 1 and $900~\text{Hz}$ for Input 2, both of them with amplitudes of $500~\text{mV}$ peak-to-peak.
 
@@ -96,6 +96,6 @@ Potential measurements were taken at various surface locations of the phantom. B
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../../02_Images/gelatine_prototype_2.png}
-    \caption{Gelatine prototype for signal sensitivity.}
+    \caption[Gelatine prototype for signal sensitivity]{Gelatine prototype for signal sensitivity.}
     \label{fig:gelatine_prototype_2}
 \end{figure}

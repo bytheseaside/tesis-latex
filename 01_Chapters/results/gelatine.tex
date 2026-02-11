@@ -1,4 +1,4 @@
-\subsubsection{Impedance Analysis and Material Sensitivity}
+\subsubsection{Experiment 1: Impedance Analysis}
 
 The impedance measurements conducted on the gelatine prototypes with varying NaCl concentrations yielded the results illustrated in Figure~\ref{fig:gelatine_results}.
 
@@ -9,8 +9,27 @@ The impedance measurements conducted on the gelatine prototypes with varying NaC
     \label{fig:gelatine_results}
 \end{figure}
 
+\subsubsection{Experiment 2: Reproducibility and Batch Consistency}
 
-\subsubsection{Signal Sensitivity}
+To evaluate the robustness of the gelatin phantom manufacturing process, two independent batches were synthesized using the standardized recipe and subjected to identical impedance measurement protocols. The electrical response was recorded across a frequency range of 5 Hz to 300 Hz.
+
+The comparative analysis of the complex impedance is presented in Figure~\ref{fig:gelatine_batches}. Qualitatively, both batches exhibited nearly identical frequency-dependent behaviors. The impedance magnitude $|Z|$ demonstrated a characteristic roll-off consistent with ionic conduction models, decreasing from approximately $4.5\,\text{k}\Omega$ at 5 Hz to $1.5\,\text{k}\Omega$ at 300 Hz. Similarly, the phase angle $\Phi$ followed a consistent trend in both samples, characterized by a distinct peak between 50 Hz and 100 Hz.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/gelatine_batches.png}
+    \caption[Batch Consistency Analysis]{Comparison of impedance measurements across two independent batches of gelatine phantoms with the same NaCl concentration.}
+    \label{fig:gelatine_batches}
+\end{figure}
+
+Quantitatively, the inter-batch variability was assessed by calculating the relative percentage difference between the two datasets. The statistical summary of this comparison is as follows:
+
+\begin{itemize}
+    \item \textbf{Impedance Magnitude ($|Z|$):} The average relative difference between the two batches was found to be $8.04\%$.
+    \item \textbf{Phase Angle ($\Phi$):} The average discrepancy in phase measurements was $4.23\%$.
+\end{itemize}
+
+\subsubsection{Experiment 3: Signal Sensitivity}
 
 After subjecting the gelatine prototype with 5\% NaCl concentration to the effect of two signal sources with frequencies 100 and 900 Hz as described in Section~\ref{sec:gelatine_impedance_sensitivity} (Figure~\ref{fig:localization_gelatine}), the recorded signals propagated within the phantom are shown in Figure~\ref{fig:superposition}.
 
@@ -39,24 +58,3 @@ After subjecting the gelatine prototype with 5\% NaCl concentration to the effec
     \caption[Superposition Measurements]{Superposition of 100 Hz and 900 Hz Sine Waves in Phantom Prototype.}
     \label{fig:superposition}
 \end{figure}
-
-\subsubsection{Reproducibility and Batch Consistency}
-
-To evaluate the robustness of the gelatin phantom manufacturing process, two independent batches were synthesized using the standardized recipe and subjected to identical impedance measurement protocols. The electrical response was recorded across a frequency range of 5 Hz to 300 Hz.
-
-The comparative analysis of the complex impedance is presented in Figure~\ref{fig:gelatine_batches}. Qualitatively, both batches exhibited nearly identical frequency-dependent behaviors. The impedance magnitude $|Z|$ demonstrated a characteristic roll-off consistent with ionic conduction models, decreasing from approximately $4.5\,\text{k}\Omega$ at 5 Hz to $1.5\,\text{k}\Omega$ at 300 Hz. Similarly, the phase angle $\Phi$ followed a consistent trend in both samples, characterized by a distinct peak between 50 Hz and 100 Hz.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{../../02_Images/gelatine_batches.png}
-    \caption[Batch Consistency Analysis]{Comparison of impedance measurements across two independent batches of gelatine phantoms with the same NaCl concentration.}
-    \label{fig:gelatine_batches}
-\end{figure}
-
-Quantitatively, the inter-batch variability was assessed by calculating the relative percentage difference between the two datasets. The statistical summary of this comparison is as follows:
-
-\begin{itemize}
-    \item \textbf{Impedance Magnitude ($|Z|$):} The average relative difference between the two batches was found to be $8.04\%$.
-    \item \textbf{Phase Angle ($\Phi$):} The average discrepancy in phase measurements was $4.23\%$.
-\end{itemize}
-
