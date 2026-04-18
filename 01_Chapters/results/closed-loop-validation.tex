@@ -2,14 +2,14 @@ The desktop application (see Figures~\ref{fig:desktop-app-running-signal-generat
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../02_Images/desktop-app-running-signal-generation.png}
+    \includegraphics[width=\textwidth]{../../02_Images/desktop-app-running-signal-generation.png}
     \caption[Desktop application running signal generation]{Desktop application running signal generation screen.}
     \label{fig:desktop-app-running-signal-generation}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../02_Images/desktop-app-standby-eeg-measured.png}
+    \includegraphics[width=\textwidth]{../../02_Images/desktop-app-standby-eeg-measured.png}
     \caption[Desktop application standby EEG measured screen]{Desktop application standby EEG measured screen.}
     \label{fig:desktop-app-standby-eeg-measured}
 \end{figure}
@@ -86,30 +86,19 @@ The setup is as shown in Figure~\ref{fig:setup_openeeg}, while the generation an
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/measurements_head_t.png}
         \caption{Time series}
         \label{fig:measurements_head_t}
     \end{subfigure}
-    \hfill
-    \begin{minipage}[b]{0.48\textwidth}
-        \begin{subfigure}[t]{\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{../../02_Images/measurements_head_f.png}
-            \caption{Frequency spectrum}
-            \label{fig:measurements_head_f}
-        \end{subfigure}
-        
-        \vspace{1em}
-        
-        \begin{subfigure}[t]{\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{../../02_Images/measurements_head_h.png}
-            \caption{Head plot}
-            \label{fig:measurements_head_h}
-        \end{subfigure}
-    \end{minipage}
+    \vspace{1em}
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/measurements_head_f.png}
+        \caption{Frequency spectrum}
+        \label{fig:measurements_head_f}
+    \end{subfigure}
     
     \caption[Open EEG Phantom validation: Measurement]{Open EEG Phantom validation: Measurement using OpenBCI GUI for multiple view options.}
     \label{fig:measurements_head}

@@ -16,9 +16,9 @@ The system is conceptualized as two distinct but synchronized subsystems:
 \subsubsection{High-Level Block Diagram}
 Figure~\ref{fig:block_diagram} illustrates the high-level architecture of the proposed solution, highlighting the interaction between the software and hardware components.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{../../02_Images/high_level_block_diagram.png}
+    \includegraphics[width=0.8\textwidth]{../../02_Images/high_level_block_diagram.png}
     \caption[High-level block diagram of the solution]{High-level block diagram of the proposed EEG signal emulation system, showing the flow from user configuration to signal acquisition.}
     \label{fig:block_diagram}
 \end{figure}
@@ -101,7 +101,7 @@ The initial design (Figure~\ref{fig:iteration_1_ui}) attempted to provide maximu
     \item \textbf{Issue B (Synchronization):} The design allowed users to import distinct EDF files for each channel independently. Functional analysis revealed that this approach introduced significant risks of temporal misalignment (synchronization drift) between channels and increased the probability of user error during setup.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../02_Images/iteration_1_ui.png}
     \caption[User Interface {-} Iteration 1]{User Interface {-} Iteration 1: High Cognitive Load Design}
@@ -116,7 +116,7 @@ The second iteration (Figure~\ref{fig:iteration_2_ui}) addressed the clutter by 
     \item \textbf{The New Problem:} This design superimposed the generated signal and the measured signal (OpenBCI) onto the same graph for each channel. Testing revealed this to be scientifically misleading. Due to volume conduction in the phantom head, a single generated dipole affects multiple acquisition electrodes simultaneously. Therefore, implying a direct 1-to-1 relationship between ``Generator 1'' and ``Sensor 1'' was incorrect and confused the validation process.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../02_Images/iteration_2_ui.png}
     \caption[User Interface {-} Iteration 2]{User Interface {-} Iteration 2: Menu Consolidation \& Visualization Fallacy}
@@ -132,9 +132,50 @@ The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization va
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{../../02_Images/iteration_3_ui.png}
-    \caption[User Interface {-} Iteration 3]{User Interface {-} Iteration 3: Final Split-View Design}
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/iteration_3_ui_1.png}
+        \caption{Generation View with EEG Mode controls, OpenBCI connected}
+        \label{fig:iteration_3_ui_1}
+    \end{subfigure}
+
+    \caption[User Interface {-} Iteration 3]{User Interface {-} Iteration 3}
     \label{fig:iteration_3_ui}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/iteration_3_ui_2.png}
+        \caption{Generation View with Import Mode controls, OpenBCI disconnected}
+        \label{fig:iteration_3_ui_2}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/iteration_3_ui_3.png}
+        \caption{Measured View with EEG Mode controls, OpenBCI connected}
+        \label{fig:iteration_3_ui_3}
+    \end{subfigure}
+
+    \caption[User Interface {-} Iteration 3 (continued)]{User Interface {-} Iteration 3 (continued)}
+    \label{fig:iteration_3_ui_continued}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../02_Images/iteration_3_ui_4.png}
+        \caption{Measured View with Import Mode controls, OpenBCI disconnected}
+        \label{fig:iteration_3_ui_4}
+    \end{subfigure}
+
+    \caption[User Interface {-} Iteration 3 (continued)]{User Interface {-} Iteration 3 (continued)}
+    \label{fig:iteration_3_ui_final}
 \end{figure}
 
 Applying this last changes resulted in the final UI design, with separate views for generation and measurement as shown in Figure~\ref{fig:final_ui_views}.
