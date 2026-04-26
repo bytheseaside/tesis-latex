@@ -144,6 +144,7 @@ The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization va
 \end{figure}
 
 \begin{figure}[p]
+    \ContinuedFloat
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
@@ -162,10 +163,10 @@ The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization va
     \end{subfigure}
 
     \caption[User Interface {-} Iteration 3 (continued)]{User Interface {-} Iteration 3 (continued)}
-    \label{fig:iteration_3_ui_continued}
 \end{figure}
 
 \begin{figure}[t]
+    \ContinuedFloat
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
@@ -175,8 +176,10 @@ The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization va
     \end{subfigure}
 
     \caption[User Interface {-} Iteration 3 (continued)]{User Interface {-} Iteration 3 (continued)}
-    \label{fig:iteration_3_ui_final}
 \end{figure}
+
+
+\newpage
 
 Applying this last changes resulted in the final UI design, with separate views for generation and measurement as shown in Figure~\ref{fig:final_ui_views}.
 
@@ -188,17 +191,21 @@ Applying this last changes resulted in the final UI design, with separate views 
         \caption{Generation View}
         \label{fig:generated_view_ui}
     \end{subfigure}
-    
-    \vspace{1em}
-    
+    \caption[Final User Interface Design]{Final User Interface Design: (a) Generation View showing the synthetic signal preview.}
+    \label{fig:final_ui_views}
+\end{figure}
+
+\begin{figure}[H]
+    \ContinuedFloat
+    \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/measured_view_ui.png}
         \caption{Measured View}
         \label{fig:measured_view_ui}
     \end{subfigure}
-    \caption[Final User Interface Design]{Final User Interface Design: (a) Generation View showing the synthetic signal preview, and (b) Measured View displaying the full 8-channel OpenBCI array}
-    \label{fig:final_ui_views}
+    \caption[Final User Interface Design (continued)]{Final User Interface Design (continued): (b) Measured View displaying the full 8-channel OpenBCI array.}
+    \label{fig:final_ui_views_continued}
 \end{figure}
 
 \subsection{Hardware Architecture}
