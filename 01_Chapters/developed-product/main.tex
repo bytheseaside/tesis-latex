@@ -143,7 +143,7 @@ The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization va
     \label{fig:iteration_3_ui}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[H]
     \ContinuedFloat
     \centering
     \begin{subfigure}[b]{\textwidth}
@@ -179,7 +179,7 @@ The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization va
 \end{figure}
 
 \FloatBarrier
-Applying this last changes resulted in the final UI design, as shown in Figure~\ref{fig:final_ui_views}.
+Applying this last changes resulted in the final UI design,  with separate views for generation and measurement as shown in Figure~\ref{fig:final_ui_views}.
 
 
 \begin{figure}[H]
@@ -190,7 +190,9 @@ Applying this last changes resulted in the final UI design, as shown in Figure~\
         \caption{Generation View showing the synthetic signal preview.}
         \label{fig:generated_view_ui}
     \end{subfigure}
+
     \vspace{1em}
+    
     \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/measured_view_ui.png}
@@ -198,7 +200,7 @@ Applying this last changes resulted in the final UI design, as shown in Figure~\
         \label{fig:measured_view_ui}
     \end{subfigure}
     \caption{Final User Interface Design}
-    \label{fig:final_ui_views_continued}
+    \label{fig:final_ui_views}
 \end{figure}
 
 This final design was implemented using React with Tailwind CSS for styling, with subtle minor adjustments made during development to optimize the user experience.
