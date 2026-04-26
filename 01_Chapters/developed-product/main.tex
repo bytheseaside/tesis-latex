@@ -178,35 +178,38 @@ The final design (Figure~\ref{fig:iteration_3_ui}) resolved the visualization va
     \caption[User Interface {-} Iteration 3 (continued)]{User Interface {-} Iteration 3 (continued)}
 \end{figure}
 
+\FloatBarrier
+Applying this last changes resulted in the final UI design, as shown in Figure~\ref{fig:final_ui_views}.
 
-\newpage
-
-Applying this last changes resulted in the final UI design, with separate views for generation and measurement as shown in Figure~\ref{fig:final_ui_views}.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/generated_view_ui.png}
-        \caption{Generation View}
+        \caption{Generation View showing the synthetic signal preview.}
         \label{fig:generated_view_ui}
     \end{subfigure}
-    \caption[Final User Interface Design]{Final User Interface Design: (a) Generation View showing the synthetic signal preview.}
-    \label{fig:final_ui_views}
-\end{figure}
-
-\begin{figure}[H]
-    \ContinuedFloat
-    \centering
+    \vspace{1em}
     \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../02_Images/measured_view_ui.png}
-        \caption{Measured View}
+        \caption{Measured View displaying the full 8-channel OpenBCI array.}
         \label{fig:measured_view_ui}
     \end{subfigure}
-    \caption[Final User Interface Design (continued)]{Final User Interface Design (continued): (b) Measured View displaying the full 8-channel OpenBCI array.}
+    \caption{Final User Interface Design}
     \label{fig:final_ui_views_continued}
 \end{figure}
+
+This final design was implemented using React with Tailwind CSS for styling, with subtle minor adjustments made during development to optimize the user experience.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../02_Images/import_mode.png}
+    \caption[Design Implementation: Import Mode]{Design Implementation: Import Mode, full video available in~\cite{AppDemo}.}
+    \label{fig:import_mode}
+\end{figure}
+
 
 \subsection{Hardware Architecture}
 
@@ -215,8 +218,7 @@ The audio signal from the PC sound card is split into two mono signals, one for 
 
 The preferred hardware for this application is the PCI 7.1 sound card (Figure~\ref{fig:7_1_channel_pci_card}), which provides multiple output channels and high-quality audio performance, ensuring accurate signal reproduction for \gls{eeg} simulation. If the user doesn't have one, an external USB sound card with similar specifications can be used as an alternative (Figure~\ref{fig:7_1_channel_usb_card}).
 
-
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
